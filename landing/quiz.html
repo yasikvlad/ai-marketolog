@@ -3,256 +3,1502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест: На каком уровне ты работаешь с AI? | AI-Маркетолог</title>
+    <title>AI-Диагностика: Сколько денег ты теряешь без AI? | AI-Маркетолог</title>
+    <meta name="description" content="Пройди 2-минутный тест и узнай, сколько часов и денег ты сливаешь каждый месяц. Персональный расчёт потерь.">
+    <meta property="og:title" content="Сколько денег ты теряешь без AI-системы?">
+    <meta property="og:description" content="2-минутная диагностика покажет твои потери в часах и долларах. Персональный расчёт.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a; --surface: #1a1a2e; --border: #2a2a3e;
-            --text: #f5f5f5; --text2: #a1a1aa; --text3: #71717a;
-            --purple: #8b5cf6; --blue: #3b82f6; --green: #22c55e;
-            --red: #ef4444; --amber: #f59e0b;
-            --font: 'Inter', sans-serif;
+            --bg: #0a0a0a;
+            --surface: #1a1a2e;
+            --surface-hover: #22223a;
+            --border: #2a2a3e;
+            --border-light: rgba(255,255,255,0.06);
+            --text: #f5f5f5;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --purple: #8b5cf6;
+            --purple-dim: rgba(139,92,246,0.15);
+            --blue: #3b82f6;
+            --green: #22c55e;
+            --green-dim: rgba(34,197,94,0.1);
+            --red: #ef4444;
+            --red-dim: rgba(239,68,68,0.1);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245,158,11,0.1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
 
-        .quiz-container { max-width: 640px; width: 100%; }
-
-        /* Progress */
-        .quiz-progress { margin-bottom: 24px; }
-        .quiz-progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-        .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--blue)); border-radius: 2px; transition: width 0.4s ease; }
-        .quiz-progress-text { font-size: 12px; color: var(--text3); margin-top: 6px; text-align: right; }
-
-        /* Question card */
-        .quiz-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 16px; padding: 32px; position: relative;
-            animation: fadeIn 0.3s ease;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow-x: hidden;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .quiz-emoji { font-size: 40px; margin-bottom: 16px; }
-        .quiz-question { font-size: 20px; font-weight: 800; margin-bottom: 24px; line-height: 1.3; }
-        @media (min-width: 640px) { .quiz-question { font-size: 24px; } }
 
-        /* Options */
-        .quiz-options { display: flex; flex-direction: column; gap: 10px; }
-        .quiz-option {
-            padding: 16px 20px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border); border-radius: 10px;
-            cursor: pointer; transition: all 0.2s ease;
-            font-size: 15px; line-height: 1.5; display: flex; align-items: center; gap: 12px;
-        }
-        .quiz-option:hover { border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.05); transform: translateX(4px); }
-        .quiz-option.selected { border-color: var(--purple); background: rgba(139,92,246,0.1); }
-        .quiz-option-letter {
-            width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
-            background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 700; color: var(--purple);
-        }
-        .quiz-option.selected .quiz-option-letter { background: var(--purple); color: #fff; }
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-        /* Result */
-        .quiz-result { display: none; text-align: center; }
-        .quiz-result.show { display: block; }
-        .result-emoji { font-size: 64px; margin-bottom: 16px; }
-        .result-level { font-size: 14px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-        .result-title { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
-        .result-desc { font-size: 15px; color: var(--text2); line-height: 1.6; margin-bottom: 24px; }
-        .result-reco {
-            text-align: left; padding: 20px; background: rgba(34,197,94,0.06);
-            border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; margin-bottom: 24px;
+        /* ===== CONTAINER ===== */
+        .quiz-wrap {
+            max-width: 580px;
+            width: 100%;
+            position: relative;
         }
-        .result-reco-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
-        .result-reco-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
-        .result-cta {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 16px 32px; background: var(--green); color: #fff;
-            font-size: 17px; font-weight: 700; border-radius: 8px; border: none;
-            cursor: pointer; font-family: var(--font); text-decoration: none;
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-wrap {
+            margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .progress-wrap.visible { opacity: 1; }
+        .progress-bar {
+            height: 5px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0%;
+        }
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .progress-pct {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--purple);
+        }
+        .progress-label {
+            font-size: 11px;
+            color: var(--text3);
+        }
+
+        /* ===== SCREEN (generic card) ===== */
+        .screen {
+            display: none;
+            animation: screenIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .screen.active { display: block; }
+        @keyframes screenIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+        }
+        @media (min-width: 480px) {
+            .card { padding: 36px 32px; }
+        }
+
+        /* ===== ENTRY: CHAT BUBBLE ===== */
+        .chat-bubble {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px 16px 16px 4px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .chat-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 6px;
+        }
+        .chat-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        .chat-text strong {
+            color: var(--green);
+        }
+
+        .entry-cta {
+            display: block;
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--green);
+            color: #fff;
+            font-family: var(--font);
+            font-size: 17px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .entry-cta:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .entry-cta:active { transform: translateY(0); }
+
+        .entry-sub {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text3);
+            margin-top: 10px;
+        }
+
+        /* ===== QUALIFICATION OPTIONS ===== */
+        .qual-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .qual-opt {
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .qual-opt:hover {
+            border-color: rgba(139,92,246,0.4);
+            background: rgba(139,92,246,0.05);
+            transform: translateX(4px);
+        }
+        .qual-opt .q-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* ===== SCANNING ANIMATION ===== */
+        .scan-wrap {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .scan-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: scanPulse 1.5s ease infinite;
+        }
+        @keyframes scanPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        .scan-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .scan-sub {
+            font-size: 14px;
+            color: var(--text2);
+            margin-bottom: 24px;
+        }
+        .scan-bar-wrap {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        .scan-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple), var(--green));
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .scan-pct {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--purple);
+            margin-top: 8px;
+        }
+        .scan-checks {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+        .scan-check {
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 6px;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.3s ease;
+        }
+        .scan-check.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .scan-check .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* ===== QUESTION SCREEN ===== */
+        .q-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .q-severity {
+            font-size: 10px;
+        }
+        .q-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .q-tag-green { background: var(--green-dim); color: var(--green); }
+        .q-tag-amber { background: var(--amber-dim); color: var(--amber); }
+        .q-tag-red { background: var(--red-dim); color: var(--red); }
+
+        .q-emoji {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .q-title {
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 480px) { .q-title { font-size: 23px; } }
+
+        /* ===== OPTIONS ===== */
+        .opts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .opt {
+            padding: 15px 18px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .opt:hover {
+            border-color: rgba(139,92,246,0.4);
+            background: rgba(139,92,246,0.05);
+            transform: translateX(3px);
+        }
+        .opt.selected {
+            border-color: var(--purple);
+            background: rgba(139,92,246,0.1);
+        }
+        .opt-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            background: rgba(139,92,246,0.1);
+            border: 1.5px solid rgba(139,92,246,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-top: 1px;
             transition: all 0.2s ease;
         }
-        .result-cta:hover { filter: brightness(1.1); transform: translateY(-2px); }
-        .result-sub { font-size: 12px; color: var(--text3); margin-top: 10px; }
-        .result-back { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--text3); cursor: pointer; text-decoration: underline; }
+        .opt.selected .opt-marker {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+        .opt-text { flex: 1; }
 
-        /* Hidden */
-        .hidden { display: none; }
+        /* Multi-select hint */
+        .multi-hint {
+            font-size: 12px;
+            color: var(--text3);
+            margin-bottom: 12px;
+        }
+
+        /* Multi-select confirm */
+        .multi-confirm {
+            margin-top: 14px;
+            display: none;
+        }
+        .multi-confirm.show { display: block; }
+        .btn-next {
+            width: 100%;
+            padding: 14px;
+            background: var(--purple);
+            color: #fff;
+            font-family: var(--font);
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-next:hover { filter: brightness(1.15); }
+        .btn-next:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ===== INSERT SCREENS ===== */
+        .insert-card {
+            text-align: center;
+            padding: 36px 24px;
+        }
+        .insert-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .insert-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .insert-text {
+            font-size: 15px;
+            color: var(--text2);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .insert-highlight {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--purple-dim);
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 24px;
+        }
+        .insert-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--green);
+            color: #fff;
+            font-family: var(--font);
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .insert-btn:hover { filter: brightness(1.1); }
+
+        /* ===== RESULT SCREENS ===== */
+        .result-section { text-align: center; }
+
+        /* Dashboard */
+        .dashboard-score {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+        }
+        .score-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .score-ring-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 8;
+        }
+        .score-ring-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .score-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .score-val {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .score-of {
+            font-size: 14px;
+            color: var(--text3);
+        }
+        .score-label-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+        }
+
+        /* Sub-metrics */
+        .sub-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .sub-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+        }
+        .sub-metric-val {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .sub-metric-label {
+            font-size: 11px;
+            color: var(--text3);
+            line-height: 1.3;
+        }
+
+        .result-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            font-family: var(--font);
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #fff;
+            background: var(--purple);
+        }
+        .result-btn:hover { filter: brightness(1.15); transform: translateY(-2px); }
+
+        /* Loss calculator */
+        .loss-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .loss-item {
+            background: rgba(239,68,68,0.06);
+            border: 1px solid rgba(239,68,68,0.15);
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+        .loss-item-big {
+            grid-column: 1 / -1;
+        }
+        .loss-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--red);
+            line-height: 1.2;
+        }
+        .loss-val-huge {
+            font-size: 36px;
+        }
+        .loss-label {
+            font-size: 12px;
+            color: var(--text2);
+            margin-top: 4px;
+        }
+
+        /* Shock */
+        .shock-number {
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--red), #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin: 16px 0 8px;
+        }
+        .shock-label {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        /* Green card */
+        .green-card {
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 14px;
+            padding: 24px 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .green-card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+        .green-card-list {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.8;
+        }
+        .green-card-list span {
+            display: block;
+        }
+
+        /* Product card */
+        .pkg-card {
+            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1));
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .pkg-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--purple);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+        .pkg-name {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .pkg-price {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        .pkg-features {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .pkg-features span {
+            display: block;
+        }
+
+        .cta-main {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--green);
+            color: #fff;
+            font-family: var(--font);
+            font-size: 17px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .cta-main:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+        .cta-secondary {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--text2);
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+        .cta-secondary:hover { border-color: var(--purple); color: var(--text); }
+
+        .fine-print {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 12px;
+        }
+
+        .restart-link {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text3);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .restart-link:hover { color: var(--text2); }
+
+        /* ===== SEPARATOR ===== */
+        .sep {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        /* ===== TYPING DOTS ===== */
+        .typing-dots {
+            display: inline-flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .typing-dots span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--text3);
+            animation: typingBounce 1.2s ease-in-out infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <!-- Progress -->
-    <div class="quiz-progress" id="quiz-progress">
-        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-fill" style="width:0%"></div></div>
-        <div class="quiz-progress-text"><span id="quiz-step">0</span> из 7</div>
+<div class="quiz-wrap">
+    <!-- PROGRESS BAR -->
+    <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-meta">
+            <span class="progress-pct" id="progressPct">0%</span>
+            <span class="progress-label" id="progressLabel"></span>
+        </div>
     </div>
 
-    <!-- Questions -->
-    <div id="quiz-questions">
-        <!-- Filled by JS -->
-    </div>
-
-    <!-- Result -->
-    <div class="quiz-result" id="quiz-result">
-        <div class="quiz-card">
-            <div class="result-emoji" id="r-emoji"></div>
-            <div class="result-level" id="r-level"></div>
-            <div class="result-title" id="r-title"></div>
-            <div class="result-desc" id="r-desc"></div>
-            <div class="result-reco">
-                <div class="result-reco-title">Рекомендация для тебя:</div>
-                <div class="result-reco-text" id="r-reco"></div>
+    <!-- === ENTRY 1: CHAT GREETING === -->
+    <div class="screen active" id="entry1">
+        <div class="chat-bubble">
+            <div class="chat-avatar">B</div>
+            <div class="chat-name">Влад Яско</div>
+            <div class="chat-text">
+                Привет! Давай за 2 минуты разберёмся, <strong>сколько денег и времени ты теряешь</strong> без AI-системы маркетинга.<br><br>
+                Я задам 8 вопросов и покажу твои потери в конкретных цифрах. Без воды, без регистрации.
             </div>
-            <a href="index.html#packages" class="result-cta">Забрать AI-систему по предпродаже &rarr;</a>
-            <div class="result-sub">от $250 &middot; старт 5 апреля &middot; 100% возврат 14 дней</div>
-            <div class="result-back" onclick="restartQuiz()">Пройти ещё раз</div>
+        </div>
+        <button class="entry-cta" onclick="goTo('entry2')">Поехали, хочу узнать</button>
+        <div class="entry-sub">2 минуты. 8 вопросов. Персональный расчёт.</div>
+    </div>
+
+    <!-- === ENTRY 2: QUALIFICATION === -->
+    <div class="screen" id="entry2">
+        <div class="card">
+            <div class="q-emoji">&#129300;</div>
+            <div class="q-title">Кто ты в мире AI-маркетинга?</div>
+            <div class="qual-options">
+                <div class="qual-opt" onclick="setSegment('expert', this)">
+                    <span class="q-icon">&#128188;</span>
+                    <span>Эксперт / предприниматель &mdash; у меня свой продукт или услуга</span>
+                </div>
+                <div class="qual-opt" onclick="setSegment('marketer', this)">
+                    <span class="q-icon">&#128640;</span>
+                    <span>Маркетолог / продюсер &mdash; работаю с клиентами</span>
+                </div>
+                <div class="qual-opt" onclick="setSegment('newbie', this)">
+                    <span class="q-icon">&#10024;</span>
+                    <span>Хочу начать &mdash; ещё выбираю нишу</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === ENTRY 3: SCANNING ANIMATION === -->
+    <div class="screen" id="entry3">
+        <div class="card">
+            <div class="scan-wrap">
+                <div class="scan-icon">&#128301;</div>
+                <div class="scan-title">Сканирование AI-системы...</div>
+                <div class="scan-sub">Анализируем твой текущий стек</div>
+                <div class="scan-bar-wrap">
+                    <div class="scan-bar-fill" id="scanFill"></div>
+                </div>
+                <div class="scan-pct" id="scanPct">0%</div>
+                <div class="scan-checks" id="scanChecks">
+                    <div class="scan-check"><span class="dot" style="background:var(--green)"></span> AI-инструменты</div>
+                    <div class="scan-check"><span class="dot" style="background:var(--amber)"></span> Автоматизация процессов</div>
+                    <div class="scan-check"><span class="dot" style="background:var(--red)"></span> Потери времени и денег</div>
+                    <div class="scan-check"><span class="dot" style="background:var(--purple)"></span> Потенциал роста</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === QUESTIONS (generated by JS) === -->
+    <div id="questionsContainer"></div>
+
+    <!-- === INSERT 1 (after Q3) === -->
+    <div class="screen" id="insert1">
+        <div class="card insert-card">
+            <div class="insert-icon">&#128161;</div>
+            <div class="insert-title">Интересный факт</div>
+            <div class="insert-text">87% маркетологов тратят больше 10 часов в неделю на задачи, которые AI делает за минуты.</div>
+            <div class="insert-highlight">Ты уже на полпути &#128170;</div>
+            <button class="insert-btn" onclick="resumeFromInsert(1)">Продолжить диагностику</button>
+        </div>
+    </div>
+
+    <!-- === INSERT 2 (after Q6) === -->
+    <div class="screen" id="insert2">
+        <div class="card insert-card">
+            <div class="insert-icon">&#128293;</div>
+            <div class="insert-title">Последний рывок</div>
+            <div class="insert-text">Ещё 2 вопроса &mdash; и покажу твои персональные потери в деньгах. Готов к правде?</div>
+            <div class="insert-highlight">Осталось совсем чуть-чуть</div>
+            <button class="insert-btn" onclick="resumeFromInsert(2)">Давай, показывай</button>
+        </div>
+    </div>
+
+    <!-- === RESULT 1: DASHBOARD === -->
+    <div class="screen" id="result1">
+        <div class="card result-section">
+            <div style="font-size:13px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">
+                Результат диагностики
+            </div>
+            <div class="dashboard-score">
+                <svg class="score-ring" viewBox="0 0 120 120">
+                    <circle class="score-ring-bg" cx="60" cy="60" r="50" />
+                    <circle class="score-ring-fill" id="scoreRing" cx="60" cy="60" r="50"
+                        stroke="var(--purple)"
+                        stroke-dasharray="314"
+                        stroke-dashoffset="314" />
+                </svg>
+                <div class="score-number">
+                    <div class="score-val" id="scoreVal">0</div>
+                    <div class="score-of">из 10</div>
+                </div>
+            </div>
+            <div class="score-label-tag" id="scoreLabelTag">--</div>
+
+            <div class="sub-metrics">
+                <div class="sub-metric">
+                    <div class="sub-metric-val" id="metricSkill" style="color:var(--purple)">0%</div>
+                    <div class="sub-metric-label">AI-навык</div>
+                </div>
+                <div class="sub-metric">
+                    <div class="sub-metric-val" id="metricAuto" style="color:var(--blue)">0%</div>
+                    <div class="sub-metric-label">Автоматизация</div>
+                </div>
+                <div class="sub-metric">
+                    <div class="sub-metric-val" id="metricSave" style="color:var(--green)">0%</div>
+                    <div class="sub-metric-label">Экономия</div>
+                </div>
+            </div>
+
+            <button class="result-btn" onclick="goTo('result2')">Посмотреть мои потери &#8594;</button>
+        </div>
+    </div>
+
+    <!-- === RESULT 2: LOSS CALCULATOR === -->
+    <div class="screen" id="result2">
+        <div class="card result-section">
+            <div style="font-size:13px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">
+                &#128680; Калькулятор потерь
+            </div>
+            <div style="font-size:18px;font-weight:800;margin-bottom:4px;">Ты теряешь прямо сейчас:</div>
+
+            <div class="loss-grid">
+                <div class="loss-item">
+                    <div class="loss-val" id="lossHoursWeek">--</div>
+                    <div class="loss-label">часов / неделю</div>
+                </div>
+                <div class="loss-item">
+                    <div class="loss-val" id="lossHoursYear">--</div>
+                    <div class="loss-label">часов / год</div>
+                </div>
+                <div class="loss-item loss-item-big">
+                    <div class="loss-val loss-val-huge" id="lossMoneyYear">--</div>
+                    <div class="loss-label">потерянных долларов в год</div>
+                </div>
+            </div>
+
+            <div style="font-size:13px;color:var(--text3);margin-bottom:20px;">
+                * Расчёт на основе средней ставки $25/час
+            </div>
+
+            <button class="result-btn" onclick="goTo('result3')">А в днях жизни это сколько? &#8594;</button>
+        </div>
+    </div>
+
+    <!-- === RESULT 3: SHOCK + GREEN CARD === -->
+    <div class="screen" id="result3">
+        <div class="card result-section">
+            <div style="font-size:14px;color:var(--text2);margin-bottom:4px;">За этот год ты потеряешь на рутине:</div>
+
+            <div class="shock-number" id="shockDays">--</div>
+            <div class="shock-label">полных дней жизни</div>
+
+            <div class="green-card">
+                <div class="green-card-title">&#9989; За это время можно было:</div>
+                <div class="green-card-list" id="greenList">
+                    <!-- filled by JS -->
+                </div>
+            </div>
+
+            <div style="font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6;">
+                Или продолжить сливать время на рутину. Твой выбор.
+            </div>
+
+            <button class="result-btn" style="background:var(--green);" onclick="goTo('result4')">
+                Хочу вернуть своё время &#8594;
+            </button>
+        </div>
+    </div>
+
+    <!-- === RESULT 4: PRODUCT === -->
+    <div class="screen" id="result4">
+        <div class="card result-section">
+            <div style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">
+                Твоя рекомендация
+            </div>
+
+            <div class="pkg-card" id="pkgCard">
+                <div class="pkg-badge" id="pkgBadge">--</div>
+                <div class="pkg-name" id="pkgName">--</div>
+                <div class="pkg-price" id="pkgPrice">--</div>
+                <div class="pkg-features" id="pkgFeatures"></div>
+            </div>
+
+            <a class="cta-main" id="pkgCta" href="#" target="_blank">
+                Забрать со скидкой предпродажи &#8594;
+            </a>
+            <a class="cta-secondary" href="index.html#packages">
+                Посмотреть все пакеты
+            </a>
+
+            <div class="fine-print">
+                100% возврат 14 дней &middot; Рассрочка до 9 платежей &middot; Старт 5 апреля
+            </div>
+
+            <span class="restart-link" onclick="restartQuiz()">&#8592; Пройти заново</span>
         </div>
     </div>
 </div>
 
 <script>
+// ==========================================
+// QUIZ ENGINE v2.0 — AI-Маркетолог
+// ==========================================
+
+let userSegment = 'expert';
+let currentQ = 0;
+let answers = [];
+let totalScore = 0;
+let hoursPerWeek = 0; // captured from Q3
+
+// ===== QUESTIONS =====
 const questions = [
     {
-        emoji: '🤖', q: 'Какой AI-инструмент ты используешь чаще всего?',
-        opts: [
-            { t: 'Никакой, пока только слышала', s: 0 },
-            { t: 'ChatGPT — иногда спрашиваю что-то', s: 1 },
-            { t: 'ChatGPT + Canva/другие — регулярно', s: 2 },
-            { t: 'Claude, Gemini, Perplexity — целый стек', s: 3 },
+        id: 'q1',
+        emoji: '&#129302;',
+        title: 'Какие AI-инструменты ты используешь?',
+        severity: 'green',
+        tag: 'AI-навыки',
+        type: 'single',
+        options: [
+            { text: 'Никакие. Слышал(а), но руки не дошли', score: 0 },
+            { text: 'ChatGPT — иногда спрашиваю что-то', score: 1 },
+            { text: 'ChatGPT + Canva + ещё пара штук', score: 2 },
+            { text: 'Claude, Midjourney, Make, n8n — целый стек', score: 3 },
         ]
     },
     {
-        emoji: '💰', q: 'Сколько ты тратишь на подрядчиков в месяц (дизайн, тексты, SMM)?',
-        opts: [
-            { t: 'Ничего — всё делаю сама', s: 1 },
-            { t: '$100–$500', s: 2 },
-            { t: '$500–$2000', s: 3 },
-            { t: 'Больше $2000', s: 3 },
+        id: 'q2',
+        emoji: '&#128176;',
+        title: 'Сколько платишь подрядчикам в месяц (дизайн, тексты, SMM)?',
+        severity: 'amber',
+        tag: 'Экономия',
+        type: 'single',
+        options: [
+            { text: 'Ничего — всё сам(а) ковыряю', score: 1 },
+            { text: '$100–500 в месяц', score: 2 },
+            { text: '$500–2000 в месяц', score: 3 },
+            { text: 'Больше $2000 — целая команда', score: 3 },
         ]
     },
     {
-        emoji: '⏰', q: 'Сколько времени в неделю уходит на маркетинговую рутину?',
-        opts: [
-            { t: 'Не занимаюсь маркетингом', s: 0 },
-            { t: '2–5 часов', s: 1 },
-            { t: '5–15 часов', s: 2 },
-            { t: 'Больше 15 часов — это моя жизнь', s: 3 },
+        id: 'q3',
+        emoji: '&#9200;',
+        title: 'Сколько часов в неделю сжирает маркетинговая рутина?',
+        severity: 'red',
+        tag: 'Время',
+        type: 'single',
+        captureHours: true,
+        options: [
+            { text: 'Не занимаюсь маркетингом толком', score: 0, hours: 2 },
+            { text: '2–5 часов', score: 1, hours: 4 },
+            { text: '5–15 часов', score: 2, hours: 10 },
+            { text: 'Больше 15 часов — это моя жизнь', score: 3, hours: 20 },
+        ]
+    },
+    // -- INSERT 1 after Q3 --
+    {
+        id: 'q4',
+        emoji: '&#9997;&#65039;',
+        title: 'Как ты создаёшь контент (посты, рилсы, тексты)?',
+        severity: 'amber',
+        tag: 'Контент',
+        type: 'single',
+        options: [
+            { text: 'Не создаю — нет времени и идей', score: 0 },
+            { text: 'Вручную пишу, мучаюсь по 2 часа на пост', score: 1 },
+            { text: 'Использую ChatGPT, но результат «пластиковый»', score: 2 },
+            { text: 'Есть AI-конвейер, выдаю контент потоком', score: 3 },
         ]
     },
     {
-        emoji: '🌐', q: 'Есть ли у тебя лендинг / сайт?',
-        opts: [
-            { t: 'Нет и не понимаю зачем', s: 0 },
-            { t: 'Нет, но понимаю что нужен', s: 1 },
-            { t: 'Да, но платила дизайнеру/верстальщику', s: 2 },
-            { t: 'Да, делала сама через конструктор или AI', s: 3 },
+        id: 'q5',
+        emoji: '&#127760;',
+        title: 'Есть ли у тебя лендинг / сайт?',
+        severity: 'green',
+        tag: 'Инфраструктура',
+        type: 'single',
+        options: [
+            { text: 'Нет и не понимаю зачем', score: 0 },
+            { text: 'Нет, но знаю что нужен', score: 1 },
+            { text: 'Да, делал(а) на Tilda / конструкторе', score: 2 },
+            { text: 'Да, и даже знаю что такое A/B-тест', score: 3 },
         ]
     },
     {
-        emoji: '📱', q: 'Как ты создаёшь контент?',
-        opts: [
-            { t: 'Не создаю — не знаю как начать', s: 0 },
-            { t: 'Руками: пишу посты, снимаю сторис', s: 1 },
-            { t: 'Иногда ChatGPT помогает с текстами', s: 2 },
-            { t: 'AI-система: промпты + генерация + автоматизация', s: 3 },
+        id: 'q6',
+        emoji: '&#129516;',
+        title: 'Какие AI-возможности тебе знакомы?',
+        severity: 'amber',
+        tag: 'Знания',
+        type: 'multi',
+        maxSelect: 4,
+        options: [
+            { text: 'AI-агенты и автоматизация (Make, n8n)', score: 1 },
+            { text: 'AI-генерация изображений (Midjourney, DALL-E)', score: 1 },
+            { text: 'AI-аналитика и исследования', score: 1 },
+            { text: 'Ничего из этого — пока не разобрался', score: 0 },
+        ]
+    },
+    // -- INSERT 2 after Q6 --
+    {
+        id: 'q7',
+        emoji: '&#128148;',
+        title: 'Что больше всего бесит прямо сейчас?',
+        severity: 'red',
+        tag: 'Боль',
+        type: 'single',
+        options: [
+            { text: 'Трачу кучу денег на то, что AI мог бы сделать', score: 3 },
+            { text: 'Руки не доходят до маркетинга вообще', score: 1 },
+            { text: 'Делаю всё сам(а), но медленно и криво', score: 2 },
+            { text: 'Конкуренты уже используют AI, а я нет', score: 2 },
         ]
     },
     {
-        emoji: '🔄', q: 'Знаешь ли ты, что такое AI-агенты и скиллы?',
-        opts: [
-            { t: 'Первый раз слышу', s: 0 },
-            { t: 'Слышала, но не понимаю', s: 1 },
-            { t: 'Примерно понимаю, но не использую', s: 2 },
-            { t: 'Использую: Claude Code, MCP, кастомные скиллы', s: 3 },
+        id: 'q8',
+        emoji: '&#128640;',
+        title: 'Если бы AI мог сделать работу 12 человек за тебя — ты бы...',
+        severity: 'green',
+        tag: 'Готовность',
+        type: 'single',
+        options: [
+            { text: 'Сказал(а) «потом разберусь»', score: 0 },
+            { text: 'Посмотрел(а) бы бесплатный урок', score: 1 },
+            { text: 'Записался бы на воркшоп прямо сейчас', score: 3 },
+            { text: 'Уже ищу такой формат — дай ссылку', score: 3 },
         ]
-    },
-    {
-        emoji: '🎯', q: 'Какая у тебя главная цель прямо сейчас?',
-        opts: [
-            { t: 'Разобраться, что вообще AI может для меня', s: 0 },
-            { t: 'Начать использовать AI в работе', s: 1 },
-            { t: 'Заменить подрядчиков и делать всё самой', s: 2 },
-            { t: 'Построить полную AI-систему маркетинга', s: 3 },
-        ]
-    },
+    }
 ];
 
-const levels = [
-    { min: 0, max: 5, emoji: '🌱', level: 'Уровень 1 из 4', title: 'Новичок', desc: 'Ты в самом начале пути. AI для тебя — загадка, но ты уже здесь, а значит — впереди всех, кто ещё даже не задумался. Хорошая новость: в 2026 году начинать с нуля проще, чем год назад.', reco: 'Тебе идеально подойдёт воркшоп «AI-Маркетолог»: мы начинаем с базы, и уже на первом модуле ты настроишь систему и сделаешь первый результат. Влад делает в прямом эфире — ты повторяешь. Не нужно быть технарём.' },
-    { min: 6, max: 10, emoji: '🔥', level: 'Уровень 2 из 4', title: 'Стартер', desc: 'Ты уже пробуешь, но хаотично. ChatGPT знаком, но результат — непредсказуемый. Тратишь время на рутину, которую AI может делать за 15 минут. Тебе не хватает системы.', reco: 'Воркшоп даст тебе то, чего не хватает: систему из 27 готовых AI-сотрудников + пошаговый пайплайн. Через 2 месяца ты будешь делать за 30 минут то, на что сейчас уходит 3 часа. Групповой пакет ($500) — идеально для тебя.' },
-    { min: 11, max: 16, emoji: '⚡', level: 'Уровень 3 из 4', title: 'Продвинутый', desc: 'Ты активно используешь AI, но ещё платишь подрядчикам и не автоматизировала процессы. Знаешь больше 90% людей, но до полной системы — один шаг.', reco: 'Тебе нужен последний рывок: AI-агенты, вайб-кодинг, контент-завод на 16 форматов. Пакет со стратсессией ($800) — Влад лично разберёт твой бизнес и покажет, где ты теряешь деньги.' },
-    { min: 17, max: 21, emoji: '👑', level: 'Уровень 4 из 4', title: 'AI-Мастер', desc: 'Ты уже на высоком уровне. Claude Code, скиллы, MCP — для тебя не пустые слова. Но даже мастерам нужны новые инструменты и комьюнити.', reco: 'Тебе подойдёт пакет со стратсессией ($800): получишь 27 готовых сотрудников Влада (каждый создавался 5-10 часов), доступ к комьюнити и свежие методологии, которых нет в открытом доступе.' },
-];
+// ===== PACKAGES =====
+const packages = {
+    low: {
+        badge: 'Для старта',
+        name: 'Пакет «Записи»',
+        price: '$250',
+        cta: 'https://secure.wayforpay.com/button/bb954200eef5b',
+        features: [
+            '&#127909; Записи всех стримов',
+            '&#128218; Все материалы и шаблоны',
+            '&#128274; Доступ навсегда',
+        ]
+    },
+    mid: {
+        badge: 'Рекомендуем',
+        name: 'Пакет «Групповой»',
+        price: '$500',
+        cta: 'https://secure.wayforpay.com/button/b7b2256b303d5',
+        features: [
+            '&#127909; Живые стримы + записи',
+            '&#128172; Q&A и обратная связь от Влада',
+            '&#129309; Закрытое комьюнити',
+            '&#127919; Работа на своём проекте',
+        ]
+    },
+    high: {
+        badge: 'Максимум',
+        name: 'Групповой + Стратегия',
+        price: '$800',
+        cta: 'https://secure.wayforpay.com/button/bff4a2bdba1b8',
+        features: [
+            '&#127909; Всё из группового пакета',
+            '&#129504; Личная стратсессия от Влада',
+            '&#127775; Персональная AI-стратегия',
+            '&#128640; Приоритетная поддержка',
+        ]
+    }
+};
 
-let currentQ = 0;
-let score = 0;
-const letters = ['A', 'B', 'C', 'D'];
+// ===== STATE =====
+const totalSteps = 3 + questions.length + 2; // entry(3) + questions(8) + inserts(2) = 13
+let currentStep = 0;
 
-function renderQuestion() {
-    const q = questions[currentQ];
-    const container = document.getElementById('quiz-questions');
-    document.getElementById('quiz-fill').style.width = ((currentQ / questions.length) * 100) + '%';
-    document.getElementById('quiz-step').textContent = currentQ + 1;
+function updateProgress(step) {
+    currentStep = step;
+    const pct = Math.round((step / totalSteps) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
 
-    container.innerHTML = `
-        <div class="quiz-card" key="${currentQ}">
-            <div class="quiz-emoji">${q.emoji}</div>
-            <div class="quiz-question">${q.q}</div>
-            <div class="quiz-options">
-                ${q.opts.map((o, i) => `
-                    <div class="quiz-option" onclick="selectOption(${i}, ${o.s})">
-                        <div class="quiz-option-letter">${letters[i]}</div>
-                        <span>${o.t}</span>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
+    if (step >= 3) {
+        const qNum = step - 3 + 1;
+        const totalQ = questions.length;
+        document.getElementById('progressLabel').textContent = qNum <= totalQ ? `Вопрос ${Math.min(qNum, totalQ)} из ${totalQ}` : '';
+    }
 }
 
-function selectOption(idx, points) {
-    score += points;
-    const opts = document.querySelectorAll('.quiz-option');
-    opts[idx].classList.add('selected');
+function showProgress() {
+    document.getElementById('progressWrap').classList.add('visible');
+}
+function hideProgress() {
+    document.getElementById('progressWrap').classList.remove('visible');
+}
 
-    setTimeout(() => {
-        currentQ++;
-        if (currentQ < questions.length) {
-            renderQuestion();
-        } else {
-            showResult();
+// ===== NAVIGATION =====
+function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.remove('active');
+        // Force reflow for animation
+        void target.offsetWidth;
+        target.classList.add('active');
+    }
+}
+
+function setSegment(seg, el) {
+    userSegment = seg;
+    // Visual feedback
+    document.querySelectorAll('.qual-opt').forEach(o => o.style.borderColor = '');
+    el.style.borderColor = 'var(--purple)';
+    setTimeout(() => startScanning(), 300);
+}
+
+// ===== SCANNING =====
+function startScanning() {
+    goTo('entry3');
+    showProgress();
+    updateProgress(1);
+
+    const fill = document.getElementById('scanFill');
+    const pctEl = document.getElementById('scanPct');
+    const checks = document.querySelectorAll('.scan-check');
+    let pct = 0;
+
+    const interval = setInterval(() => {
+        pct += 2;
+        if (pct > 100) pct = 100;
+        fill.style.width = pct + '%';
+        pctEl.textContent = pct + '%';
+
+        if (pct >= 20) checks[0].classList.add('show');
+        if (pct >= 45) checks[1].classList.add('show');
+        if (pct >= 70) checks[2].classList.add('show');
+        if (pct >= 90) checks[3].classList.add('show');
+
+        if (pct >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                updateProgress(3);
+                showQuestion(0);
+            }, 600);
         }
-    }, 400);
+    }, 40);
 }
 
-function showResult() {
-    document.getElementById('quiz-questions').classList.add('hidden');
-    document.getElementById('quiz-progress').classList.add('hidden');
-    const result = document.getElementById('quiz-result');
-    result.classList.add('show');
+// ===== BUILD QUESTIONS =====
+function buildQuestions() {
+    const container = document.getElementById('questionsContainer');
+    questions.forEach((q, idx) => {
+        const screen = document.createElement('div');
+        screen.className = 'screen';
+        screen.id = 'q' + idx;
 
-    const level = levels.find(l => score >= l.min && score <= l.max) || levels[levels.length - 1];
-    document.getElementById('r-emoji').textContent = level.emoji;
-    document.getElementById('r-level').textContent = level.level;
-    document.getElementById('r-title').textContent = level.title;
-    document.getElementById('r-desc').textContent = level.desc;
-    document.getElementById('r-reco').textContent = level.reco;
+        const severityDots = { green: '&#128994;', amber: '&#128992;', red: '&#128308;' };
+        const tagClass = { green: 'q-tag-green', amber: 'q-tag-amber', red: 'q-tag-red' };
+        const markerType = q.type === 'multi' ? '&#9744;' : '';
 
-    document.getElementById('quiz-fill').style.width = '100%';
+        let optsHTML = '';
+        q.options.forEach((opt, oi) => {
+            const letter = q.type === 'multi' ? '' : String.fromCharCode(65 + oi);
+            optsHTML += `
+                <div class="opt" data-qi="${idx}" data-oi="${oi}" onclick="selectOption(${idx}, ${oi}, '${q.type}', this)">
+                    <div class="opt-marker">${letter}</div>
+                    <div class="opt-text">${opt.text}</div>
+                </div>
+            `;
+        });
+
+        let multiHint = '';
+        let multiConfirm = '';
+        if (q.type === 'multi') {
+            multiHint = '<div class="multi-hint">Можно выбрать несколько</div>';
+            multiConfirm = `
+                <div class="multi-confirm" id="multiConfirm${idx}">
+                    <button class="btn-next" onclick="confirmMulti(${idx})">Далее &#8594;</button>
+                </div>
+            `;
+        }
+
+        screen.innerHTML = `
+            <div class="card">
+                <div class="q-meta">
+                    <span class="q-severity">${severityDots[q.severity]}</span>
+                    <span class="q-tag ${tagClass[q.severity]}">${q.tag}</span>
+                </div>
+                <div class="q-emoji">${q.emoji}</div>
+                <div class="q-title">${q.title}</div>
+                ${multiHint}
+                <div class="opts">${optsHTML}</div>
+                ${multiConfirm}
+            </div>
+        `;
+        container.appendChild(screen);
+    });
 }
 
+// ===== SELECTION =====
+let multiSelections = {};
+
+function selectOption(qi, oi, type, el) {
+    if (type === 'single') {
+        // Visual
+        el.closest('.opts').querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+
+        // Score
+        const q = questions[qi];
+        const score = q.options[oi].score;
+        answers[qi] = { questionId: q.id, optionIndex: oi, score: score };
+
+        if (q.captureHours) {
+            hoursPerWeek = q.options[oi].hours;
+        }
+
+        // Auto-advance after 400ms
+        setTimeout(() => advanceQuestion(qi), 400);
+    } else {
+        // Multi-select toggle
+        if (!multiSelections[qi]) multiSelections[qi] = new Set();
+        const set = multiSelections[qi];
+        if (set.has(oi)) {
+            set.delete(oi);
+            el.classList.remove('selected');
+        } else {
+            set.add(oi);
+            el.classList.add('selected');
+        }
+        // Show confirm button
+        const btn = document.getElementById('multiConfirm' + qi);
+        if (set.size > 0) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    }
+}
+
+function confirmMulti(qi) {
+    const q = questions[qi];
+    const set = multiSelections[qi] || new Set();
+    let score = 0;
+    set.forEach(oi => { score += q.options[oi].score; });
+    // Cap multi-select score at 3
+    score = Math.min(score, 3);
+    answers[qi] = { questionId: q.id, optionIndices: Array.from(set), score: score };
+    advanceQuestion(qi);
+}
+
+function advanceQuestion(qi) {
+    const nextQi = qi + 1;
+    const step = 3 + nextQi; // 3 entry screens
+
+    // Check for inserts (cadence 3:1)
+    if (qi === 2) {
+        // After Q3 -> Insert 1
+        updateProgress(step);
+        goTo('insert1');
+        return;
+    }
+    if (qi === 5) {
+        // After Q6 -> Insert 2
+        updateProgress(step);
+        goTo('insert2');
+        return;
+    }
+
+    if (nextQi < questions.length) {
+        updateProgress(step);
+        showQuestion(nextQi);
+    } else {
+        // Done — show results
+        hideProgress();
+        calculateAndShowResults();
+    }
+}
+
+function resumeFromInsert(insertNum) {
+    if (insertNum === 1) {
+        showQuestion(3); // Resume at Q4
+        updateProgress(3 + 3 + 1); // entry(3) + Q3(3) + insert(1)
+    } else {
+        showQuestion(6); // Resume at Q7
+        updateProgress(3 + 6 + 2); // entry(3) + Q6(6) + inserts(2)
+    }
+}
+
+function showQuestion(idx) {
+    currentQ = idx;
+    goTo('q' + idx);
+}
+
+// ===== RESULTS CALCULATION =====
+function calculateAndShowResults() {
+    // Total raw score
+    totalScore = answers.reduce((sum, a) => sum + (a ? a.score : 0), 0);
+    // Max possible: 8 questions * 3 = 24
+    const maxRaw = 24;
+    const score10 = Math.round((totalScore / maxRaw) * 10);
+
+    // Sub-metrics (approximate from relevant questions)
+    const skillScore = ((answers[0]?.score || 0) + (answers[5]?.score || 0)) / 6 * 100;
+    const autoScore = ((answers[3]?.score || 0) + (answers[4]?.score || 0)) / 6 * 100;
+    const saveScore = ((answers[1]?.score || 0) + (answers[2]?.score || 0)) / 6 * 100;
+
+    // Loss calculations
+    const hoursYear = hoursPerWeek * 50; // 50 working weeks
+    const moneyYear = hoursYear * 25; // $25/hr
+    const daysLost = Math.round(hoursYear / 16); // 16 productive hours/day
+
+    // Save to localStorage
+    const result = {
+        score10,
+        totalScore,
+        segment: userSegment,
+        skillPct: Math.round(skillScore),
+        autoPct: Math.round(autoScore),
+        savePct: Math.round(saveScore),
+        hoursWeek: hoursPerWeek,
+        hoursYear,
+        moneyYear,
+        daysLost,
+        timestamp: Date.now()
+    };
+    try { localStorage.setItem('quiz_result', JSON.stringify(result)); } catch(e) {}
+
+    // === POPULATE RESULT 1: Dashboard ===
+    const scoreVal = document.getElementById('scoreVal');
+    const scoreRing = document.getElementById('scoreRing');
+    const circumference = 314; // 2 * PI * 50
+    const offset = circumference - (score10 / 10) * circumference;
+
+    // Determine color and label
+    let scoreColor, labelText, labelBg;
+    if (score10 <= 3) {
+        scoreColor = 'var(--red)';
+        labelText = 'Новичок';
+        labelBg = 'var(--red-dim)';
+    } else if (score10 <= 6) {
+        scoreColor = 'var(--amber)';
+        labelText = 'Продвинутый';
+        labelBg = 'var(--amber-dim)';
+    } else {
+        scoreColor = 'var(--green)';
+        labelText = 'Pro-уровень';
+        labelBg = 'var(--green-dim)';
+    }
+
+    scoreVal.textContent = score10;
+    scoreVal.style.color = scoreColor;
+    scoreRing.style.stroke = scoreColor;
+    setTimeout(() => { scoreRing.style.strokeDashoffset = offset; }, 100);
+
+    const labelTag = document.getElementById('scoreLabelTag');
+    labelTag.textContent = labelText;
+    labelTag.style.background = labelBg;
+    labelTag.style.color = scoreColor;
+
+    document.getElementById('metricSkill').textContent = Math.round(skillScore) + '%';
+    document.getElementById('metricAuto').textContent = Math.round(autoScore) + '%';
+    document.getElementById('metricSave').textContent = Math.round(saveScore) + '%';
+
+    // === POPULATE RESULT 2: Loss Calculator ===
+    document.getElementById('lossHoursWeek').textContent = hoursPerWeek + ' ч';
+    document.getElementById('lossHoursYear').textContent = hoursYear.toLocaleString() + ' ч';
+    document.getElementById('lossMoneyYear').textContent = '$' + moneyYear.toLocaleString();
+
+    // === POPULATE RESULT 3: Shock ===
+    document.getElementById('shockDays').textContent = daysLost;
+    const greenList = document.getElementById('greenList');
+    greenList.innerHTML = `
+        <span>&#128218; Пройти 3 онлайн-курса и прокачаться</span>
+        <span>&#127796; Улететь в отпуск на ${Math.round(daysLost / 7)} недель</span>
+        <span>&#128176; Заработать ещё $${moneyYear.toLocaleString()} на проектах</span>
+        <span>&#129302; Построить AI-систему и забыть про рутину</span>
+    `;
+
+    // === POPULATE RESULT 4: Package ===
+    let pkg;
+    if (score10 <= 3) {
+        pkg = packages.mid; // Beginners need group support
+    } else if (score10 <= 6) {
+        pkg = packages.mid;
+    } else {
+        pkg = packages.high; // Advanced users get strategy
+    }
+
+    document.getElementById('pkgBadge').innerHTML = pkg.badge;
+    document.getElementById('pkgName').textContent = pkg.name;
+    document.getElementById('pkgPrice').innerHTML = pkg.price;
+    document.getElementById('pkgFeatures').innerHTML = pkg.features.map(f => '<span>' + f + '</span>').join('');
+    document.getElementById('pkgCta').href = pkg.cta;
+
+    // Show first result screen
+    goTo('result1');
+}
+
+// ===== RESTART =====
 function restartQuiz() {
-    currentQ = 0; score = 0;
-    document.getElementById('quiz-questions').classList.remove('hidden');
-    document.getElementById('quiz-progress').classList.remove('hidden');
-    document.getElementById('quiz-result').classList.remove('show');
-    renderQuestion();
+    answers = [];
+    totalScore = 0;
+    hoursPerWeek = 0;
+    currentQ = 0;
+    currentStep = 0;
+    multiSelections = {};
+
+    // Reset UI
+    hideProgress();
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('scoreRing').style.strokeDashoffset = 314;
+    document.getElementById('scanFill').style.width = '0%';
+    document.querySelectorAll('.scan-check').forEach(c => c.classList.remove('show'));
+    document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.multi-confirm').forEach(b => b.classList.remove('show'));
+
+    // Rebuild questions container to reset states
+    document.getElementById('questionsContainer').innerHTML = '';
+    buildQuestions();
+
+    goTo('entry1');
 }
 
-renderQuestion();
+// ===== INIT =====
+buildQuestions();
+
+// Check if returning user
+try {
+    const saved = localStorage.getItem('quiz_result');
+    if (saved) {
+        const r = JSON.parse(saved);
+        // If completed less than 1 hour ago, show results directly
+        if (Date.now() - r.timestamp < 3600000) {
+            // Optionally skip to results — for now just start fresh
+        }
+    }
+} catch(e) {}
 </script>
 
 </body>
