@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27 AI-сотрудников — AI-Маркетолог</title>
+    <meta name="description" content="27 AI-сотрудников, которые заменяют отдел маркетинга. Исследование, продукт, контент, воронки, продажи.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-card: #111113;
+            --bg-card-hover: #18181b;
+            --bg-modal: #111113;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f0f0f0;
+            --text-dim: rgba(255,255,255,0.55);
+            --text-dimmer: rgba(255,255,255,0.35);
+            --accent-purple: #a855f7;
+            --accent-blue: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
+            --accent-glow: rgba(168, 85, 247, 0.15);
+            --cat-research: #f59e0b;
+            --cat-product: #a855f7;
+            --cat-content: #3b82f6;
+            --cat-funnels: #10b981;
+            --cat-sales: #ef4444;
+            --cat-youtube: #ef4444;
+            --cat-dev: #6366f1;
+            --cat-tools: #8b5cf6;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===================== HERO ===================== */
+        .hero {
+            position: relative;
+            padding: 100px 0 60px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, rgba(99,102,241,0.06) 40%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 100px;
+            background: rgba(168,85,247,0.1);
+            border: 1px solid rgba(168,85,247,0.2);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent-purple);
+            margin-bottom: 28px;
+            animation: fadeUp 0.8s ease-out;
+        }
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeUp 0.8s ease-out 0.1s both;
+        }
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            animation: fadeUp 0.8s ease-out 0.3s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-num {
+            font-size: 40px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        .hero-stat-label {
+            font-size: 14px;
+            color: var(--text-dimmer);
+            font-weight: 500;
+        }
+
+        /* ===================== PIPELINE ===================== */
+        .pipeline {
+            padding: 40px 0 60px;
+        }
+        .pipeline-track {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease-out 0.4s both;
+        }
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .pipeline-step:hover { transform: translateY(-2px); }
+        .pipeline-node {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .pipeline-node.active {
+            border-color: currentColor;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .pipeline-node .p-icon { font-size: 18px; }
+        .pipeline-arrow {
+            color: var(--text-dimmer);
+            font-size: 20px;
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+
+        .p-research .pipeline-node { color: var(--cat-research); background: rgba(245,158,11,0.08); }
+        .p-research .pipeline-node.active { background: rgba(245,158,11,0.15); }
+        .p-product .pipeline-node { color: var(--cat-product); background: rgba(168,85,247,0.08); }
+        .p-product .pipeline-node.active { background: rgba(168,85,247,0.15); }
+        .p-content .pipeline-node { color: var(--cat-content); background: rgba(59,130,246,0.08); }
+        .p-content .pipeline-node.active { background: rgba(59,130,246,0.15); }
+        .p-funnels .pipeline-node { color: var(--cat-funnels); background: rgba(16,185,129,0.08); }
+        .p-funnels .pipeline-node.active { background: rgba(16,185,129,0.15); }
+        .p-sales .pipeline-node { color: var(--cat-sales); background: rgba(239,68,68,0.08); }
+        .p-sales .pipeline-node.active { background: rgba(239,68,68,0.15); }
+
+        /* ===================== FILTERS ===================== */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeUp 0.8s ease-out 0.5s both;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+        .filter-btn.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: #fff;
+            font-weight: 600;
+        }
+        .filter-count {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* ===================== GRID ===================== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* ===================== CARD ===================== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.6s ease-out both;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+        .card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .card:hover::before { opacity: 1; }
+
+        .card[data-cat="audience"]::before, .card[data-cat="audience"] .card-badge { --card-color: var(--cat-research); }
+        .card[data-cat="product"]::before, .card[data-cat="product"] .card-badge { --card-color: var(--cat-product); }
+        .card[data-cat="content"]::before, .card[data-cat="content"] .card-badge { --card-color: var(--cat-content); }
+        .card[data-cat="funnels"]::before, .card[data-cat="funnels"] .card-badge { --card-color: var(--cat-funnels); }
+        .card[data-cat="sales"]::before, .card[data-cat="sales"] .card-badge { --card-color: var(--cat-sales); }
+        .card[data-cat="youtube"]::before, .card[data-cat="youtube"] .card-badge { --card-color: var(--cat-sales); }
+        .card[data-cat="dev"]::before, .card[data-cat="dev"] .card-badge { --card-color: var(--cat-dev); }
+        .card[data-cat="tools"]::before, .card[data-cat="tools"] .card-badge { --card-color: var(--cat-tools); }
+        .card::before { background: var(--card-color, var(--accent-purple)); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+        .card-badge {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            color: var(--card-color, var(--accent-purple));
+            background: color-mix(in srgb, var(--card-color, var(--accent-purple)) 12%, transparent);
+            flex-shrink: 0;
+        }
+        .card-number {
+            font-size: 12px;
+            color: var(--text-dimmer);
+            font-weight: 500;
+        }
+        .card-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .card-hint {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--text-dimmer);
+            transition: color 0.3s;
+        }
+        .card:hover .card-hint { color: var(--accent-purple); }
+
+        /* ===================== MODAL ===================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--bg-modal);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+        }
+        .modal::-webkit-scrollbar { width: 6px; }
+        .modal::-webkit-scrollbar-track { background: transparent; }
+        .modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-dim);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+        }
+        .modal-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .modal-subtitle {
+            font-size: 16px;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+        .modal-detail {
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        .modal-detail strong { color: var(--text); font-weight: 600; }
+
+        .modal-example {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        .modal-example-header {
+            padding: 14px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dimmer);
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-example-input {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-example-input-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+        }
+        .modal-example-input p {
+            font-size: 14px;
+            color: var(--text);
+            font-style: italic;
+        }
+        .modal-example-output {
+            padding: 18px 20px;
+        }
+        .modal-example-output-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--cat-funnels);
+            margin-bottom: 8px;
+        }
+        .modal-example-output pre {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: var(--text-dim);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.65;
+        }
+
+        .modal-cta-wrap {
+            margin-top: 28px;
+            text-align: center;
+        }
+        .modal-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 100px;
+            background: var(--accent-gradient);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .modal-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168,85,247,0.3);
+        }
+
+        /* ===================== CTA SECTIONS ===================== */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-size: clamp(24px, 4vw, 40px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .cta-section p {
+            font-size: 18px;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 44px;
+            border-radius: 100px;
+            background: var(--accent-gradient);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(168,85,247,0.35);
+        }
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: 100px;
+            background: transparent;
+            border: 2px solid rgba(168,85,247,0.4);
+            color: var(--accent-purple);
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-top: 16px;
+        }
+        .cta-secondary:hover {
+            border-color: var(--accent-purple);
+            background: rgba(168,85,247,0.08);
+        }
+        .cta-price {
+            display: block;
+            font-size: 14px;
+            color: var(--text-dimmer);
+            margin-top: 14px;
+        }
+
+        /* ===================== FOOTER ===================== */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-dimmer);
+            font-size: 14px;
+        }
+
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 768px) {
+            .hero { padding: 80px 0 40px; }
+            .hero-stats { gap: 24px; }
+            .hero-stat-num { font-size: 32px; }
+            .pipeline-track { gap: 4px; justify-content: center; }
+            .pipeline-arrow { display: none; }
+            .pipeline-node { padding: 8px 14px; font-size: 13px; }
+            .pipeline-node .p-icon { font-size: 15px; }
+            .grid { grid-template-columns: 1fr; gap: 14px; }
+            .card { padding: 22px; }
+            .modal { padding: 28px 22px; max-height: 90vh; }
+            .modal-title { font-size: 22px; }
+            .cta-primary { padding: 16px 32px; font-size: 16px; }
+            .filters { gap: 6px; }
+            .filter-btn { padding: 6px 14px; font-size: 13px; }
+        }
+        @media (max-width: 480px) {
+            .pipeline-node { padding: 6px 10px; font-size: 11px; }
+            .container { padding: 0 16px; }
+            .card-name { font-size: 18px; }
+        }
+
+        /* hidden utility */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">AI-Маркетолог</div>
+        <h1>27 AI-сотрудников, которые заменяют отдел маркетинга</h1>
+        <p>Полная система: от исследования аудитории до продаж. Каждый инструмент рабочий. Не демо.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num">27</span>
+                <span class="hero-stat-label">AI-сотрудников</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">5</span>
+                <span class="hero-stat-label">этапов воронки</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">1</span>
+                <span class="hero-stat-label">воркшоп</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PIPELINE ==================== -->
+<section class="pipeline">
+    <div class="container">
+        <div class="pipeline-track">
+            <div class="pipeline-step p-research" data-filter="audience">
+                <div class="pipeline-node"><span class="p-icon">&#128269;</span> Исследование</div>
+            </div>
+            <span class="pipeline-arrow">&#10132;</span>
+            <div class="pipeline-step p-product" data-filter="product">
+                <div class="pipeline-node"><span class="p-icon">&#128640;</span> Продукт</div>
+            </div>
+            <span class="pipeline-arrow">&#10132;</span>
+            <div class="pipeline-step p-content" data-filter="content">
+                <div class="pipeline-node"><span class="p-icon">&#9997;&#65039;</span> Контент</div>
+            </div>
+            <span class="pipeline-arrow">&#10132;</span>
+            <div class="pipeline-step p-funnels" data-filter="funnels">
+                <div class="pipeline-node"><span class="p-icon">&#9889;</span> Воронки</div>
+            </div>
+            <span class="pipeline-arrow">&#10132;</span>
+            <div class="pipeline-step p-sales" data-filter="sales">
+                <div class="pipeline-node"><span class="p-icon">&#128176;</span> Продажи</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FILTERS ==================== -->
+<div class="container">
+    <div class="filters" id="filters"></div>
+</div>
+
+<!-- ==================== GRID ==================== -->
+<div class="container">
+    <div class="grid" id="grid"></div>
+</div>
+
+<!-- ==================== MID CTA ==================== -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Получи всех 27 сотрудников<br>на воркшопе AI-Маркетолог</h2>
+        <p>Готовая команда, которая генерирует контент, строит воронки и закрывает продажи</p>
+        <a href="index.html#packages" class="cta-primary">Выбрать пакет &#8594;</a>
+    </div>
+</section>
+
+<!-- ==================== BOTTOM CTA ==================== -->
+<section class="cta-section" style="padding-top: 0;">
+    <div class="container">
+        <h2>Забрать всех 27 AI-сотрудников</h2>
+        <p>Полный доступ. Без ограничений.</p>
+        <a href="https://secure.wayforpay.com/button/b7b2256b303d5" class="cta-primary" target="_blank" rel="noopener">Забрать за $500 &#8594;</a>
+        <span class="cta-price">Разовый платёж. Пожизненный доступ.</span>
+        <br>
+        <a href="index.html#packages" class="cta-secondary">Подробнее о пакетах &#8594;</a>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        &copy; 2026 Vlad Yasko &middot; AI-Маркетолог
+    </div>
+</footer>
+
+<!-- ==================== MODAL ==================== -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+// ==================== DATA ====================
+const EMPLOYEES = [
+  {
+    id: "hormozi-offer",
+    name: "Ассистент по офферам",
+    description: "Grand Slam офферы по методологии $100M Offers Алекса Хормози",
+    detail: "Ваш персональный стратег по офферам, обученный на полной книге <strong>$100M Offers</strong> Алекса Хормози \u2014 включая полный текст книги, методологию, примеры и шаблоны продающих страниц.<br><br>Анализирует ваш продукт, находит голодный рынок с покупательной способностью, формулирует <strong>уравнение ценности</strong> по 4 факторам: результат мечты, вероятность достижения, скорость и усилия клиента.<br><br>Генерирует полный пакет усилителей: дефицит, срочность, бонусы, гарантии. Создаёт цепляющие названия по формуле <strong>M-A-G-I-C</strong>.",
+    category: "product",
+    categoryLabel: "\u041f\u0440\u043e\u0434\u0443\u043a\u0442",
+    example: {
+      input: "Упакуй оффер для курса по AI-маркетингу, чек $500",
+      output: "\ud83c\udfaf Grand Slam Offer:\n\n\"AI-\u041c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433 \u0437\u0430 6 \u043d\u0435\u0434\u0435\u043b\u044c: \u0441\u0438\u0441\u0442\u0435\u043c\u0430, \u043a\u043e\u0442\u043e\u0440\u0430\u044f \u0433\u0435\u043d\u0435\u0440\u0438\u0440\u0443\u0435\u0442 \u043a\u043b\u0438\u0435\u043d\u0442\u043e\u0432 \u043d\u0430 \u0430\u0432\u0442\u043e\u043f\u0438\u043b\u043e\u0442\u0435\"\n\n\ud83d\udcb0 \u0423\u0440\u0430\u0432\u043d\u0435\u043d\u0438\u0435 \u0446\u0435\u043d\u043d\u043e\u0441\u0442\u0438:\n\u2022 \u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u043c\u0435\u0447\u0442\u044b: +300% \u043b\u0438\u0434\u043e\u0432 \u0431\u0435\u0437 \u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u044f \u0431\u044e\u0434\u0436\u0435\u0442\u0430\n\u2022 \u0412\u0435\u0440\u043e\u044f\u0442\u043d\u043e\u0441\u0442\u044c: 94% \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432 \u043f\u043e\u043b\u0443\u0447\u0430\u044e\u0442 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\n\u2022 \u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c: \u043f\u0435\u0440\u0432\u044b\u0435 \u043b\u0438\u0434\u044b \u0447\u0435\u0440\u0435\u0437 7 \u0434\u043d\u0435\u0439\n\u2022 \u0423\u0441\u0438\u043b\u0438\u044f: 2 \u0447\u0430\u0441\u0430 \u0432 \u043d\u0435\u0434\u0435\u043b\u044e \u043f\u043e\u0441\u043b\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438\n\n\ud83c\udf81 \u0411\u043e\u043d\u0443\u0441\u044b: 12 \u0433\u043e\u0442\u043e\u0432\u044b\u0445 \u043f\u0440\u043e\u043c\u043f\u0442\u043e\u0432, \u0448\u0430\u0431\u043b\u043e\u043d \u0432\u043e\u0440\u043e\u043d\u043a\u0438, 3 \u0440\u0430\u0437\u0431\u043e\u0440\u0430\n\u23f0 \u0414\u0435\u0444\u0438\u0446\u0438\u0442: 20 \u043c\u0435\u0441\u0442, \u0441\u0442\u0430\u0440\u0442 1 \u0430\u043f\u0440\u0435\u043b\u044f\n\ud83d\udee1\ufe0f \u0413\u0430\u0440\u0430\u043d\u0442\u0438\u044f: \u0432\u043e\u0437\u0432\u0440\u0430\u0442 100% \u0435\u0441\u043b\u0438 \u043d\u0435\u0442 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0430 \u0437\u0430 30 \u0434\u043d\u0435\u0439"
+    }
+  },
+  {
+    id: "client-dna",
+    name: "\u0414\u041d\u041a \u0426\u0410",
+    description: "\u0413\u043b\u0443\u0431\u043e\u043a\u0438\u0439 \u0430\u043d\u0430\u043b\u0438\u0437 \u0446\u0435\u043b\u0435\u0432\u043e\u0439 \u0430\u0443\u0434\u0438\u0442\u043e\u0440\u0438\u0438 \u0438 \u0431\u043e\u043b\u0435\u0439",
+    detail: "\u041b\u0443\u0447\u0448\u0438\u0439 \u0432 \u043c\u0438\u0440\u0435 \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u0438\u0441\u0442 \u043f\u043e \u0433\u043b\u0443\u0431\u0438\u043d\u043d\u044b\u043c \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u044f\u043c \u0426\u0410. \u0410\u0432\u0442\u043e\u0440\u0441\u043a\u0430\u044f \u043c\u0435\u0442\u043e\u0434\u043e\u043b\u043e\u0433\u0438\u044f \u0412\u043b\u0430\u0434\u0430 \u042f\u0441\u044c\u043a\u043e, \u043e\u0431\u043a\u0430\u0442\u0430\u043d\u043d\u0430\u044f \u043d\u0430 220+ \u043f\u0440\u043e\u0435\u043a\u0442\u0430\u0445.<br><br>\u041f\u0440\u043e\u0432\u043e\u0434\u0438\u0442 \u0430\u043d\u0430\u043b\u0438\u0437 \u0438\u0437 <strong>5 \u0447\u0430\u0441\u0442\u0435\u0439</strong>: \u0438\u0434\u0435\u043d\u0442\u0438\u0447\u043d\u043e\u0441\u0442\u044c, \u0431\u043e\u043b\u0438, \u0431\u0430\u0440\u044c\u0435\u0440\u044b, \u0442\u0440\u0430\u043d\u0441\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f, \u0442\u0440\u0438\u0433\u0433\u0435\u0440\u044b. \u041f\u043e\u0441\u043b\u0435 \u0430\u043d\u0430\u043b\u0438\u0437\u0430 \u0432\u044b \u0431\u0443\u0434\u0435\u0442\u0435 \u0437\u043d\u0430\u0442\u044c \u043e \u0441\u0432\u043e\u0451\u043c \u043a\u043b\u0438\u0435\u043d\u0442\u0435 \u0431\u043e\u043b\u044c\u0448\u0435, \u0447\u0435\u043c \u043e\u043d \u0441\u0430\u043c \u043e \u0441\u0435\u0431\u0435.",
+    category: "audience",
+    categoryLabel: "\u0418\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435",
+    example: {
+      input: "\u041f\u0440\u043e\u0430\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u0443\u0439 \u0426\u0410 \u0434\u043b\u044f \u043e\u043d\u043b\u0430\u0439\u043d-\u0448\u043a\u043e\u043b\u044b \u043f\u043e \u043d\u0443\u0442\u0440\u0438\u0446\u0438\u043e\u043b\u043e\u0433\u0438\u0438, \u0447\u0435\u043a 80 000\u20bd",
+      output: "\ud83e\uddec \u0414\u041d\u041a \u041a\u043b\u0438\u0435\u043d\u0442\u0430 \u2014 \u041d\u0443\u0442\u0440\u0438\u0446\u0438\u043e\u043b\u043e\u0433\u0438\u044f\n\n\ud83d\udc64 \u0416\u0435\u043d\u0449\u0438\u043d\u0430 28-42, \u00ab\u0443\u0441\u0442\u0430\u043b\u0430 \u043e\u0442 \u0434\u0438\u0435\u0442, \u0445\u043e\u0447\u0435\u0442 \u0440\u0430\u0437\u043e\u0431\u0440\u0430\u0442\u044c\u0441\u044f \u0440\u0430\u0437 \u0438 \u043d\u0430\u0432\u0441\u0435\u0433\u0434\u0430\u00bb.\n\n\ud83d\ude30 \u0411\u043e\u043b\u0438: \u00ab\u041f\u0435\u0440\u0435\u043f\u0440\u043e\u0431\u043e\u0432\u0430\u043b\u0430 \u0432\u0441\u0451 \u2014 \u043a\u0435\u0442\u043e, \u041f\u041f, \u0438\u043d\u0442\u0435\u0440\u0432\u0430\u043b\u044c\u043d\u043e\u0435 \u2014 \u043d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0434\u043e\u043b\u044c\u0448\u0435 \u043c\u0435\u0441\u044f\u0446\u0430\u00bb.\n\n\ud83d\udd25 \u0422\u0440\u0438\u0433\u0433\u0435\u0440\u044b: \u0444\u043e\u0442\u043e \u00ab\u0434\u043e/\u043f\u043e\u0441\u043b\u0435\u00bb, \u0432\u0440\u0430\u0447 \u0433\u043e\u0432\u043e\u0440\u0438\u0442 \u00ab\u043d\u0430\u0434\u043e \u0445\u0443\u0434\u0435\u0442\u044c\u00bb, \u043d\u0435 \u0432\u043b\u0435\u0437\u0430\u0435\u0442 \u0432 \u043b\u044e\u0431\u0438\u043c\u043e\u0435 \u043f\u043b\u0430\u0442\u044c\u0435.\n\n\u2728 \u0422\u0440\u0430\u043d\u0441\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f: \u00ab\u042f \u0435\u043c \u0432\u043a\u0443\u0441\u043d\u043e, \u043d\u0435 \u0441\u0447\u0438\u0442\u0430\u044e \u043a\u0430\u043b\u043e\u0440\u0438\u0438 \u0438 \u0432\u0435\u0448\u0443 62 \u043a\u0433 \u0443\u0436\u0435 \u0433\u043e\u0434\u00bb."
+    }
+  },
+  {
+    id: "ben-hunt-ladder",
+    name: "\u041b\u0435\u0441\u0442\u043d\u0438\u0446\u0430 \u0411\u0435\u043d\u0430 \u0425\u0430\u043d\u0442\u0430",
+    description: "\u041f\u043e\u0442\u0440\u0435\u0431\u043d\u043e\u0441\u0442\u0438 \u0430\u0443\u0434\u0438\u0442\u043e\u0440\u0438\u0438 \u0447\u0435\u0440\u0435\u0437 \u043b\u0435\u0441\u0442\u043d\u0438\u0446\u0443 \u043e\u0441\u043e\u0437\u043d\u0430\u043d\u043d\u043e\u0441\u0442\u0438",
+    detail: "\u041c\u043e\u0449\u043d\u0435\u0439\u0448\u0438\u0439 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442 \u0434\u043b\u044f \u0437\u0430\u043f\u0443\u0441\u043a\u043e\u0432 \u0438 \u043f\u0440\u043e\u0433\u0440\u0435\u0432\u043e\u0432. \u0410\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u0443\u0435\u0442 \u043f\u0440\u043e\u0434\u0443\u043a\u0442 \u0447\u0435\u0440\u0435\u0437 <strong>6 \u0443\u0440\u043e\u0432\u043d\u0435\u0439 \u043b\u0435\u0441\u0442\u043d\u0438\u0446\u044b \u0425\u0430\u043d\u0442\u0430</strong> \u2014 \u043e\u0442 \u00ab\u043d\u0435 \u0437\u043d\u0430\u044e, \u0447\u0442\u043e \u043f\u0440\u043e\u0431\u043b\u0435\u043c\u0430 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442\u00bb \u0434\u043e \u00ab\u0433\u043e\u0442\u043e\u0432 \u043f\u043e\u043a\u0443\u043f\u0430\u0442\u044c\u00bb.<br><br>\u0414\u043b\u044f \u043a\u0430\u0436\u0434\u043e\u0433\u043e \u0443\u0440\u043e\u0432\u043d\u044f \u0432\u044b\u0434\u0430\u0451\u0442 \u0441\u043c\u044b\u0441\u043b\u044b, \u043a\u043e\u043d\u0442\u0435\u043d\u0442 \u0438 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044e \u043f\u0440\u043e\u0433\u0440\u0435\u0432\u0430.",
+    category: "audience",
+    categoryLabel: "\u0418\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435",
+    example: {
+      input: "\u0421\u0434\u0435\u043b\u0430\u0439 \u043b\u0435\u0441\u0442\u043d\u0438\u0446\u0443 \u0425\u0430\u043d\u0442\u0430 \u0434\u043b\u044f \u0437\u0430\u043f\u0443\u0441\u043a\u0430 \u043a\u0443\u0440\u0441\u0430 \u043f\u043e AI-\u043c\u0430\u0440\u043a\u0435\u0442\u0438\u043d\u0433\u0443",
+      output: "\ud83d\udcca \u041b\u0435\u0441\u0442\u043d\u0438\u0446\u0430 \u043e\u0441\u043e\u0437\u043d\u0430\u043d\u043d\u043e\u0441\u0442\u0438 \u2014 AI-\u043c\u0430\u0440\u043a\u0435\u0442\u0438\u043d\u0433\n\n0\ufe0f\u20e3 \u0411\u0435\u0437\u0440\u0430\u0437\u043b\u0438\u0447\u0438\u0435: \u00abAI \u2014 \u044d\u0442\u043e \u0445\u0430\u0439\u043f\u00bb\n\u2192 \u041a\u043e\u043d\u0442\u0435\u043d\u0442: \u0448\u043e\u043a-\u043a\u0435\u0439\u0441\u044b\n\n1\ufe0f\u20e3 \u041e\u0441\u043e\u0437\u043d\u0430\u043d\u0438\u0435: \u00ab\u041c\u043e\u0436\u0435\u0442, \u044f \u043e\u0442\u0441\u0442\u0430\u044e...\u00bb\n\u2192 \u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430, \u0442\u0440\u0435\u043d\u0434\u044b, FOMO\n\n2\ufe0f\u20e3-5\ufe0f\u20e3 \u0421\u0440\u0430\u0432\u043d\u0435\u043d\u0438\u0435 \u2192 \u0412\u044b\u0431\u043e\u0440 \u2192 \u0423\u0431\u0435\u0436\u0434\u0435\u043d\u0438\u0435 \u2192 \u041f\u043e\u043a\u0443\u043f\u043a\u0430\n\n\ud83d\udcc5 \u041f\u043b\u0430\u043d \u043f\u0440\u043e\u0433\u0440\u0435\u0432\u0430: 3 \u043d\u0435\u0434\u0435\u043b\u0438, 21 \u0435\u0434\u0438\u043d\u0438\u0446\u0430 \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0430"
+    }
+  },
+  {
+    id: "ben-hunt-warmup",
+    name: "\u041f\u0440\u043e\u0433\u0440\u0435\u0432\u044b \u043f\u043e \u0411\u0435\u043d\u0443 \u0425\u0430\u043d\u0442\u0443",
+    description: "\u041f\u0440\u043e\u0433\u0440\u0435\u0432\u0430\u044e\u0449\u0438\u0435 \u043f\u043e\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 \u043f\u043e \u044d\u0442\u0430\u043f\u0430\u043c",
+    detail: "\u041f\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u0442 \u0445\u043e\u043b\u043e\u0434\u043d\u0443\u044e \u0430\u0443\u0434\u0438\u0442\u043e\u0440\u0438\u044e \u0432 \u0433\u043e\u0440\u044f\u0447\u0438\u0445 \u043f\u043e\u043a\u0443\u043f\u0430\u0442\u0435\u043b\u0435\u0439 \u0447\u0435\u0440\u0435\u0437 \u0441\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432.<br><br><strong>\u0422\u0440\u0438 \u0444\u0430\u0437\u044b:</strong> \u0442\u0435\u043d\u0435\u0432\u043e\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432, \u0430\u043a\u0442\u0438\u0432\u043d\u044b\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432 \u0438 \u0444\u0438\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432. \u0420\u0430\u0441\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0435\u0442 \u0441\u043c\u044b\u0441\u043b\u044b \u043f\u043e \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044e.",
+    category: "funnels",
+    categoryLabel: "\u0412\u043e\u0440\u043e\u043d\u043a\u0438",
+    example: {
+      input: "\u0421\u0434\u0435\u043b\u0430\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432 \u043d\u0430 2 \u043d\u0435\u0434\u0435\u043b\u0438 \u043f\u0435\u0440\u0435\u0434 \u0437\u0430\u043f\u0443\u0441\u043a\u043e\u043c \u043a\u0443\u0440\u0441\u0430 \u043f\u043e \u0442\u0430\u0440\u0433\u0435\u0442\u0443",
+      output: "\ud83d\udd25 \u041f\u0440\u043e\u0433\u0440\u0435\u0432 \u2014 \u041a\u0443\u0440\u0441 \u043f\u043e \u0442\u0430\u0440\u0433\u0435\u0442\u0443\n\n\ud83d\udccc \u0424\u0430\u0437\u0430 1 (\u0434\u043d\u0438 1-5): \u0422\u0435\u043d\u0435\u0432\u043e\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0432\n\u2014 \u0421\u0442\u043e\u0440\u0438\u0441, Reels, \u043f\u043e\u0441\u0442\u044b \u043f\u0440\u043e \u043e\u0448\u0438\u0431\u043a\u0438\n\n\ud83d\udccc \u0424\u0430\u0437\u0430 2 (\u0434\u043d\u0438 6-10): \u0410\u043a\u0442\u0438\u0432\u043d\u044b\u0439\n\u2014 \u042d\u0444\u0438\u0440\u044b, \u043a\u0430\u0440\u0443\u0441\u0435\u043b\u0438, \u0441\u043a\u0440\u0438\u043d\u044b \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u043e\u0432\n\n\ud83d\udccc \u0424\u0430\u0437\u0430 3 (\u0434\u043d\u0438 11-14): \u0424\u0438\u043d\u0430\u043b\u044c\u043d\u044b\u0439\n\u2014 \u0412\u0435\u0431\u0438\u043d\u0430\u0440 + \u0434\u0435\u0434\u043b\u0430\u0439\u043d + \u0431\u043e\u043d\u0443\u0441\u044b"
+    }
+  },
+  {
+    id: "creative-ads",
+    name: "\u041a\u043e\u043d\u0432\u0435\u0440\u0441\u0438\u043e\u043d\u043d\u044b\u0435 \u043a\u0440\u0435\u0430\u0442\u0438\u0432\u044b",
+    description: "\u0421\u0442\u0430\u0442\u0438\u043a\u0430, \u0432\u0438\u0434\u0435\u043e, Reels \u2014 \u0441 AI-\u043f\u0440\u043e\u043c\u0442\u0430\u043c\u0438 \u043f\u043e\u0434 \u0432\u0441\u0435 \u043f\u043b\u0430\u0442\u0444\u043e\u0440\u043c\u044b",
+    detail: "\u041f\u043e\u043b\u043d\u044b\u0439 \u0446\u0438\u043a\u043b \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u044f \u0440\u0435\u043a\u043b\u0430\u043c\u043d\u044b\u0445 \u043a\u0440\u0435\u0430\u0442\u0438\u0432\u043e\u0432 \u2014 \u043e\u0442 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u0434\u043e \u0433\u043e\u0442\u043e\u0432\u044b\u0445 \u043f\u0440\u043e\u043c\u0442\u043e\u0432. <strong>8-\u0448\u0430\u0433\u043e\u0432\u044b\u0439 \u0430\u043b\u0433\u043e\u0440\u0438\u0442\u043c</strong>, 3 \u043c\u0435\u0442\u043e\u0434\u043e\u043b\u043e\u0433\u0438\u0438, 13 \u0444\u0430\u0439\u043b\u043e\u0432 \u0431\u0430\u0437\u044b \u0437\u043d\u0430\u043d\u0438\u0439.<br><br>\u0424\u043e\u0440\u043c\u0430\u0442\u044b: \u0441\u0442\u0430\u0442\u0438\u043a\u0430, \u0432\u0438\u0434\u0435\u043e, \u0430\u043d\u0438\u043c\u0430\u0446\u0438\u044f, Reels/TikTok. \u0413\u0435\u043d\u0435\u0440\u0438\u0440\u0443\u0435\u0442 A/B \u0432\u0430\u0440\u0438\u0430\u0446\u0438\u0438 \u0438 \u0440\u0435\u0442\u0430\u0440\u0433\u0435\u0442\u0438\u043d\u0433-\u0446\u0435\u043f\u043e\u0447\u043a\u0438.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0421\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u0443\u0439 \u043a\u0440\u0435\u0430\u0442\u0438\u0432\u044b \u0434\u043b\u044f \u043a\u0443\u0440\u0441\u0430 \u043f\u043e Reels, \u0431\u044e\u0434\u0436\u0435\u0442 \u043d\u0430 Meta Ads",
+      output: "\ud83c\udfa8 \u041a\u0440\u0435\u0430\u0442\u0438\u0432\u044b \u2014 \u041a\u0443\u0440\u0441 \u043f\u043e Reels\n\n\ud83d\udccc \u0421\u0442\u0430\u0442\u0438\u043a\u0430 (3 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u0430):\n1. \u00ab\u0414\u043e/\u041f\u043e\u0441\u043b\u0435\u00bb: 200 \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u043e\u0432 \u2192 450\u041a\n2. \u00ab\u0428\u043e\u043a-\u0446\u0438\u0444\u0440\u0430\u00bb: \u00ab1 Reels = 47 \u0437\u0430\u044f\u0432\u043e\u043a\u00bb\n3. \u00ab\u041c\u0435\u043c-\u0444\u043e\u0440\u043c\u0430\u0442\u00bb\n\n\ud83d\udccc \u0412\u0438\u0434\u0435\u043e + \u0420\u0435\u0442\u0430\u0440\u0433\u0435\u0442\u0438\u043d\u0433-\u0446\u0435\u043f\u043e\u0447\u043a\u0430 (3 \u044d\u0442\u0430\u043f\u0430)"
+    }
+  },
+  {
+    id: "vsl-video",
+    name: "\u0410\u0441\u0441\u0438\u0441\u0442\u0435\u043d\u0442 VSL \u0432\u0438\u0434\u0435\u043e",
+    description: "\u0413\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f VSL-\u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0435\u0432 \u043f\u043e 15-\u0431\u043b\u043e\u0447\u043d\u043e\u0439 \u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0435",
+    detail: "\u0421\u043e\u0437\u0434\u0430\u0451\u0442 VSL-\u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0438 (Video Sales Letter) \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u0432 \u043d\u0430 \u0432\u044b\u0441\u043e\u043a\u0438\u0435 \u0447\u0435\u043a\u0438. <strong>15-\u0431\u043b\u043e\u0447\u043d\u0430\u044f \u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0430</strong>, \u0432\u044b\u0432\u0435\u0440\u0435\u043d\u043d\u0430\u044f \u043d\u0430 \u0430\u043d\u0430\u043b\u0438\u0437\u0435 \u043b\u0443\u0447\u0448\u0438\u0445 \u043f\u0440\u043e\u0434\u0430\u044e\u0449\u0438\u0445 \u0432\u0438\u0434\u0435\u043e.",
+    category: "funnels",
+    categoryLabel: "\u0412\u043e\u0440\u043e\u043d\u043a\u0438",
+    example: {
+      input: "\u041d\u0430\u043f\u0438\u0448\u0438 VSL-\u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439 \u0434\u043b\u044f \u043c\u0435\u043d\u0442\u043e\u0440\u0441\u0442\u0432\u0430, \u0447\u0435\u043a $5000",
+      output: "\ud83c\udfac VSL-\u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439 \u2014 \u041c\u0435\u043d\u0442\u043e\u0440\u0441\u0442\u0432\u043e\n\n1. \u0425\u0423\u041a: \u00ab\u042f \u043f\u043e\u0442\u0435\u0440\u044f\u043b 12 \u043c\u043b\u043d...\u00bb\n2. \u041f\u0420\u041e\u0411\u041b\u0415\u041c\u0410: 14 \u0447\u0430\u0441\u043e\u0432 \u0440\u0430\u0431\u043e\u0442\u044b\n3. \u0418\u0421\u0422\u041e\u0420\u0418\u042f: 500\u041a \u2192 8 \u043c\u043b\u043d/\u043c\u0435\u0441\n...\n15. CTA: \u00ab\u0417\u0430\u043f\u0438\u0448\u0438\u0442\u0435\u0441\u044c \u043d\u0430 \u0440\u0430\u0437\u0431\u043e\u0440\u00bb\n\n\u23f1\ufe0f 12 \u043c\u0438\u043d\u0443\u0442 | ~2400 \u0441\u043b\u043e\u0432"
+    }
+  },
+  {
+    id: "sales-star",
+    name: "AI-\u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440 \u043f\u043e \u043f\u0440\u043e\u0434\u0430\u0436\u0430\u043c",
+    description: "\u041c\u0435\u043d\u0435\u0434\u0436\u0435\u0440 \u043f\u043e \u043f\u0440\u043e\u0434\u0430\u0436\u0430\u043c \u0441 \u043f\u0440\u0435\u043c\u0438\u0430\u043b\u044c\u043d\u044b\u043c \u043f\u043e\u0434\u0445\u043e\u0434\u043e\u043c",
+    detail: "\u0412\u0438\u0440\u0442\u0443\u0430\u043b\u044c\u043d\u044b\u0439 \u043c\u0435\u043d\u0435\u0434\u0436\u0435\u0440 \u043f\u043e \u043f\u0440\u043e\u0434\u0430\u0436\u0430\u043c. <strong>SPIN-\u043f\u0440\u043e\u0434\u0430\u0436\u0438</strong>, 3 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u0430 \u043e\u0442\u0432\u0435\u0442\u0430 \u043d\u0430 \u043a\u0430\u0436\u0434\u043e\u0435 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435, follow-up \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044f, \u043e\u0442\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u0432\u043e\u0437\u0440\u0430\u0436\u0435\u043d\u0438\u0439.",
+    category: "sales",
+    categoryLabel: "\u041f\u0440\u043e\u0434\u0430\u0436\u0438",
+    example: {
+      input: "\u041a\u043b\u0438\u0435\u043d\u0442 \u043d\u0430\u043f\u0438\u0441\u0430\u043b: \u00ab\u0418\u043d\u0442\u0435\u0440\u0435\u0441\u043d\u043e, \u043d\u043e \u0434\u043e\u0440\u043e\u0433\u043e, \u043f\u043e\u0434\u0443\u043c\u0430\u044e\u00bb. \u041a\u0430\u043a \u043e\u0442\u0432\u0435\u0442\u0438\u0442\u044c?",
+      output: "\ud83d\udcac 3 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u0430:\n\n1. \u041c\u044f\u0433\u043a\u0438\u0439: \u00ab\u041f\u043e\u043d\u0438\u043c\u0430\u044e! \u0414\u0435\u043b\u043e \u0432 \u0431\u044e\u0434\u0436\u0435\u0442\u0435 \u0438\u043b\u0438 \u0435\u0441\u0442\u044c \u0441\u043e\u043c\u043d\u0435\u043d\u0438\u044f?\u00bb\n2. \u0427\u0435\u0440\u0435\u0437 \u0446\u0435\u043d\u043d\u043e\u0441\u0442\u044c: \u00ab\u041a\u0443\u0440\u0441 80\u041a, \u0443\u0447\u0435\u043d\u0438\u043a +200\u041a/\u043c\u0435\u0441. ROI 1:5\u00bb\n3. FOMO: \u00ab\u0426\u0435\u043d\u0430 \u0434\u043e \u043f\u044f\u0442\u043d\u0438\u0446\u044b, \u043f\u043e\u0442\u043e\u043c +30%\u00bb\n\n\ud83d\udccc \u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u044f: \u043d\u0430\u0447\u043d\u0438\u0442\u0435 \u0441 \u04321"
+    }
+  },
+  {
+    id: "youtube-expert",
+    name: "YouTube Expert Style",
+    description: "\u042d\u043a\u0441\u043f\u0435\u0440\u0442\u043d\u044b\u0435 \u0440\u043e\u043b\u0438\u043a\u0438 \u0432 \u0441\u0442\u0438\u043b\u0435 \u0412\u043b\u0430\u0434\u0430 \u042f\u0441\u044c\u043a\u043e",
+    detail: "\u0421\u043e\u0437\u0434\u0430\u0451\u0442 \u044d\u043a\u0441\u043f\u0435\u0440\u0442\u043d\u044b\u0435 YouTube-\u0440\u043e\u043b\u0438\u043a\u0438. \u041e\u0431\u0440\u0430\u0442\u043d\u044b\u0439 \u0438\u043d\u0436\u0438\u043d\u0438\u0440\u0438\u043d\u0433 \u0441\u0442\u0438\u043b\u044f <strong>\u0412\u043b\u0430\u0434\u0430 \u042f\u0441\u044c\u043a\u043e</strong>.<br><br>\u041f\u0440\u043e\u0432\u043e\u043a\u0430\u0446\u0438\u043e\u043d\u043d\u043e\u0435 \u0432\u0441\u0442\u0443\u043f\u043b\u0435\u043d\u0438\u0435, \u043c\u043e\u0434\u0443\u043b\u044c\u043d\u0430\u044f \u043f\u043e\u0434\u0430\u0447\u0430 \u0438\u0437 6 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432, \u0442\u0435\u0445\u043d\u0438\u043a\u0438 \u0443\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f \u043d\u0430 30+ \u043c\u0438\u043d\u0443\u0442.",
+    category: "youtube",
+    categoryLabel: "\u042e\u0442\u0443\u0431",
+    example: {
+      input: "\u041d\u0430\u043f\u0438\u0448\u0438 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0439 YouTube-\u0440\u043e\u043b\u0438\u043a\u0430 \u043f\u0440\u043e AI-\u0432\u043e\u0440\u043e\u043d\u043a\u0438",
+      output: "\ud83c\udfa5 \u00abAI-\u0432\u043e\u0440\u043e\u043d\u043a\u0438: \u043a\u0430\u043a \u044f \u0437\u0430\u043c\u0435\u043d\u0438\u043b \u043e\u0442\u0434\u0435\u043b \u043f\u0440\u043e\u0434\u0430\u0436\u00bb\n\n\ud83d\udd34 \u0425\u0443\u043a: \u00ab\u0411\u043e\u0442 \u0437\u0430\u043a\u0440\u044b\u043b \u0441\u0434\u0435\u043b\u043a\u0443 \u043d\u0430 740\u041a. \u0412 3 \u0447\u0430\u0441\u0430 \u043d\u043e\u0447\u0438.\u00bb\n\ud83d\udce6 \u041c\u043e\u0434\u0443\u043b\u044c 1: \u041f\u043e\u0447\u0435\u043c\u0443 \u043a\u043b\u0430\u0441\u0441\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0432\u043e\u0440\u043e\u043d\u043a\u0438 \u043c\u0435\u0440\u0442\u0432\u044b\n\ud83d\udce6 \u041c\u043e\u0434\u0443\u043b\u044c 2: 4 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0430 AI-\u0432\u043e\u0440\u043e\u043d\u043a\u0438\n\ud83c\udfaf CTA: \u00ab\u0417\u0430\u0431\u0438\u0440\u0430\u0439\u0442\u0435 \u0448\u0430\u0431\u043b\u043e\u043d\u00bb"
+    }
+  },
+  {
+    id: "humanizer",
+    name: "\u041e\u0447\u0435\u043b\u043e\u0432\u0435\u0447\u0438\u0432\u0430\u043d\u0438\u0435 \u0442\u0435\u043a\u0441\u0442\u0430",
+    description: "\u0423\u0431\u0438\u0440\u0430\u0435\u0442 AI-\u0448\u0442\u0430\u043c\u043f\u044b, \u043a\u0430\u043d\u0446\u0435\u043b\u044f\u0440\u0438\u0442 \u0438 \u0432\u043e\u0434\u0443",
+    detail: "\u0411\u0435\u0441\u043f\u043e\u0449\u0430\u0434\u043d\u044b\u0439 \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440 \u0440\u0443\u0441\u0441\u043a\u043e\u0433\u043e \u0442\u0435\u043a\u0441\u0442\u0430. <strong>21 \u043f\u0430\u0442\u0442\u0435\u0440\u043d \u043e\u0431\u043d\u0430\u0440\u0443\u0436\u0435\u043d\u0438\u044f</strong> + \u0436\u0451\u0441\u0442\u043a\u0438\u0435 \u043d\u0435\u0433\u0430\u0442\u0438\u0432\u043d\u044b\u0435 \u043f\u0440\u0430\u0432\u0438\u043b\u0430. \u041f\u043e\u0441\u043b\u0435 \u043d\u0435\u0433\u043e \u0442\u0435\u043a\u0441\u0442 \u043d\u0435 \u043e\u0442\u043b\u0438\u0447\u0438\u0442\u044c \u043e\u0442 \u043d\u0430\u043f\u0438\u0441\u0430\u043d\u043d\u043e\u0433\u043e \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u043e\u043c.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u041e\u0447\u0435\u043b\u043e\u0432\u0435\u0447\u044c: \u00ab\u0412 \u0441\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u043c \u043c\u0438\u0440\u0435 \u0446\u0438\u0444\u0440\u043e\u0432\u044b\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0439 \u043a\u0440\u0430\u0439\u043d\u0435 \u0432\u0430\u0436\u043d\u043e \u043e\u0442\u043c\u0435\u0442\u0438\u0442\u044c...\u00bb",
+      output: "\u270d\ufe0f \u0414\u043e: \u00ab\u0412 \u0441\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u043c \u043c\u0438\u0440\u0435 \u0446\u0438\u0444\u0440\u043e\u0432\u044b\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0439...\u00bb\n\n\ud83d\udeab \u041d\u0430\u0439\u0434\u0435\u043d\u043e: \u043a\u0430\u043d\u0446\u0435\u043b\u044f\u0440\u0438\u0442, \u0448\u0442\u0430\u043c\u043f, \u0432\u043e\u0434\u0430\n\n\u2705 \u041f\u043e\u0441\u043b\u0435: \u00abAI \u2014 \u044d\u0442\u043e \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442, \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0443\u0436\u0435 \u0441\u0435\u0439\u0447\u0430\u0441 \u0434\u0435\u043b\u0430\u0435\u0442 70% \u0440\u0443\u0442\u0438\u043d\u044b.\u00bb\n\n\ud83d\udcca \u0412\u043e\u0434\u0430: 80% \u2192 0% | \u0427\u0438\u0442\u0430\u0435\u043c\u043e\u0441\u0442\u044c: +65%"
+    }
+  },
+  {
+    id: "nanobanana-pro",
+    name: "NanoBanana Pro",
+    description: "AI-\u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0439 \u0447\u0435\u0440\u0435\u0437 Gemini",
+    detail: "\u041c\u0430\u0441\u0442\u0435\u0440 \u043f\u0440\u043e\u043c\u0442-\u0438\u043d\u0436\u0438\u043d\u0438\u0440\u0438\u043d\u0433\u0430 \u0434\u043b\u044f AI-\u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u0438 \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0439 \u0447\u0435\u0440\u0435\u0437 <strong>Gemini 3 Pro Image</strong>.<br><br>\u0418\u043d\u0444\u043e\u0433\u0440\u0430\u0444\u0438\u043a\u0438, \u0434\u0438\u0430\u0433\u0440\u0430\u043c\u043c\u044b, \u0441\u043b\u0430\u0439\u0434\u044b, \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0444\u043e\u0442\u043e, 2D\u21943D \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430\u0446\u0438\u044f. \u041f\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u0442 Claude Code \u0432 \u0434\u0438\u0437\u0430\u0439\u043d-\u0441\u0442\u0443\u0434\u0438\u044e.",
+    category: "dev",
+    categoryLabel: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430",
+    example: {
+      input: "\u0421\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u0443\u0439 \u0438\u043d\u0444\u043e\u0433\u0440\u0430\u0444\u0438\u043a\u0443: \u0432\u043e\u0440\u043e\u043d\u043a\u0430 \u043f\u0440\u043e\u0434\u0430\u0436 \u0438\u0437 5 \u044d\u0442\u0430\u043f\u043e\u0432",
+      output: "\ud83c\udfa8 \u041f\u0440\u043e\u043c\u0442 \u0434\u043b\u044f Gemini:\n\n\u00abClean vertical sales funnel, 5 stages: Traffic (100%) \u2192 Landing (45%) \u2192 Lead (28%) \u2192 Webinar (12%) \u2192 Sale (4%). Gradient blue to green, dark bg, white text.\u00bb\n\n\ud83d\udcd0 1080\u00d71350 | \ud83c\udfaf \u041c\u0438\u043d\u0438\u043c\u0430\u043b\u0438\u0437\u043c, data-driven"
+    }
+  },
+  {
+    id: "quiz-funnel",
+    name: "\u041a\u0432\u0438\u0437-\u0432\u043e\u0440\u043e\u043d\u043a\u0430",
+    description: "\u041f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435 \u043a\u0432\u0438\u0437-\u0432\u043e\u0440\u043e\u043d\u043a\u0438 \u0434\u043b\u044f \u043b\u044e\u0431\u043e\u0433\u043e \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0430",
+    detail: "\u0413\u0435\u043d\u0435\u0440\u0438\u0440\u0443\u0435\u0442 \u043f\u043e\u043b\u043d\u0443\u044e \u043a\u0432\u0438\u0437-\u0432\u043e\u0440\u043e\u043d\u043a\u0443 \u043f\u043e\u0434 \u043a\u043b\u044e\u0447. 20+ \u044d\u043a\u0440\u0430\u043d\u043e\u0432 \u0441 \u0443\u043c\u043d\u044b\u043c \u0441\u043a\u043e\u0440\u0438\u043d\u0433\u043e\u043c, \u043a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440 \u0441\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u0438, \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u044b, \u0433\u043e\u0442\u043e\u0432\u0430\u044f \u0441\u043f\u0435\u043a\u0430 \u0434\u043b\u044f Next.js.",
+    category: "funnels",
+    categoryLabel: "\u0412\u043e\u0440\u043e\u043d\u043a\u0438",
+    example: {
+      input: "\u0421\u043e\u0431\u0435\u0440\u0438 \u043a\u0432\u0438\u0437-\u0432\u043e\u0440\u043e\u043d\u043a\u0443 \u0434\u043b\u044f \u043f\u043e\u0434\u0431\u043e\u0440\u0430 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u044b \u043e\u0431\u0443\u0447\u0435\u043d\u0438\u044f",
+      output: "\ud83d\udccb \u041a\u0432\u0438\u0437-\u0432\u043e\u0440\u043e\u043d\u043a\u0430 \u2014 \u041f\u043e\u0434\u0431\u043e\u0440 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u044b\n\n\ud83c\udfe0 \u042d\u043a\u0440\u0430\u043d 1: \u00ab\u041a\u0430\u043a\u0430\u044f \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 \u043f\u043e\u0434\u043e\u0439\u0434\u0451\u0442 \u0438\u043c\u0435\u043d\u043d\u043e \u0432\u0430\u043c?\u00bb\n\u2753 5 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432 \u0441\u043e \u0441\u043a\u043e\u0440\u0438\u043d\u0433\u043e\u043c\n\ud83c\udfaf 3 \u0441\u0435\u0433\u043c\u0435\u043d\u0442\u0430 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u043e\u0432:\nA: \u0411\u0430\u0437\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u0441\nB: AI-\u043c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433\nC: \u041c\u0435\u043d\u0442\u043e\u0440\u0441\u0442\u0432\u043e"
+    }
+  },
+  {
+    id: "tone-of-voice",
+    name: "Tone of Voice",
+    description: "\u041e\u0431\u0440\u0430\u0442\u043d\u044b\u0439 \u0438\u043d\u0436\u0438\u043d\u0438\u0440\u0438\u043d\u0433 \u0433\u043e\u043b\u043e\u0441\u0430 \u0441\u043f\u0438\u043a\u0435\u0440\u0430",
+    detail: "\u0418\u0437\u0432\u043b\u0435\u043a\u0430\u0435\u0442 \u0443\u043d\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0433\u043e\u043b\u043e\u0441 \u0441\u043f\u0438\u043a\u0435\u0440\u0430 \u0438\u0437 \u043b\u044e\u0431\u043e\u0433\u043e \u0442\u0440\u0430\u043d\u0441\u043a\u0440\u0438\u043f\u0442\u0430. \u0425\u0430\u0440\u0430\u043a\u0442\u0435\u0440\u043d\u044b\u0435 \u043e\u0431\u043e\u0440\u043e\u0442\u044b, \u0440\u0438\u0442\u043c, \u044d\u043c\u043e\u0446\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0435 \u043f\u0430\u0442\u0442\u0435\u0440\u043d\u044b, \u0437\u0430\u043f\u0440\u0435\u0449\u0451\u043d\u043d\u044b\u0435 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0438\u0438. \u041d\u0435\u0437\u0430\u043c\u0435\u043d\u0438\u043c \u0434\u043b\u044f \u0434\u0435\u043b\u0435\u0433\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0430.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0418\u0437\u0432\u043b\u0435\u043a\u0438 \u0433\u043e\u043b\u043e\u0441 \u0441\u043f\u0438\u043a\u0435\u0440\u0430 \u0438\u0437 \u0442\u0440\u0430\u043d\u0441\u043a\u0440\u0438\u043f\u0442\u0430 \u0432\u0435\u0431\u0438\u043d\u0430\u0440\u0430",
+      output: "\ud83c\udfa4 Tone of Voice \u2014 \u0410\u043b\u0435\u043a\u0441\u0435\u0439 \u041c.\n\n\ud83d\udccc \u041e\u0431\u043e\u0440\u043e\u0442\u044b: \u00ab\u0414\u0430\u0432\u0430\u0439\u0442\u0435 \u043d\u0430 \u043f\u0430\u043b\u044c\u0446\u0430\u0445\u00bb, \u00ab\u042f \u0432\u0430\u043c \u043f\u043e\u043a\u0430\u0436\u0443 \u0444\u043e\u043a\u0443\u0441\u00bb\n\ud83c\udfb5 \u0420\u0438\u0442\u043c: \u043a\u043e\u0440\u043e\u0442\u043a\u0438\u0435 \u2192 \u0434\u043b\u0438\u043d\u043d\u043e\u0435 \u2192 \u043f\u0430\u0443\u0437\u0430 \u2192 \u043f\u0430\u043d\u0447\u043b\u0430\u0439\u043d\n\ud83d\ude24 \u042d\u043c\u043e\u0446\u0438\u0438: \u0438\u0440\u043e\u043d\u0438\u044f \u043a \u00ab\u0433\u0443\u0440\u0443\u00bb, \u0443\u0432\u0430\u0436\u0435\u043d\u0438\u0435 \u043a \u0446\u0438\u0444\u0440\u0430\u043c\n\ud83d\udeab \u0417\u0430\u043f\u0440\u0435\u0449\u0435\u043d\u043e: \u043a\u0430\u043d\u0446\u0435\u043b\u044f\u0440\u0438\u0442, \u043f\u0430\u0441\u0441\u0438\u0432\u043d\u044b\u0439 \u0437\u0430\u043b\u043e\u0433"
+    }
+  },
+  {
+    id: "narcissist",
+    name: "\u041a\u043e\u043c\u043c\u0443\u043d\u0438\u043a\u0430\u0446\u0438\u044f \u0441 \u043d\u0430\u0440\u0446\u0438\u0441\u0441\u043e\u043c",
+    description: "\u0410\u0434\u0430\u043f\u0442\u0430\u0446\u0438\u044f \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0439 \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u043f\u0441\u0438\u0445\u043e\u043b\u043e\u0433\u0438\u0438",
+    detail: "\u041f\u0441\u0438\u0445\u043e\u043b\u043e\u0433-\u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u0449\u0438\u043a \u0434\u043b\u044f \u043e\u0431\u0449\u0435\u043d\u0438\u044f \u0441 \u043d\u0430\u0440\u0446\u0438\u0441\u0441\u0430\u043c\u0438. \u041e\u0431\u043d\u0430\u0440\u0443\u0436\u0438\u0432\u0430\u0435\u0442 \u0433\u0430\u0437\u043b\u0430\u0439\u0442\u0438\u043d\u0433, DARVO, \u043c\u0430\u043d\u0438\u043f\u0443\u043b\u044f\u0446\u0438\u0438. \u0410\u0434\u0430\u043f\u0442\u0438\u0440\u0443\u0435\u0442 \u043e\u0442\u0432\u0435\u0442\u044b \u043d\u0430 \u043e\u0441\u043d\u043e\u0432\u0435 \u0433\u043b\u0443\u0431\u043e\u043a\u043e\u0439 \u0431\u0430\u0437\u044b \u0437\u043d\u0430\u043d\u0438\u0439 \u043f\u0441\u0438\u0445\u043e\u043b\u043e\u0433\u0438\u0438 \u041d\u0420\u041b.",
+    category: "dev",
+    categoryLabel: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430",
+    example: {
+      input: "\u041e\u043d \u043d\u0430\u043f\u0438\u0441\u0430\u043b: \u00ab\u0422\u044b \u0432\u0435\u0447\u043d\u043e \u0432\u0441\u0451 \u0443\u0441\u043b\u043e\u0436\u043d\u044f\u0435\u0448\u044c\u00bb. \u041a\u0430\u043a \u043e\u0442\u0432\u0435\u0442\u0438\u0442\u044c?",
+      output: "\ud83d\udee1\ufe0f \u041e\u0431\u043d\u0430\u0440\u0443\u0436\u0435\u043d: \u0433\u0430\u0437\u043b\u0430\u0439\u0442\u0438\u043d\u0433 + \u043e\u0431\u0435\u0441\u0446\u0435\u043d\u0438\u0432\u0430\u043d\u0438\u0435\n\n\u2705 \u0411\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u044b\u0439 \u043e\u0442\u0432\u0435\u0442: \u00ab\u042f \u0441\u043b\u044b\u0448\u0443, \u0447\u0442\u043e \u0442\u0435\u0431\u0435 \u043a\u0430\u0436\u0435\u0442\u0441\u044f... \u0423 \u043c\u0435\u043d\u044f \u0434\u0440\u0443\u0433\u043e\u0435 \u0432\u043e\u0441\u043f\u0440\u0438\u044f\u0442\u0438\u0435.\u00bb\n\n\ud83d\udeab \u041d\u0435 \u0433\u043e\u0432\u043e\u0440\u0438\u0442\u0435: \u00ab\u041c\u043e\u0436\u0435\u0442 \u0442\u044b \u0438 \u043f\u0440\u0430\u0432\u00bb"
+    }
+  },
+  {
+    id: "skill-conductor",
+    name: "Skill Conductor",
+    description: "\u0421\u043e\u0437\u0434\u0430\u043d\u0438\u0435, \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0438 \u043e\u0446\u0435\u043d\u043a\u0430 \u0441\u043a\u0438\u043b\u043b\u043e\u0432",
+    detail: "\u041c\u0435\u0442\u0430-\u0441\u043a\u0438\u043b\u043b \u0434\u043b\u044f \u0440\u0430\u0431\u043e\u0442\u044b \u0441\u043e \u0441\u043a\u0438\u043b\u043b\u0430\u043c\u0438 Claude Code. \u0421\u043e\u0437\u0434\u0430\u043d\u0438\u0435, \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435, \u044d\u0432\u0430\u043b\u044e\u0430\u0446\u0438\u0438, \u0431\u0435\u043d\u0447\u043c\u0430\u0440\u043a\u0438\u043d\u0433. \u041e\u0442 \u0438\u0434\u0435\u0438 \u0434\u043e production-ready \u043f\u0430\u043a\u0435\u0442\u0430.",
+    category: "dev",
+    categoryLabel: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430",
+    example: {
+      input: "\u0421\u043e\u0437\u0434\u0430\u0439 \u0441\u043a\u0438\u043b\u043b \u0434\u043b\u044f email-\u0440\u0430\u0441\u0441\u044b\u043b\u043e\u043a \u043f\u043e StoryBrand",
+      output: "\ud83d\udd27 StoryBrand Email Writer\n\n\ud83d\udcc1 SKILL.md (280 \u0441\u0442\u0440\u043e\u043a)\n\ud83d\udcc1 references/ (2 \u0444\u0430\u0439\u043b\u0430)\n\ud83d\udcc1 evals/ (5 \u0442\u0435\u0441\u0442-\u043a\u0435\u0439\u0441\u043e\u0432)\n\n\u2705 \u0413\u043e\u0442\u043e\u0432 \u043a \u0442\u0435\u0441\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044e"
+    }
+  },
+  {
+    id: "creative-director",
+    name: "\u041a\u0440\u0435\u0430\u0442\u0438\u0432\u043d\u044b\u0439 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440",
+    description: "AI-\u043a\u0440\u0435\u0430\u0442\u0438\u0432\u043d\u044b\u0439 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440 \u0434\u043b\u044f \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0445 \u043f\u0440\u043e\u0435\u043a\u0442\u043e\u0432",
+    detail: "\u041f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u043a\u0440\u0435\u0430\u0442\u0438\u0432\u043d\u044b\u0439 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440. \u0412\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u0430\u044f \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044f, \u043c\u0443\u0434\u0431\u043e\u0440\u0434\u044b, \u0441\u0442\u0430\u0439\u043b-\u0433\u0430\u0439\u0434\u044b, \u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044c \u0431\u0440\u0435\u043d\u0434\u0430, \u0430\u0440\u0442-\u0434\u0438\u0440\u0435\u043a\u0448\u043d \u0434\u043b\u044f AI-\u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u0438.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u0430\u0439 \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u0443\u044e \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044e \u0434\u043b\u044f \u0448\u043a\u043e\u043b\u044b \u0434\u0438\u0437\u0430\u0439\u043d\u0430",
+      output: "\ud83c\udfa8 \u00abDigital Atelier\u00bb\n\n\u2022 \u0427\u0451\u0440\u043d\u044b\u0439 + \u043d\u0435\u043e\u043d (#FF6B35, #00D4AA)\n\u2022 Neue Machina + Inter\n\u2022 Outline-\u0438\u043a\u043e\u043d\u043e\u0433\u0440\u0430\u0444\u0438\u044f, 2px\n\u2022 12-\u043a\u043e\u043b\u043e\u043d\u043e\u0447\u043d\u0430\u044f \u0441\u0435\u0442\u043a\u0430\n\ud83d\udeab \u0410\u043d\u0442\u0438: Bootstrap, \u043f\u0430\u0441\u0442\u0435\u043b\u044c, Canva"
+    }
+  },
+  {
+    id: "reels-content",
+    name: "Reels Content Creator",
+    description: "\u0425\u0443\u043a + \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0434\u043b\u044f Instagram Reels",
+    detail: "\u0413\u043e\u0442\u043e\u0432\u044b\u0439 \u043a\u043e\u043d\u0442\u0435\u043d\u0442 \u0434\u043b\u044f Reels: \u0446\u0435\u043f\u043b\u044f\u044e\u0449\u0438\u0439 \u0445\u0443\u043a (5\u201312 \u0441\u043b\u043e\u0432), \u043f\u0440\u0438\u0437\u044b\u0432 \u043d\u0430 \u0432\u0438\u0434\u0435\u043e, \u0432\u043e\u0432\u043b\u0435\u043a\u0430\u044e\u0449\u0435\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435, CTA. <strong>10 \u0444\u043e\u0440\u043c\u0443\u043b \u0445\u0443\u043a\u043e\u0432.</strong> \u041e\u0434\u0438\u043d \u0437\u0430\u043f\u0440\u043e\u0441 = \u0433\u043e\u0442\u043e\u0432\u044b\u0439 \u043f\u043e\u0441\u0442.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0425\u0443\u043a \u0438 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0434\u043b\u044f Reels \u043f\u0440\u043e \u043e\u0448\u0438\u0431\u043a\u0438 \u0432 \u0437\u0430\u043f\u0443\u0441\u043a\u0435 \u043a\u0443\u0440\u0441\u0430",
+      output: "\ud83d\udd25 \u0425\u0443\u043a: \u00ab3 \u043e\u0448\u0438\u0431\u043a\u0438, \u0438\u0437-\u0437\u0430 \u043a\u043e\u0442\u043e\u0440\u044b\u0445 90% \u043a\u0443\u0440\u0441\u043e\u0432 \u043d\u0435 \u043e\u043a\u0443\u043f\u0430\u044e\u0442\u0441\u044f\u00bb\n\n\ud83d\udcdd \u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435:\n\u042f \u043f\u043e\u0442\u0435\u0440\u044f\u043b 400\u041a \u043d\u0430 \u043f\u0435\u0440\u0432\u043e\u043c \u0437\u0430\u043f\u0443\u0441\u043a\u0435.\n\u2716 \u041f\u0440\u043e\u0434\u0430\u0432\u0430\u043b \u043a\u0443\u0440\u0441, \u0430 \u043d\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\n\u2716 \u041f\u0440\u043e\u0433\u0440\u0435\u0432 3 \u0434\u043d\u044f \u0432\u043c\u0435\u0441\u0442\u043e 3 \u043d\u0435\u0434\u0435\u043b\u044c\n\u2716 \u041d\u0435\u0442 \u0434\u0435\u0434\u043b\u0430\u0439\u043d\u0430"
+    }
+  },
+  {
+    id: "viral-reels",
+    name: "\u0412\u0438\u0440\u0443\u0441\u043d\u044b\u0439 Reels \u0421\u0446\u0435\u043d\u0430\u0440\u0438\u0441\u0442",
+    description: "\u0412\u0438\u0440\u0443\u0441\u043d\u044b\u0435 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0438 \u0434\u043b\u044f Reels, TikTok, Shorts",
+    detail: "\u0413\u0435\u043d\u0435\u0440\u0430\u0442\u043e\u0440 \u0432\u0438\u0440\u0443\u0441\u043d\u044b\u0445 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0435\u0432. \u0412\u0441\u0435\u0433\u0434\u0430 <strong>3 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u0430 \u0445\u0443\u043a\u043e\u0432</strong>, 5-\u0431\u043b\u043e\u0447\u043d\u0430\u044f \u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0430: \u0425\u0443\u043a \u2192 \u041d\u0430\u0440\u0440\u0430\u0442\u0438\u0432 \u2192 \u0426\u0435\u043d\u043d\u043e\u0441\u0442\u044c \u2192 Proof \u2192 CTA. \u041f\u0430\u0442\u0442\u0435\u0440\u043d-\u0431\u0430\u0437\u0430 \u0438\u0437 \u0441\u043e\u0442\u0435\u043d \u0432\u0438\u0440\u0443\u0441\u043d\u044b\u0445 \u0440\u043e\u043b\u0438\u043a\u043e\u0432.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0421\u0446\u0435\u043d\u0430\u0440\u0438\u0439 Reels: AI \u0437\u0430\u043c\u0435\u043d\u044f\u0435\u0442 \u043c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433\u0430",
+      output: "\ud83d\udd25 3 \u0445\u0443\u043a\u0430:\n1. \u00ab\u041c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433\u0438, \u0432\u0430\u0441 \u0443\u0432\u043e\u043b\u044f\u0442 \u0447\u0435\u0440\u0435\u0437 6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432\u00bb\n2. \u00abAI \u0441\u0434\u0435\u043b\u0430\u043b \u0437\u0430 11 \u043c\u0438\u043d\u0443\u0442 \u0442\u043e, \u0447\u0442\u043e \u043a\u043e\u043c\u0430\u043d\u0434\u0430 \u0434\u0435\u043b\u0430\u043b\u0430 \u043d\u0435\u0434\u0435\u043b\u044e\u00bb\n3. \u0422\u0438\u0437\u0435\u0440: \u00ab\u041c\u043e\u0439 \u043c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433 \u043f\u043e\u0437\u0432\u043e\u043d\u0438\u043b HR\u00bb\n\n\ud83d\udcdc \u0421\u0446\u0435\u043d\u0430\u0440\u0438\u0439 30 \u0441\u0435\u043a | \u041a\u043e\u043d\u0432\u0435\u0440\u0441\u0438\u044f 4.2%"
+    }
+  },
+  {
+    id: "viral-threads",
+    name: "Viral Threads \u041c\u0430\u0441\u0442\u0435\u0440",
+    description: "\u0412\u0438\u0440\u0443\u0441\u043d\u044b\u0435 \u043f\u043e\u0441\u0442\u044b \u0434\u043b\u044f Instagram Threads",
+    detail: "\u0413\u0435\u043d\u0435\u0440\u0430\u0442\u043e\u0440 \u043f\u043e\u0441\u0442\u043e\u0432 \u0434\u043b\u044f Threads. <strong>7 \u0432\u0438\u0440\u0443\u0441\u043d\u044b\u0445 \u0444\u043e\u0440\u043c\u0430\u0442\u043e\u0432</strong>, \u043b\u0438\u043c\u0438\u0442 500 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432, \u0441\u0442\u0438\u043b\u044c \u00ab\u043a\u0430\u043a \u043f\u0435\u0440\u0435\u043f\u0438\u0441\u043a\u0430 \u0441 \u0434\u0440\u0443\u0433\u043e\u043c\u00bb. Median engagement 6.25%.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u041f\u043e\u0441\u0442 \u0434\u043b\u044f Threads \u043f\u0440\u043e \u0432\u044b\u0433\u043e\u0440\u0430\u043d\u0438\u0435 \u043f\u0440\u0435\u0434\u043f\u0440\u0438\u043d\u0438\u043c\u0430\u0442\u0435\u043b\u0435\u0439",
+      output: "\ud83d\udcf1 Threads (487 \u0441\u0438\u043c\u0432\u043e\u043b\u043e\u0432):\n\n\u0412\u044b\u0433\u043e\u0440\u0430\u043d\u0438\u0435 \u2014 \u044d\u0442\u043e \u043d\u0435 \u043a\u043e\u0433\u0434\u0430 \u0442\u044b \u0443\u0441\u0442\u0430\u043b.\n\u042d\u0442\u043e \u043a\u043e\u0433\u0434\u0430 47 \u0443\u0432\u0435\u0434\u043e\u043c\u043b\u0435\u043d\u0438\u0439 \u0438 \u043c\u044b\u0441\u043b\u044c: \u00ab\u0410 \u0447\u0442\u043e \u0435\u0441\u043b\u0438 \u043f\u0440\u043e\u0441\u0442\u043e \u043d\u0435 \u043e\u0442\u0432\u0435\u0447\u0430\u0442\u044c. \u041d\u0438\u043a\u043e\u043c\u0443. \u041d\u0438\u043a\u043e\u0433\u0434\u0430.\u00bb\n\n\ud83d\udd01 \u0424\u043e\u0440\u043c\u0430\u0442: \u041b\u0438\u0447\u043d\u044b\u0439 \u043e\u043f\u044b\u0442 + \u0421\u043e\u0432\u0435\u0442\u044b\n\ud83d\udcca \u041f\u0440\u043e\u0433\u043d\u043e\u0437: \u0432\u044b\u0441\u043e\u043a\u0438\u0439 reply-rate"
+    }
+  },
+  {
+    id: "carousel-from-video",
+    name: "\u0412\u0438\u0434\u0435\u043e \u2192 \u041a\u0430\u0440\u0443\u0441\u0435\u043b\u044c",
+    description: "\u0422\u0440\u0430\u043d\u0441\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u0432\u0438\u0434\u0435\u043e \u0438 \u0442\u0440\u0430\u043d\u0441\u043a\u0440\u0438\u043f\u0442\u043e\u0432 \u0432 \u043a\u0430\u0440\u0443\u0441\u0435\u043b\u0438",
+    detail: "\u041f\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u0442 \u0434\u043b\u0438\u043d\u043d\u044b\u0439 \u0432\u0438\u0434\u0435\u043e\u043a\u043e\u043d\u0442\u0435\u043d\u0442 \u0432 \u0433\u043e\u0442\u043e\u0432\u044b\u0435 \u043a\u0430\u0440\u0443\u0441\u0435\u043b\u0438 \u0434\u043b\u044f Instagram \u0438 LinkedIn. <strong>4 \u0444\u0430\u0437\u044b:</strong> \u0430\u043d\u0430\u043b\u0438\u0437 \u2192 \u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u0430 \u2192 \u0442\u0435\u043a\u0441\u0442 \u2192 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0430. \u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c > \u041f\u043e\u043b\u043d\u043e\u0442\u0430, \u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044f > \u041e\u0431\u044a\u044f\u0441\u043d\u0435\u043d\u0438\u044f.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u041a\u0430\u0440\u0443\u0441\u0435\u043b\u044c \u0438\u0437 \u043f\u043e\u0434\u043a\u0430\u0441\u0442\u0430 \u043f\u0440\u043e \u043b\u0438\u0447\u043d\u044b\u0439 \u0431\u0440\u0435\u043d\u0434",
+      output: "\ud83d\udcd1 18 \u0441\u043b\u0430\u0439\u0434\u043e\u0432:\n\n1\ufe0f\u20e3 \u00ab\u041b\u0418\u0427\u041d\u042b\u0419 \u0411\u0420\u0415\u041d\u0414 \u2014 \u042d\u0422\u041e \u041d\u0415 \u041f\u0420\u041e \u041b\u041e\u0413\u041e\u0422\u0418\u041f\u00bb\n2\ufe0f\u20e3 \u00ab95% \u044d\u043a\u0441\u043f\u0435\u0440\u0442\u043e\u0432 \u0441\u0442\u0440\u043e\u044f\u0442 \u0431\u0440\u0435\u043d\u0434 \u043d\u0435\u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u00bb\n3\ufe0f\u20e3 \u00ab\u0411\u0440\u0435\u043d\u0434 = \u041e\u0431\u0435\u0449\u0430\u043d\u0438\u0435 \u00d7 \u0414\u043e\u043a\u0430\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u043e\u00bb\n...\n1\ufe0f8\ufe0f\u20e3 CTA: \u00ab\u0421\u043e\u0445\u0440\u0430\u043d\u0438 \u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u044c \u0434\u0440\u0443\u0433\u0443\u00bb\n\n\ud83d\udcd0 1080\u00d71350 | \u2b1b \u0422\u0451\u043c\u043d\u044b\u0439 \u0444\u043e\u043d"
+    }
+  },
+  {
+    id: "stories-yasko",
+    name: "\u0421\u0442\u043e\u0440\u0438\u0441 \u043f\u043e \u043c\u0435\u0442\u043e\u0434\u0443 \u042f\u0441\u043a\u043e",
+    description: "Instagram-\u0441\u0442\u043e\u0440\u0438\u0441 \u043f\u043e \u0430\u0432\u0442\u043e\u0440\u0441\u043a\u043e\u0439 \u043c\u0435\u0442\u043e\u0434\u043e\u043b\u043e\u0433\u0438\u0438",
+    detail: "\u041f\u0440\u043e\u0434\u0430\u044e\u0449\u0438\u0435 \u043b\u0438\u043d\u0438\u0438 \u0441\u0442\u043e\u0440\u0438\u0441 \u043f\u043e \u043c\u0435\u0442\u043e\u0434\u043e\u043b\u043e\u0433\u0438\u0438 <strong>\u0412\u043b\u0430\u0434\u0430 \u042f\u0441\u044c\u043a\u043e</strong>. <strong>\u0414\u043e\u0444\u0430\u043c\u0438\u043d\u043e\u0432\u0430\u044f \u0430\u0440\u0445\u0438\u0442\u0435\u043a\u0442\u0443\u0440\u0430:</strong> 6 \u0443\u0440\u043e\u0432\u043d\u0435\u0439 \u043b\u0435\u0441\u0442\u043d\u0438\u0446\u044b, Curiosity Loops, Desire Mapping, 5 \u0442\u0438\u043f\u043e\u0432 \u043b\u0438\u043d\u0438\u0439.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u041b\u0438\u043d\u0438\u044f \u0441\u0442\u043e\u0440\u0438\u0441: \u00ab\u043f\u043e\u0447\u0435\u043c\u0443 \u044f \u0443\u0448\u0451\u043b \u0438\u0437 \u043d\u0430\u0439\u043c\u0430\u00bb",
+      output: "\ud83d\udcf1 25 \u0441\u0442\u043e\u0440\u0438\u0441:\n\n\ud83c\udfac Stimulation (1-4):\n1. \u00ab\u042f \u0443\u0434\u0430\u043b\u0438\u043b \u044d\u0442\u043e \u0441\u0442\u043e\u0440\u0438\u0441 3 \u0440\u0430\u0437\u0430\u00bb\n2. \u0424\u043e\u0442\u043e \u043e\u0444\u0438\u0441\u0430: \u00ab14 \u0447\u0430\u0441\u043e\u0432. \u0417\u0430 120\u041a\u00bb\n\n\ud83d\udd25 Captivation (5-10): \u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043f\u0440\u043e\u0432\u0430\u043b\u0430\n\ud83d\udca1 Anticipation: \u00ab3 \u0432\u0435\u0449\u0438, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u044f \u043f\u043e\u043d\u044f\u043b\u00bb\n\ud83c\udfaf CTA (24-25): \u0421\u0442\u0438\u043a\u0435\u0440 \u0432\u043e\u043f\u0440\u043e\u0441\u043e\u0432"
+    }
+  },
+  {
+    id: "frontend-design",
+    name: "Frontend Design Engineer",
+    description: "\u041f\u0440\u043e\u0434\u0430\u043a\u0448\u043d-\u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u044b \u0443\u0440\u043e\u0432\u043d\u044f Awwwards",
+    detail: "\u0421\u043e\u0437\u0434\u0430\u0451\u0442 \u043f\u0440\u0435\u043c\u0438\u0430\u043b\u044c\u043d\u044b\u0435 \u0444\u0440\u043e\u043d\u0442\u0435\u043d\u0434-\u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u044b. <strong>\u0421\u043b\u043e\u0432\u0430\u0440\u044c \u043d\u0438\u0448:</strong> 12+ \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u0445 \u044f\u0437\u044b\u043a\u043e\u0432. CSS-\u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0435, GPU-\u0443\u0441\u043a\u043e\u0440\u0435\u043d\u0438\u0435, clamp()-\u0442\u0438\u043f\u043e\u0433\u0440\u0430\u0444\u0438\u043a\u0430, WCAG 2.1 AA.",
+    category: "dev",
+    categoryLabel: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430",
+    example: {
+      input: "\u041b\u0435\u043d\u0434\u0438\u043d\u0433 \u0434\u043b\u044f \u043a\u0443\u0440\u0441\u0430 \u043f\u043e \u043d\u0435\u0439\u0440\u043e\u0441\u0435\u0442\u044f\u043c, tech-\u0441\u0442\u0438\u043b\u044c",
+      output: "\ud83d\udda5\ufe0f \u041d\u0438\u0448\u0430: Tech/AI \u2192 dark, neon, grid\n\n\ud83d\udce6 7 \u043a\u043e\u043c\u043f\u043e\u043d\u0435\u043d\u0442\u043e\u0432:\nHero + Pain + \u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430 + \u041a\u0435\u0439\u0441\u044b + \u0422\u0430\u0440\u0438\u0444\u044b + FAQ + CTA\n\n\u2699\ufe0f React + Tailwind + Framer Motion\n\ud83d\udcf1 mobile-first | Lighthouse 95+"
+    }
+  },
+  {
+    id: "notebooklm",
+    name: "NotebookLM Agent",
+    description: "\u0417\u0430\u043f\u0440\u043e\u0441\u044b \u043a Google NotebookLM \u0447\u0435\u0440\u0435\u0437 MCP",
+    detail: "\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0430\u0435\u0442 NotebookLM \u043d\u043e\u0443\u0442\u0431\u0443\u043a\u0438 \u0432 Claude Code \u0447\u0435\u0440\u0435\u0437 <strong>MCP-\u0441\u0435\u0440\u0432\u0435\u0440</strong>. \u041e\u0442\u0432\u0435\u0442\u044b \u0441 \u0446\u0438\u0442\u0430\u0442\u0430\u043c\u0438 \u0438\u0437 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a\u043e\u0432. \u0413\u0430\u043b\u043b\u044e\u0446\u0438\u043d\u0430\u0446\u0438\u0438: 0%.",
+    category: "dev",
+    categoryLabel: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430",
+    example: {
+      input: "\u0421\u043f\u0440\u043e\u0441\u0438 \u0432 \u043d\u043e\u0443\u0442\u0431\u0443\u043a\u0435: \u043a\u0430\u043a\u0438\u0435 \u043c\u0435\u0442\u0440\u0438\u043a\u0438 \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u0442\u044c \u043d\u0430 \u0437\u0430\u043f\u0443\u0441\u043a\u0435?",
+      output: "\ud83d\udcd3 NotebookLM:\n\n1. CPL [\u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a: \u041c\u043e\u0434\u0443\u043b\u044c 3]\n2. CR \u0432\u0435\u0431\u0438\u043d\u0430\u0440\u0430 [\u0427\u0435\u043a\u043b\u0438\u0441\u0442]\n3. \u0414\u043e\u0445\u043e\u0434\u0438\u043c\u043e\u0441\u0442\u044c [\u041a\u0435\u0439\u0441 #4]\n4. ROAS >3x [\u0424\u0438\u043d\u043c\u043e\u0434\u0435\u043b\u044c]\n5. LTV \u043a\u043e\u0433\u043e\u0440\u0442\u044b [\u042e\u043d\u0438\u0442-\u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430]\n\n\ud83d\udcce 4 \u0438\u0441\u0442\u043e\u0447\u043d\u0438\u043a\u0430 | 0% \u0433\u0430\u043b\u043b\u044e\u0446\u0438\u043d\u0430\u0446\u0438\u0439"
+    }
+  },
+  {
+    id: "call-analysis",
+    name: "\u0410\u043d\u0430\u043b\u0438\u0437 \u0437\u0432\u043e\u043d\u043a\u043e\u0432",
+    description: "\u041e\u043f\u0435\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u044b\u0439 \u0430\u0441\u0441\u0438\u0441\u0442\u0435\u043d\u0442 \u0434\u043b\u044f \u0440\u0430\u0437\u0431\u043e\u0440\u0430 \u0437\u0432\u043e\u043d\u043a\u043e\u0432 \u0438 \u0432\u0441\u0442\u0440\u0435\u0447",
+    detail: "\u0420\u0430\u0437\u0431\u0438\u0440\u0430\u0435\u0442 \u0442\u0440\u0430\u043d\u0441\u043a\u0440\u0438\u043f\u0446\u0438\u0438 \u0437\u0432\u043e\u043d\u043a\u043e\u0432 \u0438 \u0432\u0441\u0442\u0440\u0435\u0447. \u0424\u0438\u043a\u0441\u0438\u0440\u0443\u0435\u0442 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u0451\u043d\u043d\u043e\u0441\u0442\u0438, action items, \u0434\u0435\u0434\u043b\u0430\u0439\u043d\u044b. \u0424\u043e\u0440\u043c\u0438\u0440\u0443\u0435\u0442 \u043e\u0442\u0447\u0451\u0442 \u00ab\u0447\u0442\u043e \u043e\u0431\u0435\u0449\u0430\u043b\u0438 \u2014 \u0447\u0442\u043e \u0441\u0434\u0435\u043b\u0430\u043b\u0438\u00bb.",
+    category: "sales",
+    categoryLabel: "\u041f\u0440\u043e\u0434\u0430\u0436\u0438",
+    example: {
+      input: "\u0420\u0430\u0437\u0431\u0435\u0440\u0438 \u0437\u0432\u043e\u043d\u043e\u043a \u0441 \u043f\u043e\u0434\u0440\u044f\u0434\u0447\u0438\u043a\u043e\u043c \u043f\u043e \u0440\u0435\u043a\u043b\u0430\u043c\u0435",
+      output: "\ud83d\udcde \u0417\u0432\u043e\u043d\u043e\u043a: \u0412\u043b\u0430\u0434 \u2194 \u0414\u043c\u0438\u0442\u0440\u0438\u0439, 23 \u043c\u0438\u043d\n\n\u2705 \u0414\u043e\u0433\u043e\u0432\u043e\u0440\u0451\u043d\u043d\u043e\u0441\u0442\u0438:\n1. \u041c\u0435\u0434\u0438\u0430\u043f\u043b\u0430\u043d \u0434\u043e \u043f\u044f\u0442\u043d\u0438\u0446\u044b\n2. \u0411\u044e\u0434\u0436\u0435\u0442: 150\u041a \u043d\u0430 \u0442\u0435\u0441\u0442\n3. \u0421\u043e\u0437\u0432\u043e\u043d 4 \u0430\u043f\u0440\u0435\u043b\u044f\n\n\u26a0\ufe0f \u041d\u0435 \u043e\u0431\u0441\u0443\u0434\u0438\u043b\u0438: \u0446\u0435\u043b\u0435\u0432\u043e\u0439 CPL"
+    }
+  },
+  {
+    id: "content-system",
+    name: "Content System",
+    description: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442-\u043a\u043e\u043d\u0432\u0435\u0439\u0435\u0440: \u0438\u0437 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u0430 \u0432 7 \u0444\u043e\u0440\u043c\u0430\u0442\u043e\u0432",
+    detail: "\u041f\u043e\u043b\u043d\u0430\u044f \u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0430. <strong>7 \u0444\u043e\u0440\u043c\u0430\u0442\u043e\u0432:</strong> Reels, \u043a\u0430\u0440\u0443\u0441\u0435\u043b\u0438, \u043a\u043e\u0440\u043e\u0442\u043a\u0438\u0435 \u043f\u043e\u0441\u0442\u044b, \u0434\u043b\u0438\u043d\u043d\u044b\u0435 \u043f\u043e\u0441\u0442\u044b, \u0441\u0442\u0430\u0442\u044c\u0438, \u0441\u0442\u043e\u0440\u0438\u0441, \u0446\u0438\u0442\u0430\u0442\u044b. \u0410\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u0443\u0435\u0442 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b, \u0432\u044b\u0434\u0435\u043b\u044f\u0435\u0442 \u00ab\u0437\u043e\u043b\u043e\u0442\u044b\u0435 \u043a\u0443\u0441\u043a\u0438\u00bb, \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u0435\u0442 \u0432 Notion.",
+    category: "content",
+    categoryLabel: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442",
+    example: {
+      input: "\u0412\u043e\u0442 \u0442\u0440\u0430\u043d\u0441\u043a\u0440\u0438\u043f\u0442 \u043f\u043e\u0434\u043a\u0430\u0441\u0442\u0430. \u0421\u0434\u0435\u043b\u0430\u0439 \u043a\u043e\u043d\u0442\u0435\u043d\u0442",
+      output: "\ud83d\udce6 7 \u0444\u043e\u0440\u043c\u0430\u0442\u043e\u0432:\n\n\ud83c\udfac Reels: 3 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u044f\n\ud83d\udcd1 \u041a\u0430\u0440\u0443\u0441\u0435\u043b\u044c: 15 \u0441\u043b\u0430\u0439\u0434\u043e\u0432\n\ud83d\udcdd \u041a\u043e\u0440\u043e\u0442\u043a\u0438\u0439: 780 \u0437\u043d.\n\ud83d\udcc4 \u0414\u043b\u0438\u043d\u043d\u044b\u0439: 2400 \u0437\u043d.\n\u270d\ufe0f \u0421\u0442\u0430\u0442\u044c\u044f: 6000 \u0437\u043d.\n\ud83d\udcf1 \u0421\u0442\u043e\u0440\u0438\u0441: 18 \u0448\u0442.\n\ud83d\udcac \u0426\u0438\u0442\u0430\u0442\u044b: 5 \u043a\u0430\u0440\u0442\u043e\u0447\u0435\u043a\n\n\ud83d\udcca \u0418\u0442\u043e\u0433\u043e: 14 \u0435\u0434\u0438\u043d\u0438\u0446 \u043a\u043e\u043d\u0442\u0435\u043d\u0442\u0430 \u0438\u0437 1 \u043f\u043e\u0434\u043a\u0430\u0441\u0442\u0430"
+    }
+  },
+  {
+    id: "direct-funnel",
+    name: "Direct Funnel",
+    description: "\u041a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440 \u0432\u043e\u0440\u043e\u043d\u043e\u043a: Instagram \u2192 Telegram \u2192 \u0437\u0430\u044f\u0432\u043a\u0430",
+    detail: "\u041f\u043e\u043b\u043d\u044b\u0439 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440 \u0432\u043e\u0440\u043e\u043d\u043a\u0438 \u043f\u0440\u043e\u0434\u0430\u0436. <strong>4 \u0441\u043a\u0438\u043b\u043b\u0430:</strong> Direct Funnel, Lead Magnet Writer, Offer Sharpener, Bot Sequence Writer. \u041e\u0442 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u0434\u043e \u0433\u043e\u0442\u043e\u0432\u044b\u0445 \u0442\u0435\u043a\u0441\u0442\u043e\u0432.",
+    category: "funnels",
+    categoryLabel: "\u0412\u043e\u0440\u043e\u043d\u043a\u0438",
+    example: {
+      input: "\u0412\u043e\u0440\u043e\u043d\u043a\u0430 \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0430\u0436\u0438 \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0438\u0439 \u0447\u0435\u0440\u0435\u0437 Instagram",
+      output: "\ud83d\udd04 Direct Funnel \u2014 \u041a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0438\u0438\n\n\u0428\u0430\u0433 1: Reels + \u043a\u043e\u0434\u043e\u0432\u043e\u0435 \u0441\u043b\u043e\u0432\u043e\n\u0428\u0430\u0433 2: DM-\u0431\u043e\u0442 (4 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f)\n\u0428\u0430\u0433 3: Telegram-\u0431\u043e\u0442 + \u043b\u0438\u0434\u043c\u0430\u0433\u043d\u0438\u0442\n\u0428\u0430\u0433 4: \u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u044b\u0439 \u0440\u0430\u0437\u0431\u043e\u0440 \u2192 \u043e\u0444\u0444\u0435\u0440 25\u041a"
+    }
+  },
+  {
+    id: "commitment-tracker",
+    name: "\u0422\u0440\u0435\u043a\u0435\u0440 \u0434\u043e\u0433\u043e\u0432\u043e\u0440\u0451\u043d\u043d\u043e\u0441\u0442\u0435\u0439",
+    description: "\u0424\u0438\u043a\u0441\u0430\u0446\u0438\u044f \u0438 \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u043d\u0438\u0435 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432",
+    detail: "\u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0439 \u0442\u0440\u0435\u043a\u0435\u0440 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432 \u0438\u0437 \u0432\u0441\u0442\u0440\u0435\u0447, \u043f\u0435\u0440\u0435\u043f\u0438\u0441\u043e\u043a, \u0437\u0432\u043e\u043d\u043a\u043e\u0432. \u041e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0435, \u0434\u0435\u0434\u043b\u0430\u0439\u043d\u044b, \u0441\u0442\u0430\u0442\u0443\u0441\u044b, \u043e\u0442\u0447\u0451\u0442\u044b \u043f\u043e \u043f\u0440\u043e\u0441\u0440\u043e\u0447\u0435\u043d\u043d\u044b\u043c.",
+    category: "sales",
+    categoryLabel: "\u041f\u0440\u043e\u0434\u0430\u0436\u0438",
+    example: {
+      input: "\u0417\u0430\u0444\u0438\u043a\u0441\u0438\u0440\u0443\u0439 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430 \u0438\u0437 \u0441\u043e\u0437\u0432\u043e\u043d\u0430",
+      output: "\ud83d\udccb \u0422\u0440\u0435\u043a\u0435\u0440 \u2014 \u0421\u043e\u0437\u0432\u043e\u043d 18.03\n\n1. \u041c\u0430\u0448\u0430 \u2014 \u043c\u0435\u0434\u0438\u0430\u043f\u043b\u0430\u043d | \u0434\u043e 21.03 | \u23f3\n2. \u0414\u0438\u043c\u0430 \u2014 \u0431\u0430\u0433\u0438 \u043a\u0432\u0438\u0437\u0430 | \u0434\u043e 20.03 | \u23f3\n3. \u0412\u043b\u0430\u0434 \u2014 \u0431\u044e\u0434\u0436\u0435\u0442 | \u0434\u043e 22.03 | \ud83d\udd34\n\n\u26a0\ufe0f \u041f\u0440\u043e\u0441\u0440\u043e\u0447\u0435\u043d\u043e: 1 \u0437\u0430\u0434\u0430\u0447\u0430"
+    }
+  }
+];
+
+const CATEGORIES = [
+  { id: "all", label: "\u0412\u0441\u0435", count: 27 },
+  { id: "audience", label: "\u0418\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435", count: 0 },
+  { id: "product", label: "\u041f\u0440\u043e\u0434\u0443\u043a\u0442", count: 0 },
+  { id: "content", label: "\u041a\u043e\u043d\u0442\u0435\u043d\u0442", count: 0 },
+  { id: "funnels", label: "\u0412\u043e\u0440\u043e\u043d\u043a\u0438", count: 0 },
+  { id: "sales", label: "\u041f\u0440\u043e\u0434\u0430\u0436\u0438", count: 0 },
+  { id: "youtube", label: "\u042e\u0442\u0443\u0431", count: 0 },
+  { id: "dev", label: "\u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430", count: 0 }
+];
+
+// ==================== INIT ====================
+const CAT_COLORS = {
+  audience: 'var(--cat-research)',
+  product: 'var(--cat-product)',
+  content: 'var(--cat-content)',
+  funnels: 'var(--cat-funnels)',
+  sales: 'var(--cat-sales)',
+  youtube: 'var(--cat-sales)',
+  dev: 'var(--cat-dev)',
+  tools: 'var(--cat-tools)'
+};
+
+// Count categories
+EMPLOYEES.forEach(e => {
+  const cat = CATEGORIES.find(c => c.id === e.category);
+  if (cat) cat.count++;
+});
+
+// Render filters
+const filtersEl = document.getElementById('filters');
+CATEGORIES.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat.id === 'all' ? ' active' : '');
+  btn.dataset.cat = cat.id;
+  btn.innerHTML = cat.label + '<span class="filter-count">' + cat.count + '</span>';
+  btn.addEventListener('click', () => filterCards(cat.id));
+  filtersEl.appendChild(btn);
+});
+
+// Render grid
+const gridEl = document.getElementById('grid');
+EMPLOYEES.forEach((emp, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.cat = emp.category;
+  card.style.animationDelay = (i * 0.04) + 's';
+  card.innerHTML = `
+    <div class="card-header">
+      <span class="card-number">#${i + 1}</span>
+      <span class="card-badge">${emp.categoryLabel}</span>
+    </div>
+    <div class="card-name">${emp.name}</div>
+    <div class="card-desc">${emp.description}</div>
+    <div class="card-hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      Открыть пример работы
+    </div>
+  `;
+  card.addEventListener('click', () => openModal(emp));
+  gridEl.appendChild(card);
+});
+
+// ==================== FILTER ====================
+function filterCards(catId) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === catId));
+  document.querySelectorAll('.pipeline-node').forEach(n => n.classList.remove('active'));
+
+  const pipelineMap = { audience: 'audience', product: 'product', content: 'content', funnels: 'funnels', sales: 'sales' };
+  if (pipelineMap[catId]) {
+    document.querySelector(`.pipeline-step[data-filter="${catId}"] .pipeline-node`)?.classList.add('active');
+  }
+
+  document.querySelectorAll('.card').forEach(card => {
+    if (catId === 'all' || card.dataset.cat === catId) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// Pipeline clicks
+document.querySelectorAll('.pipeline-step').forEach(step => {
+  step.addEventListener('click', () => {
+    const cat = step.dataset.filter;
+    filterCards(cat);
+  });
+});
+
+// ==================== MODAL ====================
+const overlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+const modalCloseBtn = document.getElementById('modalClose');
+
+function openModal(emp) {
+  const color = CAT_COLORS[emp.category] || 'var(--accent-purple)';
+  modalContent.innerHTML = `
+    <div class="modal-badge" style="color:${color};background:color-mix(in srgb, ${color} 12%, transparent)">${emp.categoryLabel}</div>
+    <div class="modal-title">${emp.name}</div>
+    <div class="modal-subtitle">${emp.description}</div>
+    <div class="modal-detail">${emp.detail}</div>
+    ${emp.example ? `
+    <div class="modal-example">
+      <div class="modal-example-header">Пример работы</div>
+      <div class="modal-example-input">
+        <div class="modal-example-input-label">Ваш запрос</div>
+        <p>${emp.example.input}</p>
+      </div>
+      <div class="modal-example-output">
+        <div class="modal-example-output-label">Результат</div>
+        <pre>${emp.example.output}</pre>
+      </div>
+    </div>
+    ` : ''}
+    <div class="modal-cta-wrap">
+      <a href="index.html#packages" class="modal-cta">Получить этого сотрудника &#8594;</a>
+    </div>
+  `;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalCloseBtn.addEventListener('click', closeModal);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// ==================== SCROLL ANIMATIONS ====================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.card').forEach(card => {
+  card.style.animationPlayState = 'paused';
+  observer.observe(card);
+});
+</script>
+</body>
+</html>
