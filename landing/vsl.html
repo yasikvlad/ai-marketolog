@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI-Маркетолог | Второй Поток</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #050510;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --cyan: #06b6d4;
+  --pink: #ec4899;
+  --text: #e8e8f0;
+  --text-dim: rgba(255,255,255,0.5);
+  --text-muted: rgba(255,255,255,0.3);
+  --glow-purple: 0 0 60px rgba(139,92,246,0.3);
+  --glow-blue: 0 0 60px rgba(59,130,246,0.3);
+  --glow-green: 0 0 60px rgba(34,197,94,0.3);
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========== PROGRESS BAR ========== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--blue), var(--green));
+  z-index: 9999;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 40px rgba(59,130,246,0.3);
+}
+
+/* ========== NAV DOTS ========== */
+.nav-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.nav-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  border: none;
+  padding: 0;
+}
+.nav-dots .dot.active {
+  background: var(--purple);
+  box-shadow: 0 0 12px rgba(139,92,246,0.6);
+  transform: scale(1.4);
+}
+.nav-dots .dot:hover {
+  background: rgba(255,255,255,0.4);
+  transform: scale(1.3);
+}
+
+/* ========== SECTIONS ========== */
+section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  overflow: hidden;
+}
+
+/* ========== PARTICLE CANVAS ========== */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== VOLUMETRIC ORBS ========== */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  will-change: transform;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--purple), transparent 70%);
+  top: -200px; left: -200px;
+  animation: orbFloat1 20s ease-in-out infinite;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--blue), transparent 70%);
+  bottom: -150px; right: -150px;
+  animation: orbFloat2 25s ease-in-out infinite;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--green), transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat3 18s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, 50px) scale(1.1); }
+  66% { transform: translate(-50px, 100px) scale(0.9); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, -60px) scale(1.15); }
+  66% { transform: translate(60px, -80px) scale(0.85); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-30%, -70%) scale(1.2); }
+}
+
+/* ========== REVEAL ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========== TYPOGRAPHY ========== */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(139,92,246,0.3);
+  background: rgba(139,92,246,0.08);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--purple);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.section-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, var(--purple) 50%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-green {
+  background: linear-gradient(135deg, #fff 0%, var(--green) 50%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== SECTION 1: HERO ========== */
+#hero {
+  position: relative;
+  text-align: center;
+}
+#hero h1 {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  max-width: 900px;
+  margin-bottom: 24px;
+}
+#hero .subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--text-dim);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15));
+  border: 1px solid rgba(139,92,246,0.25);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  backdrop-filter: blur(10px);
+  margin-bottom: 50px;
+}
+.hero-badge .live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(139,92,246,0.4);
+  border: none;
+  cursor: pointer;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(139,92,246,0.6);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+.scroll-hint .arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ========== SECTION 2: PROBLEM ========== */
+#problem { text-align: center; }
+#problem h2 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  max-width: 800px;
+  margin-bottom: 48px;
+}
+.problem-counter {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 800;
+  color: rgba(255,255,255,0.06);
+  letter-spacing: -0.04em;
+  position: relative;
+}
+.problem-counter .amount {
+  position: relative;
+  display: inline-block;
+}
+.problem-counter .label {
+  display: block;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 8px;
+  letter-spacing: 0;
+}
+.chaos-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 500px;
+  margin: 0 auto 48px;
+}
+.chaos-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  animation: chaosFloat var(--dur, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0.4;
+}
+@keyframes chaosFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  50% { transform: translateY(-8px) rotate(3deg); opacity: 0.2; }
+}
+
+/* ========== SECTION 3: TURNING POINT ========== */
+#turning-point { text-align: center; }
+#turning-point h2 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  max-width: 700px;
+  margin-bottom: 60px;
+}
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px;
+}
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 10px;
+  position: relative;
+  opacity: 0.2;
+  transition: all 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.pipeline-step.lit {
+  opacity: 1;
+}
+.pipeline-step .step-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+  transition: all 0.6s ease;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.pipeline-step.lit .step-icon {
+  background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.2));
+  border-color: rgba(139,92,246,0.3);
+  box-shadow: var(--glow-purple);
+}
+.pipeline-step .step-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 80px;
+}
+.pipeline-arrow {
+  color: var(--text-muted);
+  font-size: 18px;
+  opacity: 0.3;
+  margin: 0 2px;
+  padding-bottom: 24px;
+}
+
+/* ========== SECTION 4: DEEP RESEARCH ========== */
+#deep-research { text-align: center; }
+#deep-research h2 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+#deep-research .sub {
+  color: var(--text-dim);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  margin-bottom: 48px;
+  max-width: 500px;
+}
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 700px;
+  width: 100%;
+}
+.research-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+.research-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139,92,246,0.2);
+  transform: translateY(-4px);
+}
+.research-card .num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.research-card .name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  border: 1px solid rgba(139,92,246,0.25);
+  background: rgba(139,92,246,0.06);
+  color: var(--purple);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.section-link:hover {
+  background: rgba(139,92,246,0.15);
+  transform: translateY(-2px);
+}
+
+/* ========== SECTION 5: 27 EMPLOYEES ========== */
+#employees { text-align: center; }
+#employees h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  max-width: 700px;
+  margin-bottom: 12px;
+}
+#employees .sub {
+  color: var(--text-dim);
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+.employee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px;
+  max-width: 800px;
+  width: 100%;
+}
+.emp-card {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 22px;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  cursor: default;
+  position: relative;
+}
+.emp-card.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.emp-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139,92,246,0.2);
+  transform: scale(1.08);
+}
+.emp-card .emp-name {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+  padding: 0 4px;
+}
+.emp-categories {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.emp-cat {
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid;
+  cursor: default;
+}
+
+/* ========== SECTION 6: VIBE CODING ========== */
+#vibe-coding { text-align: center; }
+#vibe-coding h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  max-width: 700px;
+  margin-bottom: 12px;
+}
+#vibe-coding .sub {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin-bottom: 48px;
+  max-width: 500px;
+}
+.code-pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 500px;
+  width: 100%;
+}
+.code-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.04);
+  opacity: 0.3;
+  transition: all 0.5s ease;
+}
+.code-step.lit {
+  opacity: 1;
+  background: rgba(139,92,246,0.06);
+  border-color: rgba(139,92,246,0.15);
+}
+.code-step .num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--purple);
+  min-width: 28px;
+}
+.code-step .txt {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+.stats-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-item .stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+}
+.stat-item .stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ========== SECTION 7: CONTENT FACTORY ========== */
+#content-factory { text-align: center; }
+#content-factory h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  max-width: 600px;
+  margin-bottom: 60px;
+}
+.content-explosion {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  margin: 0 auto;
+}
+.content-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 0 40px rgba(139,92,246,0.4);
+  z-index: 2;
+}
+.content-item {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.content-item.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========== SECTION 8: TESTIMONIALS ========== */
+#testimonials { text-align: center; }
+#testimonials h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  margin-bottom: 48px;
+}
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 700px;
+  width: 100%;
+}
+.quote-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.quote-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 60px;
+  font-family: Georgia, serif;
+  color: rgba(139,92,246,0.1);
+  line-height: 1;
+}
+.quote-card .text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+.quote-card .author {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+}
+.quote-card .role {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.case-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(6,182,212,0.06));
+  border-color: rgba(34,197,94,0.15);
+  text-align: center;
+  padding: 32px;
+}
+.case-card .case-stat {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.case-card .case-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 8px;
+}
+
+/* ========== SECTION 9: FOR WHOM ========== */
+#for-whom { text-align: center; }
+#for-whom h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  margin-bottom: 48px;
+}
+.whom-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 800px;
+  width: 100%;
+}
+.whom-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+  cursor: default;
+}
+.whom-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139,92,246,0.2);
+  transform: translateY(-8px);
+  box-shadow: var(--glow-purple);
+}
+.whom-card .icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+.whom-card h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.whom-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* ========== SECTION 10: HOW IT WORKS ========== */
+#how-it-works { text-align: center; }
+#how-it-works h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  margin-bottom: 48px;
+}
+.format-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.format-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+.format-card .icon { font-size: 32px; margin-bottom: 12px; }
+.format-card h3 { font-size: 15px; margin-bottom: 6px; }
+.format-card p { font-size: 12px; color: var(--text-dim); }
+.timeline-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 100px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+.timeline-strip .sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* ========== SECTION 11: PACKAGES ========== */
+#packages { text-align: center; }
+#packages h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  margin-bottom: 16px;
+}
+.countdown {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.cd-item .cd-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  min-width: 50px;
+  text-align: center;
+}
+.cd-item .cd-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  width: 100%;
+}
+.pkg-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 24px;
+  padding: 32px 20px;
+  text-align: left;
+  position: relative;
+  transition: all 0.4s ease;
+}
+.pkg-card.featured {
+  background: linear-gradient(180deg, rgba(139,92,246,0.08), rgba(59,130,246,0.04));
+  border-color: rgba(139,92,246,0.3);
+  box-shadow: var(--glow-purple);
+  transform: scale(1.03);
+}
+.pkg-card .pkg-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 16px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+.pkg-card .pkg-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pkg-card .pkg-price {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.pkg-card .pkg-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.pkg-card .pkg-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+.pkg-card .pkg-features li::before {
+  content: '\2713';
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.pkg-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+.pkg-btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+}
+.pkg-btn-outline:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.3);
+}
+.pkg-btn-primary {
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(139,92,246,0.3);
+}
+.pkg-btn-primary:hover {
+  box-shadow: 0 8px 30px rgba(139,92,246,0.5);
+  transform: translateY(-2px);
+}
+
+/* ========== SECTION 12: GUARANTEE + CTA ========== */
+#cta-final { text-align: center; }
+.guarantee-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(34,197,94,0.2);
+  background: rgba(34,197,94,0.05);
+  margin-bottom: 40px;
+}
+.guarantee-badge .shield {
+  font-size: 32px;
+}
+.guarantee-badge .g-text {
+  text-align: left;
+}
+.guarantee-badge .g-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green);
+}
+.guarantee-badge .g-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+#cta-final h2 {
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+#cta-final .sub {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+.final-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 48px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 40px rgba(139,92,246,0.4);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(0deg); }
+  100% { transform: translateX(100%) rotate(0deg); }
+}
+.final-cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 60px rgba(139,92,246,0.6);
+}
+.contact-info {
+  margin-top: 32px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.contact-info a {
+  color: var(--text-dim);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.contact-info a:hover { color: var(--purple); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  section { padding: 40px 20px; }
+  .nav-dots { right: 10px; gap: 8px; }
+  .nav-dots .dot { width: 6px; height: 6px; }
+  .research-grid { grid-template-columns: repeat(2, 1fr); }
+  .employee-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .emp-card { font-size: 18px; }
+  .emp-card .emp-name { font-size: 7px; }
+  .quotes-grid { grid-template-columns: 1fr; }
+  .whom-cards { grid-template-columns: 1fr; gap: 12px; }
+  .format-grid { grid-template-columns: 1fr; }
+  .packages-grid { grid-template-columns: 1fr; gap: 12px; }
+  .pkg-card.featured { transform: none; }
+  .pipeline { gap: 0; }
+  .pipeline-step { padding: 8px 4px; }
+  .pipeline-step .step-icon { width: 44px; height: 44px; font-size: 18px; }
+  .pipeline-step .step-label { font-size: 9px; max-width: 60px; }
+  .pipeline-arrow { font-size: 14px; margin: 0; }
+  .content-explosion { width: 280px; height: 280px; }
+  .scroll-hint { display: none; }
+  .chaos-icons { gap: 10px; }
+  .chaos-icon { width: 44px; height: 44px; font-size: 18px; }
+}
+
+@media (max-width: 480px) {
+  .employee-grid { grid-template-columns: repeat(4, 1fr); }
+  .research-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .research-card { padding: 16px 10px; }
+  .packages-grid { gap: 24px; }
+  .hero-cta { padding: 14px 32px; font-size: 15px; }
+  .code-pipeline { gap: 3px; }
+  .code-step { padding: 10px 14px; gap: 12px; }
+}
+
+/* ========== BOKEH LAYER ========== */
+.bokeh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.bokeh-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: bokehFloat linear infinite;
+}
+@keyframes bokehFloat {
+  0% { opacity: 0; transform: translateY(100vh) scale(0.5); }
+  10% { opacity: var(--opa, 0.15); }
+  90% { opacity: var(--opa, 0.15); }
+  100% { opacity: 0; transform: translateY(-20vh) scale(1.2); }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar" style="width: 0%"></div>
+
+<!-- Nav Dots -->
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
+<!-- Bokeh Layer -->
+<div class="bokeh" id="bokeh"></div>
+
+<!-- ========== SECTION 1: HERO ========== -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-badge reveal" style="transition-delay: 0.1s">
+    <span class="live-dot"></span>
+    Второй поток | Старт 15 апреля
+  </div>
+
+  <h1 class="gradient-text reveal" style="transition-delay: 0.3s">
+    Обучись нейронкам.<br>x10 к продуктивности.
+  </h1>
+
+  <p class="subtitle reveal" style="transition-delay: 0.5s">
+    Делегируй 80% рутины. Внедри AI-маркетинг.<br>
+    Замени себе целый отдел за 2 месяца.
+  </p>
+
+  <a href="https://aimarketolog.site" target="_blank" class="hero-cta reveal" style="transition-delay: 0.7s">
+    Забрать место
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+
+  <div class="scroll-hint">
+    <span>Скролль</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ========== SECTION 2: PROBLEM ========== -->
+<section id="problem">
+  <div class="section-badge reveal">Проблема</div>
+
+  <div class="chaos-icons reveal" style="transition-delay: 0.2s">
+    <div class="chaos-icon" style="--dur: 3s; --delay: 0s">🤖</div>
+    <div class="chaos-icon" style="--dur: 3.5s; --delay: 0.2s">📱</div>
+    <div class="chaos-icon" style="--dur: 2.8s; --delay: 0.4s">💬</div>
+    <div class="chaos-icon" style="--dur: 3.2s; --delay: 0.6s">📺</div>
+    <div class="chaos-icon" style="--dur: 3.7s; --delay: 0.1s">🧠</div>
+    <div class="chaos-icon" style="--dur: 2.9s; --delay: 0.3s">📚</div>
+    <div class="chaos-icon" style="--dur: 3.4s; --delay: 0.5s">💸</div>
+    <div class="chaos-icon" style="--dur: 3.1s; --delay: 0.7s">🤯</div>
+  </div>
+
+  <h2 class="reveal" style="transition-delay: 0.3s">
+    Подписался на 30 каналов про AI.<br>
+    Попробовал ChatGPT. Купил курс за $300.
+  </h2>
+
+  <div class="problem-counter reveal-scale" style="transition-delay: 0.5s">
+    <span class="amount">$<span class="counter" data-target="0">0</span></span>
+    <span class="label">заработано</span>
+  </div>
+</section>
+
+<!-- ========== SECTION 3: TURNING POINT ========== -->
+<section id="turning-point">
+  <div class="section-badge reveal">Поворотный момент</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">
+    Один человек. <span class="gradient-text">30+ нейронок.</span><br>Система.
+  </h2>
+
+  <div class="pipeline reveal" style="transition-delay: 0.4s" id="pipeline">
+    <div class="pipeline-step" data-step="0">
+      <div class="step-icon">🔍</div>
+      <div class="step-label">Research</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="1">
+      <div class="step-icon">📦</div>
+      <div class="step-label">Упаковка</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="2">
+      <div class="step-icon">💻</div>
+      <div class="step-label">Сайты</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="3">
+      <div class="step-icon">✍️</div>
+      <div class="step-label">Контент</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="4">
+      <div class="step-icon">🎨</div>
+      <div class="step-label">Визуал</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="5">
+      <div class="step-icon">🔄</div>
+      <div class="step-label">Воронки</div>
+    </div>
+    <div class="pipeline-arrow">&#8594;</div>
+    <div class="pipeline-step" data-step="6">
+      <div class="step-icon">⚡</div>
+      <div class="step-label">Автоматизация</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 4: DEEP RESEARCH ========== -->
+<section id="deep-research">
+  <div class="section-badge reveal">Шаг 1</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">
+    <span class="gradient-text">Полная картина рынка</span><br>за 1 день
+  </h2>
+
+  <p class="sub reveal" style="transition-delay: 0.3s">
+    Авторский метод Deep Research из 6 шагов
+  </p>
+
+  <div class="research-grid">
+    <div class="research-card reveal" style="transition-delay: 0.3s">
+      <div class="num">01</div>
+      <div class="name">ДНК бизнеса</div>
+    </div>
+    <div class="research-card reveal" style="transition-delay: 0.4s">
+      <div class="num">02</div>
+      <div class="name">Метапромтинг</div>
+    </div>
+    <div class="research-card reveal" style="transition-delay: 0.5s">
+      <div class="num">03</div>
+      <div class="name">Мультивселенная</div>
+    </div>
+    <div class="research-card reveal" style="transition-delay: 0.6s">
+      <div class="num">04</div>
+      <div class="name">NotebookLM</div>
+    </div>
+    <div class="research-card reveal" style="transition-delay: 0.7s">
+      <div class="num">05</div>
+      <div class="name">Допрос</div>
+    </div>
+    <div class="research-card reveal" style="transition-delay: 0.8s">
+      <div class="num">06</div>
+      <div class="name">Формула</div>
+    </div>
+  </div>
+
+  <a href="https://deep-research-guide.vercel.app" target="_blank" class="section-link reveal" style="transition-delay: 0.9s">
+    Посмотреть метод
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+  </a>
+</section>
+
+<!-- ========== SECTION 5: 27 EMPLOYEES ========== -->
+<section id="employees">
+  <div class="section-badge reveal">Ядро системы</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">
+    Это не курс по промптам. Это<br><span class="gradient-text">27 готовых AI-сотрудников.</span>
+  </h2>
+
+  <div class="emp-categories reveal" style="transition-delay: 0.3s">
+    <span class="emp-cat" style="color: var(--purple); border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.08);">Исследование ЦА</span>
+    <span class="emp-cat" style="color: var(--blue); border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.08);">Продукт</span>
+    <span class="emp-cat" style="color: var(--green); border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.08);">Контент (9)</span>
+    <span class="emp-cat" style="color: var(--cyan); border-color: rgba(6,182,212,0.3); background: rgba(6,182,212,0.08);">Воронки</span>
+    <span class="emp-cat" style="color: var(--pink); border-color: rgba(236,72,153,0.3); background: rgba(236,72,153,0.08);">Продажи</span>
+  </div>
+
+  <div class="employee-grid" id="empGrid">
+    <!-- Generated by JS -->
+  </div>
+
+  <a href="https://virtual-employees-kappa.vercel.app" target="_blank" class="section-link reveal" style="transition-delay: 0.4s">
+    Каталог сотрудников
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+  </a>
+</section>
+
+<!-- ========== SECTION 6: VIBE CODING ========== -->
+<section id="vibe-coding">
+  <div class="orb orb-2" style="opacity: 0.08;"></div>
+  <div class="section-badge reveal">Вайб-кодинг</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">
+    Сайт голосом за 2 часа.<br><span class="gradient-text-green">6 лендингов за 1.5 часа.</span>
+  </h2>
+
+  <p class="sub reveal" style="transition-delay: 0.3s">
+    Без кода. Без дизайнера. Без верстальщика.
+  </p>
+
+  <div class="code-pipeline" id="codePipeline">
+    <div class="code-step" data-cs="0"><span class="num">1</span><span class="txt">Промт-бриф проекта</span></div>
+    <div class="code-step" data-cs="1"><span class="num">2</span><span class="txt">HTML-генерация</span></div>
+    <div class="code-step" data-cs="2"><span class="num">3</span><span class="txt">Стилизация + анимации</span></div>
+    <div class="code-step" data-cs="3"><span class="num">4</span><span class="txt">Мобильная адаптация</span></div>
+    <div class="code-step" data-cs="4"><span class="num">5</span><span class="txt">Интерактив (квизы, формы)</span></div>
+    <div class="code-step" data-cs="5"><span class="num">6</span><span class="txt">Деплой на Vercel</span></div>
+    <div class="code-step" data-cs="6"><span class="num">7</span><span class="txt">Аналитика + оптимизация</span></div>
+  </div>
+
+  <div class="stats-row reveal" style="transition-delay: 0.5s">
+    <div class="stat-item">
+      <div class="stat-num gradient-text-green">$<span class="counter" data-target="3000">0</span></div>
+      <div class="stat-label">экономия на подрядчиках</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num gradient-text">0</div>
+      <div class="stat-label">строк кода</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 7: CONTENT FACTORY ========== -->
+<section id="content-factory">
+  <div class="section-badge reveal">Контент-завод</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">
+    Из <span class="gradient-text">1 единицы контента</span><br>16 готовых форматов
+  </h2>
+
+  <div class="content-explosion reveal-scale" style="transition-delay: 0.4s" id="contentExplosion">
+    <div class="content-center">1</div>
+    <!-- Items positioned by JS -->
+  </div>
+
+  <div class="stats-row reveal" style="transition-delay: 0.6s">
+    <div class="stat-item">
+      <div class="stat-num gradient-text"><span class="counter" data-target="30">0</span> мин</div>
+      <div class="stat-label">контент-план на месяц</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 8: TESTIMONIALS ========== -->
+<section id="testimonials">
+  <div class="section-badge reveal">Отзывы первого потока</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">Что говорят ученики</h2>
+
+  <div class="quotes-grid">
+    <div class="quote-card reveal-left" style="transition-delay: 0.3s">
+      <div class="text">Сижу, делаю домашку и охереваю. Вот реально охереваю, потому что понимаю, насколько это всё упрощает жизнь.</div>
+      <div class="author">Виктория</div>
+      <div class="role">HR-рекрутинг</div>
+    </div>
+    <div class="quote-card reveal-right" style="transition-delay: 0.4s">
+      <div class="text">Это может решить 80% моих запросов! У меня прямо азарт!</div>
+      <div class="author">Татьяна</div>
+      <div class="role">Бизнес-психолог</div>
+    </div>
+    <div class="quote-card reveal-left" style="transition-delay: 0.5s">
+      <div class="text">Прям разработчиком себя чувствую. Пилит мне расширение для хрома!</div>
+      <div class="author">Александра</div>
+      <div class="role">Ученица 1-го потока</div>
+    </div>
+    <div class="quote-card reveal-right" style="transition-delay: 0.6s">
+      <div class="text">Нужно быть полным долбоебом, чтобы не заработать на этом.</div>
+      <div class="author">Андрей</div>
+      <div class="role">Предприниматель</div>
+    </div>
+    <div class="case-card reveal-scale" style="transition-delay: 0.7s">
+      <div class="case-stat"><span class="counter" data-target="2288">0</span></div>
+      <div class="case-label">пользователей за 2 дня. $0 на рекламу.<br>Кейс Дофаминомика.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 9: FOR WHOM ========== -->
+<section id="for-whom">
+  <div class="section-badge reveal">Для кого</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">Три типа людей</h2>
+
+  <div class="whom-cards">
+    <div class="whom-card reveal" style="transition-delay: 0.3s">
+      <div class="icon">🎯</div>
+      <h3>Эксперты</h3>
+      <p>Задолбались платить продюсеру, SMM-щику и дизайнеру. Хотят делать всё сами, но быстро.</p>
+    </div>
+    <div class="whom-card reveal" style="transition-delay: 0.4s">
+      <div class="icon">🚀</div>
+      <h3>Маркетологи</h3>
+      <p>Хотят ломать рынок. Вести 10 проектов в одиночку. Стать AI-продюсером.</p>
+    </div>
+    <div class="whom-card reveal" style="transition-delay: 0.5s">
+      <div class="icon">⚡</div>
+      <h3>AI-стартаперы</h3>
+      <p>Видят, что классический инфобиз умирает. Запускают микро-сервисы и приложения.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 10: HOW IT WORKS ========== -->
+<section id="how-it-works">
+  <div class="section-badge reveal">Формат</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">Как проходит обучение</h2>
+
+  <div class="format-grid">
+    <div class="format-card reveal" style="transition-delay: 0.3s">
+      <div class="icon">🎬</div>
+      <h3>Записи модулей</h3>
+      <p>Смотри когда удобно. 8 модулей.</p>
+    </div>
+    <div class="format-card reveal" style="transition-delay: 0.4s">
+      <div class="icon">🔴</div>
+      <h3>Live-воркшопы</h3>
+      <p>Показываю в прямом эфире на твоём проекте.</p>
+    </div>
+    <div class="format-card reveal" style="transition-delay: 0.5s">
+      <div class="icon">💬</div>
+      <h3>Чат комьюнити</h3>
+      <p>71+ участник. Помощь, команда, запуски.</p>
+    </div>
+    <div class="format-card reveal" style="transition-delay: 0.6s">
+      <div class="icon">🤖</div>
+      <h3>27 AI-сотрудников</h3>
+      <p>Готовые инструменты. Копируешь и работаешь.</p>
+    </div>
+  </div>
+
+  <div class="timeline-strip reveal" style="transition-delay: 0.7s">
+    <span>2 месяца</span>
+    <span class="sep"></span>
+    <span>8 модулей</span>
+    <span class="sep"></span>
+    <span>27 инструментов</span>
+  </div>
+</section>
+
+<!-- ========== SECTION 11: PACKAGES ========== -->
+<section id="packages">
+  <div class="section-badge reveal">Предпродажа</div>
+
+  <h2 class="reveal" style="transition-delay: 0.2s">Выбери свой пакет</h2>
+
+  <div class="countdown reveal" style="transition-delay: 0.3s" id="countdown">
+    <div class="cd-item"><div class="cd-num" id="cd-days">00</div><div class="cd-label">дней</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">часов</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">минут</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">секунд</div></div>
+  </div>
+
+  <div class="packages-grid">
+    <div class="pkg-card reveal" style="transition-delay: 0.4s">
+      <div class="pkg-name">Самостоятельный</div>
+      <div class="pkg-price">$250</div>
+      <ul class="pkg-features">
+        <li>8 модулей в записи</li>
+        <li>27 AI-сотрудников</li>
+        <li>Записи 1-го потока</li>
+        <li>Доступ навсегда</li>
+      </ul>
+      <a href="https://www.wayforpay.com/button/b4b88fc09806e" target="_blank" class="pkg-btn pkg-btn-outline">Забрать</a>
+    </div>
+
+    <div class="pkg-card featured reveal" style="transition-delay: 0.5s">
+      <div class="pkg-badge">70% выбирают</div>
+      <div class="pkg-name">Групповой</div>
+      <div class="pkg-price">$500</div>
+      <ul class="pkg-features">
+        <li>Всё из Самостоятельного</li>
+        <li>Live-сессии каждую неделю</li>
+        <li>Чат комьюнити</li>
+        <li>Обратная связь лично</li>
+        <li>Рассрочка от $56/мес</li>
+      </ul>
+      <a href="https://www.wayforpay.com/button/b563de27d9ab2" target="_blank" class="pkg-btn pkg-btn-primary">Забрать</a>
+    </div>
+
+    <div class="pkg-card reveal" style="transition-delay: 0.6s">
+      <div class="pkg-name">Групповой + Стратсессия</div>
+      <div class="pkg-price">$800</div>
+      <ul class="pkg-features">
+        <li>Всё из Группового</li>
+        <li>1 час стратсессии лично</li>
+        <li>Прогон через 63 нейронки</li>
+        <li>Готовый план запуска</li>
+      </ul>
+      <a href="https://www.wayforpay.com/button/b0b93a3e39e7b" target="_blank" class="pkg-btn pkg-btn-outline">Забрать</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 12: GUARANTEE + CTA ========== -->
+<section id="cta-final">
+  <div class="orb orb-1" style="opacity: 0.1;"></div>
+  <div class="orb orb-3" style="opacity: 0.08;"></div>
+
+  <div class="guarantee-badge reveal" style="transition-delay: 0.1s">
+    <div class="shield">🛡️</div>
+    <div class="g-text">
+      <div class="g-title">100% возврат 14 дней</div>
+      <div class="g-sub">Без вопросов. Без мелким шрифтом.</div>
+    </div>
+  </div>
+
+  <h2 class="gradient-text reveal" style="transition-delay: 0.3s">
+    Система, которая<br>заменит целый отдел
+  </h2>
+
+  <p class="sub reveal" style="transition-delay: 0.4s">
+    Цена предпродажи заканчивается. Потом — $297 / $597 / $997.
+  </p>
+
+  <a href="https://aimarketolog.site" target="_blank" class="final-cta reveal" style="transition-delay: 0.5s">
+    Забрать по цене предпродажи
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+
+  <div class="contact-info reveal" style="transition-delay: 0.7s">
+    <a href="https://aimarketolog.site" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg>
+      aimarketolog.site
+    </a>
+    <a href="https://t.me/vlad_yasko_ai" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+      @vlad_yasko_ai
+    </a>
+  </div>
+</section>
+
+<script>
+(function() {
+  'use strict';
+
+  // ========== PARTICLES ==========
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const PARTICLE_COUNT = 60;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1.5 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.3 + 0.05;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(139, 92, 246, ${0.03 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ========== BOKEH ==========
+  const bokeh = document.getElementById('bokeh');
+  const bokehColors = ['rgba(139,92,246,', 'rgba(59,130,246,', 'rgba(34,197,94,', 'rgba(236,72,153,'];
+  for (let i = 0; i < 15; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'bokeh-dot';
+    const size = Math.random() * 8 + 3;
+    const color = bokehColors[Math.floor(Math.random() * bokehColors.length)];
+    const opa = (Math.random() * 0.12 + 0.04).toFixed(2);
+    dot.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      background: ${color}${opa});
+      box-shadow: 0 0 ${size * 3}px ${color}${opa});
+      --opa: ${opa};
+      animation-duration: ${Math.random() * 15 + 15}s;
+      animation-delay: ${Math.random() * 10}s;
+    `;
+    bokeh.appendChild(dot);
+  }
+
+  // ========== SECTIONS & NAV DOTS ==========
+  const sections = document.querySelectorAll('section');
+  const navDotsContainer = document.getElementById('navDots');
+
+  sections.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.addEventListener('click', () => sections[i].scrollIntoView({ behavior: 'smooth' }));
+    navDotsContainer.appendChild(dot);
+  });
+
+  const dots = navDotsContainer.querySelectorAll('.dot');
+
+  // ========== SCROLL TRACKING ==========
+  const progressBar = document.getElementById('progressBar');
+
+  function onScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    // Active dot
+    let activeIdx = 0;
+    sections.forEach((s, i) => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.3) {
+        activeIdx = i;
+      }
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ========== REVEAL ON SCROLL ==========
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ========== COUNTER ANIMATION ==========
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.counted) {
+        entry.target.dataset.counted = 'true';
+        const target = parseInt(entry.target.dataset.target);
+        const duration = 1500;
+        const start = performance.now();
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          entry.target.textContent = Math.floor(target * eased).toLocaleString();
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // ========== PIPELINE ANIMATION ==========
+  const pipelineSection = document.getElementById('turning-point');
+  const pipelineSteps = document.querySelectorAll('#pipeline .pipeline-step');
+  let pipelineAnimated = false;
+
+  const pipelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !pipelineAnimated) {
+        pipelineAnimated = true;
+        pipelineSteps.forEach((step, i) => {
+          setTimeout(() => step.classList.add('lit'), i * 300);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  pipelineObserver.observe(pipelineSection);
+
+  // ========== CODE PIPELINE ANIMATION ==========
+  const codePipelineSection = document.getElementById('vibe-coding');
+  const codeSteps = document.querySelectorAll('#codePipeline .code-step');
+  let codeAnimated = false;
+
+  const codeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !codeAnimated) {
+        codeAnimated = true;
+        codeSteps.forEach((step, i) => {
+          setTimeout(() => step.classList.add('lit'), i * 250);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  codeObserver.observe(codePipelineSection);
+
+  // ========== EMPLOYEE GRID ==========
+  const employees = [
+    { icon: '🔍', name: 'ДНК Клиента' },
+    { icon: '🎯', name: 'Лестница Ханта' },
+    { icon: '💎', name: 'Оффер Хормози' },
+    { icon: '📊', name: 'Аналитик рынка' },
+    { icon: '🧠', name: 'Стратег' },
+    { icon: '✍️', name: 'Копирайтер' },
+    { icon: '📱', name: 'Reels-мейкер' },
+    { icon: '🎨', name: 'Визуал-мейкер' },
+    { icon: '📝', name: 'Threads' },
+    { icon: '🎭', name: 'Stories' },
+    { icon: '📸', name: 'Карусели' },
+    { icon: '🎬', name: 'Креативы' },
+    { icon: '🗣️', name: 'ToV-мастер' },
+    { icon: '📅', name: 'Контент-план' },
+    { icon: '💡', name: 'Идеи контента' },
+    { icon: '🔗', name: 'Лид-магнит' },
+    { icon: '🤖', name: 'Бот-билдер' },
+    { icon: '📧', name: 'Email-цепочка' },
+    { icon: '🎥', name: 'VSL-мейкер' },
+    { icon: '💰', name: 'Продажник' },
+    { icon: '📈', name: 'Таргетолог' },
+    { icon: '🔄', name: 'Автоматизатор' },
+    { icon: '🌐', name: 'Сайт-билдер' },
+    { icon: '📋', name: 'Квиз-мейкер' },
+    { icon: '🔔', name: 'AI-менеджер' },
+    { icon: '📊', name: 'Дашборды' },
+    { icon: '⚡', name: 'Open Claw' },
+  ];
+
+  const empGrid = document.getElementById('empGrid');
+  employees.forEach((emp) => {
+    const card = document.createElement('div');
+    card.className = 'emp-card';
+    card.innerHTML = `<span>${emp.icon}</span><span class="emp-name">${emp.name}</span>`;
+    empGrid.appendChild(card);
+  });
+
+  const empCards = document.querySelectorAll('.emp-card');
+  let empAnimated = false;
+  const empObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !empAnimated) {
+        empAnimated = true;
+        empCards.forEach((card, i) => {
+          setTimeout(() => card.classList.add('visible'), i * 60);
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  empObserver.observe(document.getElementById('employees'));
+
+  // ========== CONTENT EXPLOSION ==========
+  const contentItems = [
+    'Reels', 'Stories', 'Threads', 'Карусель', 'Пост',
+    'Email', 'Telegram', 'Подкаст', 'Статья', 'Twitter',
+    'LinkedIn', 'YouTube', 'Pinterest', 'Квиз', 'Чек-лист', 'PDF'
+  ];
+  const explosion = document.getElementById('contentExplosion');
+  contentItems.forEach((item, i) => {
+    const el = document.createElement('div');
+    el.className = 'content-item';
+    el.textContent = item;
+    const angle = (i / contentItems.length) * Math.PI * 2 - Math.PI / 2;
+    const radius = 130;
+    const x = Math.cos(angle) * radius + 170 - 30;
+    const y = Math.sin(angle) * radius + 170 - 14;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    explosion.appendChild(el);
+  });
+
+  let contentAnimated = false;
+  const contentObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !contentAnimated) {
+        contentAnimated = true;
+        const items = explosion.querySelectorAll('.content-item');
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 80 + 300);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  contentObserver.observe(document.getElementById('content-factory'));
+
+  // ========== COUNTDOWN TIMER ==========
+  function updateCountdown() {
+    const target = new Date('2026-04-15T00:00:00+03:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ========== KEYBOARD NAVIGATION ==========
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      const current = getCurrentSectionIndex();
+      if (current < sections.length - 1) {
+        sections[current + 1].scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const current = getCurrentSectionIndex();
+      if (current > 0) {
+        sections[current - 1].scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+
+  function getCurrentSectionIndex() {
+    let idx = 0;
+    sections.forEach((s, i) => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.5 && rect.bottom > 0) idx = i;
+    });
+    return idx;
+  }
+
+  // ========== TOUCH SWIPE ==========
+  let touchStartY = 0;
+  let touchEndY = 0;
+  let swiping = false;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartY = e.changedTouches[0].screenY;
+    swiping = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    if (!swiping) return;
+    swiping = false;
+    touchEndY = e.changedTouches[0].screenY;
+    const diff = touchStartY - touchEndY;
+    if (Math.abs(diff) < 50) return;
+
+    const current = getCurrentSectionIndex();
+    if (diff > 0 && current < sections.length - 1) {
+      sections[current + 1].scrollIntoView({ behavior: 'smooth' });
+    } else if (diff < 0 && current > 0) {
+      sections[current - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  }, { passive: true });
+
+})();
+</script>
+</body>
+</html>
