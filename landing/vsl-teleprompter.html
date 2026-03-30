@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSL Teleprompter — AI-Маркетолог</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --direction: #FFD700;
+  --emphasis: #00FF88;
+  --emphasis2: #C084FC;
+  --dim: #555555;
+  --progress: #FF6B35;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--progress);
+  z-index: 1000;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 12px var(--progress);
+}
+
+#slide-counter {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dim);
+  z-index: 1000;
+  letter-spacing: 1px;
+}
+
+#timer {
+  position: fixed;
+  top: 16px;
+  left: 24px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dim);
+  z-index: 1000;
+}
+
+#controls-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: #333;
+  z-index: 1000;
+  text-align: center;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+
+.slide {
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  position: relative;
+}
+
+.slide-inner {
+  max-width: 880px;
+  width: 100%;
+  text-align: center;
+}
+
+.slide-num {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2a2a2a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.direction {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--direction);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 36px;
+  padding: 8px 20px;
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.text {
+  font-family: 'Inter', sans-serif;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.text.sm { font-size: 32px; }
+
+.em { color: var(--emphasis); font-weight: 600; }
+.em2 { color: var(--emphasis2); font-weight: 600; }
+.num { color: #FF6B35; font-weight: 700; }
+
+.pause {
+  display: block;
+  margin-top: 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FF6B35;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.slide.divider {
+  background: linear-gradient(135deg, #080808, #111);
+}
+.slide.divider .text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--emphasis), var(--emphasis2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .slide { padding: 40px 24px; }
+  .text { font-size: 28px; }
+  .text.sm { font-size: 24px; }
+  .slide.divider .text { font-size: 34px; }
+  .direction { font-size: 12px; letter-spacing: 1px; }
+  #slide-counter, #timer { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  .slide { padding: 32px 18px; }
+  .text { font-size: 24px; line-height: 1.55; }
+  .text.sm { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="slide-counter">1 / 90</div>
+<div id="timer">00:00</div>
+<div id="controls-hint">Стрелки / Свайп / Пробел для навигации</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 1: ХУК С ЦИФРАМИ [0:00 — 1:00]      -->
+<!-- ========================================== -->
+
+<div class="slide" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 1</div>
+    <div class="direction">КАМЕРА: крупный план, смотри прямо в объектив</div>
+    <div class="text">
+      Короче.
+    </div>
+    <span class="pause">... пауза 2 сек ...</span>
+  </div>
+</div>
+
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 2</div>
+    <div class="direction">КАМЕРА: уверенный тон</div>
+    <div class="text">
+      Полгода назад я <span class="em">в одиночку закрывал работу</span>, на которую раньше нанимал <span class="num">12 человек</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 3</div>
+    <div class="direction">КАМЕРА: загибай пальцы</div>
+    <div class="text">
+      Дизайнер, копирайтер, SMM-щик, таргетолог, аналитик — <span class="em2">все уволены</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="4">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 4</div>
+    <div class="direction">КАМЕРА: наклонись ближе</div>
+    <div class="text">
+      Не потому что я жадный. А потому что <span class="num">30 нейронок</span> за <span class="em">$20 в месяц</span> делают их работу быстрее, качественнее и <span class="em">в 100 раз дешевле</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="5">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 5</div>
+    <div class="direction">КАМЕРА: переключи энергию, бодро</div>
+    <div class="text">
+      И сегодня я покажу тебе <span class="num">7 AI-навыков</span>, которые позволяют одному человеку заменить целый отдел.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="6">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 6</div>
+    <div class="direction">КАМЕРА: покажи на экран</div>
+    <div class="text">
+      <span class="em">Не расскажу — покажу.</span> На своём экране. На реальных примерах.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 7</div>
+    <div class="direction">КАМЕРА: энергия прямого призыва</div>
+    <div class="text">
+      А в конце дам возможность забрать всю мою систему — <span class="num">27 готовых цифровых сотрудников</span> — и внедрить это в свой бизнес за <span class="em">2 месяца</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="8">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 8</div>
+    <div class="direction">КАМЕРА: улыбка, кивок</div>
+    <div class="text">
+      Погнали.
+    </div>
+    <span class="pause">... пауза, переход ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 2: ПРОБЛЕМА [1:00 — 3:00]            -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="9">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 9</div>
+    <div class="direction">СКРИНКАСТ: вкладки ChatGPT, курсы, Telegram-каналы</div>
+    <div class="text">Проблема</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="10">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 10</div>
+    <div class="direction">КАМЕРА + скринкаст на фоне</div>
+    <div class="text">
+      Ты наверное сейчас в такой же ситуации, в которой я был год назад.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="11">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 11</div>
+    <div class="direction">КАМЕРА: сочувственный тон</div>
+    <div class="text">
+      Подписался на <span class="num">30 каналов</span> про AI. Попробовал ChatGPT. Может, купил какой-то курс за <span class="num">$300</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="12">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 12</div>
+    <div class="direction">КАМЕРА: серьёзно, по-честному</div>
+    <div class="text">
+      Результат? <span class="em2">Каша в голове. Ноль заработанных денег.</span> И ощущение, что все вокруг уже внедрили AI, а ты — нет.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="13">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 13</div>
+    <div class="direction">КАМЕРА: уязвимость, честность</div>
+    <div class="text">
+      И я понимаю это чувство, потому что я — <span class="em">маркетолог с 14-летним стажем</span> — тоже не мог понять: окей, ChatGPT прикольный, но <span class="em2">как мне конкретно заработать больше денег?</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="14">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 14</div>
+    <div class="direction">КАМЕРА: вопрос, который мучил</div>
+    <div class="text">
+      Как это внедрить в мои реальные процессы? Где конкретный результат?
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="15">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 15</div>
+    <div class="direction">КАМЕРА: переключись на уверенность</div>
+    <div class="text">
+      А потом я начал <span class="em">системно</span> в это погружаться. Не промпты учить — а <span class="em">строить систему</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="16">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 16</div>
+    <div class="direction">КАМЕРА: гордость, факт</div>
+    <div class="text">
+      И за полгода моя продуктивность выросла <span class="num">в 5-10 раз</span>. Буквально. Я покажу.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 3: 7 НАВЫКОВ [3:00 — 16:00]          -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="17">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 17</div>
+    <div class="direction">КАМЕРА: энергичный переход</div>
+    <div class="text">7 AI-навыков</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="18">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 18</div>
+    <div class="direction">КАМЕРА: задай рамку</div>
+    <div class="text">
+      Сейчас я покажу тебе <span class="num">7</span> конкретных AI-навыков, которые я использую <span class="em">каждый день</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="19">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 19</div>
+    <div class="direction">КАМЕРА: обещание структуры</div>
+    <div class="text">
+      Для каждого покажу — как это работает, что на выходе и сколько времени экономит. И каждому из этих навыков я учу на воркшопе <span class="em2">&laquo;AI-Маркетолог&raquo;</span>.
+    </div>
+  </div>
+</div>
+
+<!-- НАВЫК 1: DEEP RESEARCH -->
+
+<div class="slide divider" data-slide="20">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 20</div>
+    <div class="direction">СКРИНКАСТ: deep-research-guide.vercel.app</div>
+    <div class="text">Навык 1: Deep Research</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="21">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 21</div>
+    <div class="direction">СКРИНКАСТ: медленный скролл по 6 шагам</div>
+    <div class="text">
+      Первый навык — <span class="em">Deep Research</span>. Это мой авторский метод.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="22">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 22</div>
+    <div class="direction">СКРИНКАСТ: покажи инструменты рядом</div>
+    <div class="text">
+      Я беру <span class="num">3-5 нейронок</span> — Perplexity, Parallel AI, Claude, Gemini — запускаю их <span class="em">параллельно</span>, как мультивселенную.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="23">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 23</div>
+    <div class="direction">СКРИНКАСТ: покажи итоговый документ</div>
+    <div class="text">
+      И за <span class="num">1 день</span> получаю то, на что маркетолог тратит <span class="num">2-3 недели</span>: полную картину рынка, конкурентов, запросы аудитории, ценообразование, позиционирование.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="24">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 24</div>
+    <div class="direction">СКРИНКАСТ: выдели URL на экране</div>
+    <div class="text sm">
+      Смотри, вот инструкция — я её выложил <span class="em">бесплатно</span>: <span class="em2">deep-research-guide.vercel.app</span>. <span class="num">6 шагов</span>. ДНК бизнеса, метапромтинг, мультивселенная, NotebookLM, допрос, формула.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="25">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 25</div>
+    <div class="direction">КАМЕРА: прямой питч</div>
+    <div class="text">
+      На воркшопе мы это делаем <span class="em">на ТВОЁМ бизнесе</span>. На выходе — готовая маркетинговая стратегия.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="26">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 26</div>
+    <div class="direction">КАМЕРА: casual, помогающий тон</div>
+    <div class="text">
+      Кстати, если хочешь попробовать — зайди на <span class="em2">deep-research-guide.vercel.app</span>, там всё бесплатно.
+    </div>
+    <span class="pause">... пауза, переход ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 2: УПАКОВКА -->
+
+<div class="slide divider" data-slide="27">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 27</div>
+    <div class="direction">СКРИНКАСТ: virtual-employees — «Исследование ЦА» и «Продукт»</div>
+    <div class="text">Навык 2: Упаковка</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="28">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 28</div>
+    <div class="direction">СКРИНКАСТ: кликни на скилл «ДНК Клиента»</div>
+    <div class="text">
+      У меня есть скилл <span class="em">&laquo;ДНК Клиента&raquo;</span> — это 5-частевой глубинный анализ целевой аудитории. Боли, страхи, триггеры покупки, барьеры, мотивация.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="29">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 29</div>
+    <div class="direction">СКРИНКАСТ: покажи выходной документ</div>
+    <div class="text">
+      Он знает про твою ЦА <span class="em2">больше, чем она сама</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="30">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 30</div>
+    <div class="direction">СКРИНКАСТ: покажи Лестницу Ханта + Оффер по Хормози</div>
+    <div class="text sm">
+      Потом <span class="em">&laquo;Лестница Ханта&raquo;</span> — раскладывает аудиторию по <span class="num">6 уровням</span> осведомлённости. И <span class="em">&laquo;Оффер по Хормози&raquo;</span> — создаёт предложение по формуле из книги $100M Offers. Ценность <span class="num">x10</span> от цены.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="31">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 31</div>
+    <div class="direction">СКРИНКАСТ: кликни и покажи генерацию</div>
+    <div class="text">
+      Вот как это выглядит — клик, и через <span class="num">3 минуты</span> у тебя готовый документ на <span class="num">50 000 символов</span>. Маркетолог на это тратит неделю.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="32">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 32</div>
+    <div class="direction">КАМЕРА: режим сторителлинга</div>
+    <div class="text">
+      А на стратсессии на первом потоке мы Олесе, <span class="em">семейному психологу из Казахстана</span>, за <span class="num">20 минут</span> нашли <span class="em2">&laquo;голубой океан&raquo;</span> — нишу, в которую никто не заходил.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 3: ВАЙБ-КОДИНГ -->
+
+<div class="slide divider" data-slide="33">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 33</div>
+    <div class="direction">СКРИНКАСТ: deep-research-guide.vercel.app/vibe-coding</div>
+    <div class="text">Навык 3: Вайб-кодинг</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="34">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 34</div>
+    <div class="direction">КАМЕРА: возбуждённая энергия</div>
+    <div class="text">
+      Смотри. Я говорю голосом — <span class="em">AI строит сайт</span>. Без дизайнера. Без верстальщика. Без единой строчки кода.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="35">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 35</div>
+    <div class="direction">СКРИНКАСТ: ускоренное создание лендинга</div>
+    <div class="text sm">
+      Вот, смотри. Я говорю: &laquo;Сделай лендинг для курса по AI-маркетингу, тёмная тема, фиолетовые градиенты, 10 секций, анимации&raquo;.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="36">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 36</div>
+    <div class="direction">СКРИНКАСТ: покажи готовый сайт</div>
+    <div class="text">
+      И через <span class="num">2 часа</span> — готовый сайт. С квизами, калькуляторами, формами оплаты. <span class="em">Бесплатно публикуется в интернет</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="37">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 37</div>
+    <div class="direction">КАМЕРА: social proof, удивление</div>
+    <div class="text">
+      На первом потоке один ученик сделал <span class="num">6 лендингов за 1.5 часа</span>. Шесть! Вместо <span class="num">$3000+</span> на дизайнеров.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="38">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 38</div>
+    <div class="direction">КАМЕРА: прочитай цитату с выражением</div>
+    <div class="text sm">
+      Александра из первого потока написала в чат: <span class="em2">&laquo;Бля, какая крутая штука клод код! Прям разработчиком себя чувствую. Пилит мне расширение для хрома.&raquo;</span>
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 4: КОНТЕНТ-ЗАВОД -->
+
+<div class="slide divider" data-slide="39">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 39</div>
+    <div class="direction">СКРИНКАСТ: virtual-employees — «Контент — 9 сотрудников»</div>
+    <div class="text">Навык 4: Контент-завод</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="40">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 40</div>
+    <div class="direction">СКРИНКАСТ: скролль через контент-сотрудников</div>
+    <div class="text sm">
+      У меня <span class="num">9 цифровых сотрудников</span> для контента. Смотри: Reels, Вирусные Reels, Stories, Карусели, Threads, Креативы, Tone of Voice, Content System, Очеловечивание.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="41">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 41</div>
+    <div class="direction">СКРИНКАСТ: покажи процесс генерации контента</div>
+    <div class="text">
+      Как это работает? Ты накидываешь голосом идею. Аишка анализирует её, понимает какой тип контента, вставляет твой тон и стилистику, и выдаёт <span class="em">готовый текст</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="42">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 42</div>
+    <div class="direction">КАМЕРА: впечатляющая цифра</div>
+    <div class="text">
+      Из одной единицы контента — <span class="num">16 форматов</span> для всех площадок. Контент-план на месяц за <span class="num">30 минут</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="43">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 43</div>
+    <div class="direction">КАМЕРА: дифференциация</div>
+    <div class="text">
+      И тексты звучат как <span class="em">ТЫ</span>, а не как робот. Потому что мы <span class="em2">оцифровываем твой Tone of Voice</span>.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 5: ВИЗУАЛЬНЫЙ КОНТЕНТ -->
+
+<div class="slide divider" data-slide="44">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 44</div>
+    <div class="direction">НАРЕЗКА: примеры AI-фото, видео, аватары</div>
+    <div class="text">Навык 5: Визуальный контент</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="45">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 45</div>
+    <div class="direction">ПОКАЗАТЬ: примеры AI-фото</div>
+    <div class="text">
+      Фото через Nano Banana Pro и Gemini. Оживление фото в видео через Grok и Kling. Клон голоса через 11Labs.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="46">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 46</div>
+    <div class="direction">ПОКАЗАТЬ: аватар + VSL пример</div>
+    <div class="text">
+      Цифровые аватары. <span class="em">VSL-ролик за 3 часа</span> вместо недели у видеографа.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="47">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 47</div>
+    <div class="direction">КАМЕРА: про учеников</div>
+    <div class="text">
+      Я учу это делать <span class="em">каждого ученика</span>. AI-фотосессия за полчаса. Без фотостудии, без фотографа.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 6: ВОРОНКИ -->
+
+<div class="slide divider" data-slide="48">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 48</div>
+    <div class="direction">СКРИНКАСТ: virtual-employees — «Воронки»</div>
+    <div class="text">Навык 6: Воронки и автоплатежи</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="49">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 49</div>
+    <div class="direction">СКРИНКАСТ: покажи структуру воронки</div>
+    <div class="text">
+      Лид-магнит &rarr; квиз &rarr; лендинг &rarr; бот &rarr; автооплата. <span class="em">Всё через AI</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="50">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 50</div>
+    <div class="direction">КАМЕРА: весёлый сторителлинг</div>
+    <div class="text sm">
+      На первом потоке мы для Олеси-психолога за <span class="num">20 минут</span> собрали квиз-воронку <span class="em2">&laquo;Свекровь-чекер&raquo;</span> — &laquo;На сколько процентов твой брак под угрозой из-за свекрови?&raquo;
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="51">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 51</div>
+    <div class="direction">КАМЕРА: практическая ценность</div>
+    <div class="text">
+      Персонализированный, с AI-квалификацией. И подключение автоплатежей — тоже на воркшопе. Чтобы <span class="em">воронка работала без тебя</span>.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- НАВЫК 7: AI-АГЕНТЫ -->
+
+<div class="slide divider" data-slide="52">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 52</div>
+    <div class="direction">СКРИНКАСТ: Open Claw, AI-агенты</div>
+    <div class="text">Навык 7: AI-агенты</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="53">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 53</div>
+    <div class="direction">СКРИНКАСТ: покажи агентов в работе</div>
+    <div class="text">
+      Open Claw — персональный AI-помощник <span class="num">24/7</span>. AI-менеджер по продажам, который <span class="em">автономно отвечает в Telegram</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="54">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 54</div>
+    <div class="direction">СКРИНКАСТ: агент для звонков + Excel</div>
+    <div class="text">
+      Агент, который анализирует звонки, рассылает задачи. Агент для Excel и коммерческих предложений.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="55">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 55</div>
+    <div class="direction">КАМЕРА: мощное закрытие блока навыков</div>
+    <div class="text">
+      Ты создаёшь таких агентов <span class="em">сам</span>. Под свои задачи. И они <span class="em2">работают пока ты спишь</span>.
+    </div>
+    <span class="pause">... глубокий вдох, пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 4: КЕЙСЫ УЧЕНИКОВ [16:00 — 18:00]    -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="56">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 56</div>
+    <div class="direction">КАМЕРА: переход к доказательствам</div>
+    <div class="text">Кейсы учеников</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="57">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 57</div>
+    <div class="direction">СКРИНКАСТ: покажи скриншоты из чата</div>
+    <div class="text">
+      Окей, это всё красиво, но <span class="em2">работает ли?</span> Вот реальные сообщения из чата обучения. Без редактуры.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="58">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 58</div>
+    <div class="direction">ПОКАЗАТЬ: скриншот Виктории</div>
+    <div class="text">
+      <span class="em">Виктория</span>, HR: <span class="em2">&laquo;Сижу, делаю домашку и охереваю. Вот реально охереваю.&raquo;</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="59">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 59</div>
+    <div class="direction">ПОКАЗАТЬ: скриншот Татьяны</div>
+    <div class="text">
+      <span class="em">Татьяна</span>, бизнес-психолог: <span class="em2">&laquo;Это может решить 80% моих запросов!&raquo;</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="60">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 60</div>
+    <div class="direction">ПОКАЗАТЬ: скриншот Андрея</div>
+    <div class="text sm">
+      <span class="em">Андрей</span>, предприниматель: <span class="em2">&laquo;Нужно быть полным долбоёбом, чтобы не заработать на этом.&raquo;</span> Извини, Андрей, но это лучшая цитата.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="61">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 61</div>
+    <div class="direction">ПОКАЗАТЬ: кейс Jedi Monkey</div>
+    <div class="text">
+      И отдельный кейс — <span class="em">Jedi Monkey</span>, СДВГ-блоггер. Сделал дофамин-трекер через AI. Один пост. Ноль рекламы.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="62">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 62</div>
+    <div class="direction">КАМЕРА: впечатляющий результат</div>
+    <div class="text">
+      <span class="num">2 288 пользователей</span> за <span class="num">2 дня</span>. С одного поста. Без рекламы.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="63">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 63</div>
+    <div class="direction">КАМЕРА: итоговые цифры</div>
+    <div class="text">
+      <span class="num">60 учеников</span> на первом потоке. <span class="num">12+ ниш</span> — HR, психология, коучинг, SAAS, строительство, TikTok, e-commerce. <span class="em">Одна система — работает в любой нише</span>.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 5: ДЛЯ КОГО [18:00 — 19:30]          -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="64">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 64</div>
+    <div class="direction">КАМЕРА: прямое обращение</div>
+    <div class="text">Для кого это</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="65">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 65</div>
+    <div class="direction">КАМЕРА: подними 1 палец</div>
+    <div class="text">
+      Для кого? Три типа людей.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="66">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 66</div>
+    <div class="direction">КАМЕРА: первый тип</div>
+    <div class="text sm">
+      <span class="em">Эксперты, которые задолбались.</span> Устал платить команде, которая делает долго и плохо. Хочешь уволить продюсера и делать всё сам — но быстро. Вот система.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="67">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 67</div>
+    <div class="direction">КАМЕРА: подними 2 пальца</div>
+    <div class="text sm">
+      <span class="em">Маркетологи и продюсеры.</span> Хочешь ломать рынок. Предлагать не за <span class="num">$10K</span>, а за <span class="num">$1K</span> — и делать за один вечер. Стать AI-продюсером с <span class="num">10 проектами</span> в одиночку.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="68">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 68</div>
+    <div class="direction">КАМЕРА: подними 3 пальца</div>
+    <div class="text sm">
+      <span class="em">AI-стартаперы.</span> Классический инфобиз умирает. Хочешь запускать микро-сервисы и приложения. Как дофамин-трекер — <span class="num">2288 пользователей</span> с одного поста.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 6: 27 СОТРУДНИКОВ [19:30 — 20:30]    -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="69">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 69</div>
+    <div class="direction">СКРИНКАСТ: virtual-employees-kappa.vercel.app — полный каталог</div>
+    <div class="text">27 сотрудников</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="70">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 70</div>
+    <div class="direction">СКРИНКАСТ: скролль по категориям</div>
+    <div class="text">
+      И самое ценное. Ты получаешь не промпты и не PDF-ки. Ты получаешь <span class="num">27 готовых цифровых сотрудников</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="71">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 71</div>
+    <div class="direction">СКРИНКАСТ: кликни по модальным окнам</div>
+    <div class="text sm">
+      Вот они — смотри. Исследование ЦА, Продукт, Контент, Воронки, Продажи, Рутина. Каждого я создавал по <span class="num">5-10 часов</span>. Это <span class="num">200+ часов</span> моей работы.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="72">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 72</div>
+    <div class="direction">КАМЕРА: якорение ценности</div>
+    <div class="text">
+      Ты копируешь за <span class="num">5 минут</span> — и они <span class="em">работают как у меня</span>. Я планирую продавать это отдельно за <span class="num">$2000+</span>. Но пока — <span class="em2">бонусом обучения</span>.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 7: КАК ПРОХОДИТ ОБУЧЕНИЕ [20:30]     -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="73">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 73</div>
+    <div class="direction">СКРИНКАСТ: Notion, Zoom, чат</div>
+    <div class="text">Как проходит обучение</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="74">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 74</div>
+    <div class="direction">СКРИНКАСТ: покажи модули в Notion</div>
+    <div class="text">
+      Формат. Каждую неделю — новый модуль в записи. <span class="num">8 модулей</span> за <span class="num">2 месяца</span>. Смотри когда удобно.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="75">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 75</div>
+    <div class="direction">КАМЕРА: ценность сообщества</div>
+    <div class="text">
+      Плюс — <span class="em">живой воркшоп каждую неделю</span>. Я в прямом эфире показываю как внедрять. На <span class="em2">ТВОЁМ проекте</span>. Задаёшь вопросы — получаешь ответы.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="76">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 76</div>
+    <div class="direction">КАМЕРА: про среду</div>
+    <div class="text">
+      Чат — <span class="num">71 участник</span> на первом потоке. Помогают друг другу, находят команду. Это не <span class="em2">&laquo;курс, где тебя бросили с уроками&raquo;</span> — это среда.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 8: ПАКЕТЫ И ЦЕНЫ [21:30 — 23:00]     -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="77">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 77</div>
+    <div class="direction">СКРИНКАСТ: aimarketolog.site — блок пакетов</div>
+    <div class="text">Пакеты и цены</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="78">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 78</div>
+    <div class="direction">СКРИНКАСТ: покажи 3 пакета</div>
+    <div class="text">
+      Три пакета. Предпродажа — <span class="em2">цена растёт через 5 дней</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="79">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 79</div>
+    <div class="direction">СКРИНКАСТ: выдели первый пакет</div>
+    <div class="text">
+      <span class="num">$250 — Самостоятельный.</span> Все <span class="num">8 модулей</span> + <span class="num">27 сотрудников</span> + записи первого потока. Для тех, кто шарит и разберётся сам.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="80">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 80</div>
+    <div class="direction">СКРИНКАСТ: выдели второй пакет</div>
+    <div class="text sm">
+      <span class="num">$500 — Групповой.</span> Всё из первого + live каждую неделю + чат + обратная связь от меня. <span class="em">70% выбирают этот</span>. Рассрочка от <span class="num">$56/мес</span>. Это дешевле, чем один пост от фрилансера.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="81">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 81</div>
+    <div class="direction">СКРИНКАСТ: выдели третий пакет</div>
+    <div class="text sm">
+      <span class="num">$800 — Со стратсессией.</span> Всё + час моего времени. Прогон твоего проекта через <span class="num">63 нейронки</span>. Готовый план. Стратсессия отдельно стоит <span class="num">$700</span> — здесь всё за <span class="num">$800</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="82">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 82</div>
+    <div class="direction">КАМЕРА: сравнение цен</div>
+    <div class="text">
+      Для сравнения: конкуренты берут <span class="num">$1500-$6000</span> за похожие программы. У меня — от <span class="num">$250</span>. Потому что мне важнее чтобы ты начал, чем чтобы ты заплатил максимум.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 9: ГАРАНТИЯ [23:00 — 23:30]          -->
+<!-- ========================================== -->
+
+<div class="slide" data-slide="83">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 83</div>
+    <div class="direction">КАМЕРА: крупный план, искренне</div>
+    <div class="text">
+      Гарантия <span class="em">&laquo;Без дураков&raquo;</span>. <span class="num">100%</span> возврат в первые <span class="num">14 дней</span>. Напиши — и получишь деньги обратно. Мне важнее, чтобы ты <span class="em2">попробовал</span>.
+    </div>
+    <span class="pause">... пауза ...</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- БЛОК 10: ЭМОЦИОНАЛЬНОЕ ЗАКРЫТИЕ [23:30]    -->
+<!-- ========================================== -->
+
+<div class="slide divider" data-slide="84">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 84</div>
+    <div class="direction">КАМЕРА: спокойно, прямо в объектив</div>
+    <div class="text">Закрытие</div>
+  </div>
+</div>
+
+<div class="slide" data-slide="85">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 85</div>
+    <div class="direction">КАМЕРА: честно, без давления</div>
+    <div class="text">
+      Смотри, я не буду тебе говорить <span class="em2">&laquo;последний шанс&raquo;</span> или <span class="em2">&laquo;мест осталось 3&raquo;</span>. Места есть.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="86">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 86</div>
+    <div class="direction">КАМЕРА: мягкий дедлайн</div>
+    <div class="text">
+      Но цена предпродажи <span class="em">реально заканчивается через 5 дней</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="87">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 87</div>
+    <div class="direction">КАМЕРА: личная история</div>
+    <div class="text">
+      Я мечтал найти человека, который шарит в нейронках — и понял, что нужно <span class="em">стать им самому</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="88">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 88</div>
+    <div class="direction">КАМЕРА: уверенность, про систему</div>
+    <div class="text">
+      Сейчас <span class="num">10, 20, 40</span> проектов — мне без разницы, потому что <span class="em">есть система</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="89">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 89</div>
+    <div class="direction">КАМЕРА: эмоционально, вдохновлённо</div>
+    <div class="text sm">
+      И я вижу, как ученики первого потока — люди, которые полгода назад не знали что такое Claude — сейчас делают лендинги голосом, генерируют контент за <span class="num">30 минут</span>, строят воронки с автооплатами.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="90">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 90</div>
+    <div class="direction">КАМЕРА: цитата с чувством</div>
+    <div class="text">
+      И пишут в чат: <span class="em2">&laquo;Охереваю от возможностей.&raquo;</span>
+    </div>
+    <span class="pause">... пауза 3 сек ...</span>
+  </div>
+</div>
+
+<div class="slide" data-slide="91">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 91</div>
+    <div class="direction">КАМЕРА: развилка</div>
+    <div class="text">
+      Ты можешь <span class="em2">подождать</span>. Посмотреть. Подписаться ещё на <span class="num">30 каналов</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="92">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 92</div>
+    <div class="direction">КАМЕРА: наклонись вперёд, финальный толчок</div>
+    <div class="text">
+      Или ты можешь за <span class="num">2 месяца</span> забрать систему, которую я строил <span class="em">год</span>.
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="93">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 93</div>
+    <div class="direction">КАМЕРА: CTA, покажи вниз</div>
+    <div class="text">
+      Ссылка — под видео. <span class="em2">aimarketolog.site</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="94">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 94</div>
+    <div class="direction">КАМЕРА: второй CTA</div>
+    <div class="text">
+      Или пиши в Telegram: <span class="em2">@vlad_yasko_ai</span>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-slide="95">
+  <div class="slide-inner">
+    <div class="slide-num">Слайд 95</div>
+    <div class="direction">КАМЕРА: улыбка, энергия, кивок</div>
+    <div class="text">
+      <span class="em">Залетай. Погнали.</span>
+    </div>
+    <span class="pause">... конец записи ...</span>
+  </div>
+</div>
+
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const bar = document.getElementById('progress-bar');
+  const counter = document.getElementById('slide-counter');
+  const hint = document.getElementById('controls-hint');
+  const timerEl = document.getElementById('timer');
+  let cur = 0;
+  let t0 = null;
+  let ti = null;
+
+  counter.textContent = '1 / ' + total;
+
+  function startTimer() {
+    if (t0) return;
+    t0 = Date.now();
+    ti = setInterval(function() {
+      var e = Math.floor((Date.now() - t0) / 1000);
+      var m = String(Math.floor(e / 60)).padStart(2, '0');
+      var s = String(e % 60).padStart(2, '0');
+      timerEl.textContent = m + ':' + s;
+    }, 1000);
+  }
+
+  function update() {
+    bar.style.width = (cur / (total - 1) * 100) + '%';
+    counter.textContent = (cur + 1) + ' / ' + total;
+  }
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var idx = Array.from(slides).indexOf(entry.target);
+        if (idx !== -1) { cur = idx; update(); }
+      }
+    });
+  }, { threshold: 0.6 });
+
+  slides.forEach(function(s) { obs.observe(s); });
+
+  function goTo(idx) {
+    if (idx < 0) idx = 0;
+    if (idx >= total) idx = total - 1;
+    slides[idx].scrollIntoView({ behavior: 'smooth' });
+    cur = idx;
+    update();
+    startTimer();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault(); goTo(cur + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault(); goTo(cur - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); goTo(total - 1);
+    }
+  });
+
+  var ty = 0, tx = 0;
+  document.addEventListener('touchstart', function(e) {
+    ty = e.touches[0].clientY;
+    tx = e.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    var dy = ty - e.changedTouches[0].clientY;
+    var dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+      if (dy > 0) goTo(cur + 1); else goTo(cur - 1);
+    }
+    startTimer();
+  }, { passive: true });
+
+  setTimeout(function() { hint.style.opacity = '0'; }, 5000);
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#controls-hint')) return;
+    if (e.clientX > window.innerWidth / 2) goTo(cur + 1);
+    else goTo(cur - 1);
+    startTimer();
+  });
+})();
+</script>
+
+</body>
+</html>
