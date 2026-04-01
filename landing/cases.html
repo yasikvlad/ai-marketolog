@@ -7,13 +7,13 @@
     <meta name="description" content="Реальные проекты студентов курса AI-Маркетолог. Созданы во время обучения, не после.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #050510;
-            --bg-surface: #0d0d1a;
-            --bg-card: #111125;
-            --border: #1e1e3a;
+            --bg-surface: #0a0a1a;
+            --bg-card: #0e0e22;
+            --border: #1a1a35;
             --text-primary: #f5f5f5;
             --text-secondary: #a1a1aa;
             --text-muted: #71717a;
@@ -24,13 +24,16 @@
             --accent-orange: #f97316;
             --accent-cyan: #06b6d4;
             --accent-rose: #f43f5e;
+            --accent-indigo: #6366f1;
+            --accent-amber: #f59e0b;
+            --accent-emerald: #10b981;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-display: 'Manrope', 'Inter', sans-serif;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
             --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-            --container: 1140px;
+            --container: 1200px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,19 +48,93 @@
         }
         a { color: inherit; text-decoration: none; }
 
-        /* Animated gradient mesh background */
-        body::before {
-            content: '';
+        /* ===== CANVAS PARTICLE BACKGROUND ===== */
+        #particle-canvas {
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(139,92,246,0.07), transparent),
-                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(59,130,246,0.05), transparent),
-                radial-gradient(ellipse 50% 60% at 50% 80%, rgba(34,197,94,0.03), transparent);
-            background-size: 200% 200%;
-            animation: meshFlow 20s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== VOLUMETRIC COLOR ORBS ===== */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
             pointer-events: none;
             z-index: 0;
+            will-change: transform;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+            top: -10%; left: -5%;
+            animation: orbFloat1 18s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%);
+            top: 30%; right: -10%;
+            animation: orbFloat2 22s ease-in-out infinite;
+        }
+        .orb-3 {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%);
+            bottom: 10%; left: 20%;
+            animation: orbFloat3 20s ease-in-out infinite;
+        }
+        .orb-4 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(236,72,153,0.08), transparent 70%);
+            top: 60%; left: 50%;
+            animation: orbFloat1 25s ease-in-out infinite reverse;
+        }
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(60px, -40px) scale(1.1); }
+            66% { transform: translate(-30px, 50px) scale(0.95); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 30px) scale(1.05); }
+            66% { transform: translate(40px, -60px) scale(0.9); }
+        }
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -30px) scale(1.08); }
+        }
+
+        /* ===== FILM GRAIN OVERLAY ===== */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+            animation: grainShift 0.5s steps(3) infinite;
+        }
+        @keyframes grainShift {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(-2px, 1px); }
+            66% { transform: translate(1px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* ===== ANIMATED GRADIENT MESH ===== */
+        .gradient-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(139,92,246,0.06), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(59,130,246,0.04), transparent),
+                radial-gradient(ellipse 50% 60% at 50% 80%, rgba(34,197,94,0.03), transparent);
+            background-size: 200% 200%;
+            animation: meshFlow 25s ease-in-out infinite;
         }
         @keyframes meshFlow {
             0%, 100% { background-position: 0% 50%; }
@@ -70,65 +147,105 @@
             margin: 0 auto;
             padding: 0 24px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        /* ===== NAV ===== */
+        /* ===== FIXED NAV ===== */
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 16px 0;
-            background: rgba(5,5,16,0.85);
-            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            background: rgba(5,5,16,0.7);
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
             border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.4s;
+        }
+        .nav.scrolled {
+            background: rgba(5,5,16,0.92);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
         .nav .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-back:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .nav-back svg { width: 14px; height: 14px; }
         .nav-logo {
             font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 900;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .nav-back {
+        .nav-counter {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(139,92,246,0.08);
+            border: 1px solid rgba(139,92,246,0.15);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-purple);
         }
-        .nav-back:hover { color: var(--text-primary); }
-        .nav-back svg { width: 16px; height: 16px; }
+        .nav-counter .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
 
         /* ===== HERO ===== */
         .hero {
-            padding: 140px 0 60px;
+            padding: 150px 0 60px;
             text-align: center;
+            position: relative;
         }
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            background: rgba(139,92,246,0.1);
-            border: 1px solid rgba(139,92,246,0.2);
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(139,92,246,0.08);
+            border: 1px solid rgba(139,92,246,0.18);
             border-radius: 100px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--accent-purple);
-            margin-bottom: 32px;
-            animation: fadeInUp 0.6s var(--ease-out) both;
+            margin-bottom: 36px;
+            animation: fadeInUp 0.7s var(--ease-out) both;
+            letter-spacing: 0.02em;
         }
         .hero-badge .dot {
             width: 8px;
@@ -136,35 +253,69 @@
             border-radius: 50%;
             background: var(--accent-green);
             animation: pulse 2s infinite;
+            box-shadow: 0 0 12px rgba(34,197,94,0.5);
         }
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px rgba(34,197,94,0.5); }
+            50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 4px rgba(34,197,94,0.2); }
         }
         .hero h1 {
             font-family: var(--font-display);
-            font-size: clamp(36px, 5vw, 56px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.6s var(--ease-out) 0.1s both;
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.7s var(--ease-out) 0.1s both;
         }
         .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 50%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto;
+            animation: fadeInUp 0.7s var(--ease-out) 0.2s both;
+            line-height: 1.6;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 48px;
+            animation: fadeInUp 0.7s var(--ease-out) 0.3s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-num {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 900;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .hero-sub {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeInUp 0.6s var(--ease-out) 0.2s both;
+        .hero-stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -172,8 +323,8 @@
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            padding: 40px 0 80px;
+            gap: 28px;
+            padding: 50px 0 100px;
         }
 
         /* ===== CARD ===== */
@@ -182,44 +333,64 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             overflow: hidden;
-            transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.4s;
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             position: relative;
+            transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), border-color 0.5s;
+            will-change: transform;
         }
         .project-card.visible {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
         }
         .project-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px) scale(1.01);
             border-color: var(--card-accent);
             box-shadow:
-                0 20px 60px rgba(0,0,0,0.4),
-                0 0 40px color-mix(in srgb, var(--card-accent) 15%, transparent);
+                0 24px 80px rgba(0,0,0,0.5),
+                0 0 60px color-mix(in srgb, var(--card-accent) 12%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.04);
         }
 
-        /* Top accent line */
+        /* Top accent line with glow */
         .project-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: var(--card-accent);
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
             opacity: 0;
             transition: opacity 0.4s;
+            z-index: 3;
         }
         .project-card:hover::before { opacity: 1; }
 
-        /* Preview area */
+        /* Corner glow on hover */
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 0%), color-mix(in srgb, var(--card-accent) 6%, transparent), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .project-card:hover::after { opacity: 1; }
+
+        /* ===== PREVIEW AREA ===== */
         .card-preview {
             position: relative;
-            height: 200px;
+            height: 240px;
             overflow: hidden;
             background: var(--bg-surface);
+            z-index: 2;
         }
         .card-preview iframe {
             width: 200%;
@@ -228,7 +399,32 @@
             transform-origin: top left;
             border: none;
             pointer-events: none;
+            opacity: 0.85;
+            transition: opacity 0.4s, filter 0.4s;
         }
+        .project-card:hover .card-preview iframe {
+            opacity: 1;
+            filter: brightness(1.05);
+        }
+
+        /* Overlay gradient - subtle, fades on hover */
+        .card-preview-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                var(--bg-card) 0%,
+                rgba(14,14,34,0.4) 30%,
+                rgba(14,14,34,0.1) 60%,
+                transparent 100%);
+            pointer-events: none;
+            transition: opacity 0.4s;
+            z-index: 2;
+        }
+        .project-card:hover .card-preview-overlay {
+            opacity: 0.3;
+        }
+
+        /* Preview placeholder for bots */
         .card-preview-placeholder {
             width: 100%;
             height: 100%;
@@ -239,17 +435,17 @@
             gap: 12px;
             padding: 20px;
             text-align: center;
-            background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 8%, var(--bg-surface)), var(--bg-surface));
+            background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 6%, var(--bg-surface)), var(--bg-surface));
         }
         .card-preview-placeholder .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: color-mix(in srgb, var(--card-accent) 15%, transparent);
-            font-size: 24px;
+            background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+            font-size: 26px;
         }
         .card-preview-placeholder p {
             font-size: 13px;
@@ -257,36 +453,143 @@
             line-height: 1.4;
         }
 
-        /* Overlay gradient */
-        .card-preview::after {
+        /* ===== AGENT CARD SPECIAL (cards 10, 11) ===== */
+        .card-agent {
+            border: 1px solid rgba(139,92,246,0.25);
+        }
+        .card-agent:hover {
+            border-color: rgba(139,92,246,0.5);
+            box-shadow:
+                0 24px 80px rgba(0,0,0,0.5),
+                0 0 80px rgba(139,92,246,0.15),
+                0 0 30px rgba(139,92,246,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .card-agent .card-preview {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 240px;
+        }
+        .agent-preview-content {
+            text-align: center;
+            padding: 24px;
+            position: relative;
+            z-index: 2;
+        }
+        .agent-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(139,92,246,0.4);
+            box-shadow: 0 0 30px rgba(139,92,246,0.2);
+        }
+        .agent-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .agent-avatar-initials {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+        }
+        /* Pulsing ring around avatar */
+        .agent-avatar::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: linear-gradient(to top, var(--bg-card), transparent);
-            pointer-events: none;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(139,92,246,0.3);
+            animation: avatarPulse 3s ease-in-out infinite;
+        }
+        @keyframes avatarPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 0; }
+        }
+        .agent-bot-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .agent-bot-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        /* ГОЛОС ВЛАДА badge */
+        .badge-voice {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.12));
+            border: 1px solid rgba(139,92,246,0.25);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-purple);
+            margin-top: 12px;
+        }
+        .badge-voice svg {
+            width: 12px;
+            height: 12px;
+        }
+        /* Animated background for agent cards */
+        .agent-bg-anim {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .agent-bg-anim::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: conic-gradient(from 0deg, transparent, rgba(139,92,246,0.06), transparent, rgba(236,72,153,0.04), transparent);
+            animation: agentBgSpin 12s linear infinite;
+        }
+        @keyframes agentBgSpin {
+            to { transform: rotate(360deg); }
         }
 
-        /* Card body */
+        /* ===== CARD BODY ===== */
         .card-body {
-            padding: 20px 24px 24px;
+            padding: 22px 24px 26px;
+            position: relative;
+            z-index: 2;
         }
         .card-niche {
             display: inline-block;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             color: var(--card-accent);
             margin-bottom: 8px;
         }
         .card-title {
             font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 800;
+            font-size: 24px;
+            font-weight: 900;
             margin-bottom: 4px;
+            letter-spacing: -0.02em;
         }
         .card-student {
             font-size: 13px;
@@ -296,7 +599,7 @@
         .card-desc {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.55;
             margin-bottom: 16px;
         }
 
@@ -306,8 +609,8 @@
             align-items: center;
             gap: 8px;
             padding: 10px 14px;
-            background: color-mix(in srgb, var(--card-accent) 8%, transparent);
-            border: 1px solid color-mix(in srgb, var(--card-accent) 15%, transparent);
+            background: color-mix(in srgb, var(--card-accent) 6%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-accent) 12%, transparent);
             border-radius: var(--radius-md);
             margin-bottom: 16px;
             font-size: 13px;
@@ -316,8 +619,8 @@
         }
         .card-wow .wow-icon {
             flex-shrink: 0;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
         }
 
         /* Link button */
@@ -326,31 +629,43 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px 20px;
-            background: color-mix(in srgb, var(--card-accent) 12%, transparent);
-            border: 1px solid color-mix(in srgb, var(--card-accent) 25%, transparent);
+            padding: 13px 22px;
+            background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-accent) 20%, transparent);
             border-radius: var(--radius-md);
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
             transition: all 0.3s var(--ease-out);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
+        .card-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 12%, transparent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card-link:hover::before { opacity: 1; }
         .card-link:hover {
-            background: color-mix(in srgb, var(--card-accent) 20%, transparent);
             border-color: var(--card-accent);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--card-accent) 15%, transparent);
         }
         .card-link svg {
             width: 16px;
             height: 16px;
             transition: transform 0.3s;
+            position: relative;
         }
         .card-link:hover svg { transform: translateX(3px); }
 
         /* ===== BOTTOM CTA ===== */
         .bottom-section {
-            padding: 60px 0 100px;
+            padding: 80px 0 120px;
             text-align: center;
             position: relative;
         }
@@ -360,98 +675,175 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
+            width: 300px;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+        }
+        /* Glow behind CTA */
+        .bottom-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(139,92,246,0.08), transparent 70%);
+            pointer-events: none;
         }
 
         .bottom-quote {
             font-family: var(--font-display);
-            font-size: clamp(22px, 3.5vw, 32px);
-            font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 12px;
-            max-width: 700px;
+            font-size: clamp(26px, 4vw, 44px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
+            letter-spacing: -0.02em;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(24px);
+            position: relative;
         }
         .bottom-quote.visible {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.6s var(--ease-out);
+            transition: all 0.7s var(--ease-out);
         }
         .bottom-quote em {
             font-style: normal;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
         }
 
         .bottom-subtext {
-            font-size: 16px;
+            font-size: 18px;
             color: var(--text-muted);
-            margin-bottom: 40px;
+            margin-bottom: 48px;
             opacity: 0;
             transform: translateY(20px);
+            position: relative;
         }
         .bottom-subtext.visible {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.6s var(--ease-out) 0.1s;
+            transition: all 0.7s var(--ease-out) 0.1s;
         }
 
+        /* Urgency counter */
+        .urgency-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .urgency-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.7s var(--ease-out) 0.15s;
+        }
+        .urgency-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-rose);
+            animation: urgencyPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes urgencyPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(244,63,94,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(244,63,94,0); }
+        }
+        .urgency-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-rose);
+        }
+
+        /* GREEN CTA button with pulse */
         .cta-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            gap: 12px;
+            padding: 22px 52px;
+            background: linear-gradient(135deg, #16a34a, var(--accent-green), #34d399);
+            background-size: 200% 200%;
+            animation: ctaGradient 3s ease-in-out infinite;
             border: none;
-            border-radius: var(--radius-lg);
+            border-radius: 16px;
             font-family: var(--font);
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
             color: white;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out);
             position: relative;
             overflow: hidden;
             opacity: 0;
             transform: translateY(20px);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            letter-spacing: -0.01em;
+        }
+        @keyframes ctaGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         .cta-btn.visible {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.6s var(--ease-out) 0.2s, transform 0.6s var(--ease-out) 0.2s;
+            transition: opacity 0.7s var(--ease-out) 0.2s, transform 0.7s var(--ease-out) 0.2s;
         }
+        /* Pulsing glow */
         .cta-btn::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #16a34a, var(--accent-green), #34d399);
+            z-index: -1;
+            animation: ctaPulse 2.5s ease-in-out infinite;
         }
-        .cta-btn:hover::before { opacity: 1; }
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(34,197,94,0.3), 0 0 60px rgba(34,197,94,0.1); opacity: 1; }
+            50% { box-shadow: 0 0 40px rgba(34,197,94,0.5), 0 0 100px rgba(34,197,94,0.2); opacity: 0.8; }
+        }
+        /* Shimmer */
+        .cta-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: ctaShimmer 4s ease-in-out infinite;
+        }
+        @keyframes ctaShimmer {
+            0% { left: -100%; }
+            40%, 100% { left: 200%; }
+        }
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(139,92,246,0.35);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 50px rgba(34,197,94,0.4);
         }
-        .cta-btn svg { width: 20px; height: 20px; }
+        .cta-btn svg { width: 22px; height: 22px; position: relative; }
 
         .cta-date {
-            margin-top: 16px;
-            font-size: 15px;
-            font-weight: 600;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 700;
             color: var(--accent-green);
             opacity: 0;
+            position: relative;
         }
         .cta-date.visible {
             opacity: 1;
-            transition: opacity 0.6s var(--ease-out) 0.3s;
+            transition: opacity 0.7s var(--ease-out) 0.3s;
         }
 
         /* ===== COUNTER ANIMATION ===== */
@@ -461,30 +853,64 @@
         @media (max-width: 1024px) {
             .projects-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+                gap: 22px;
             }
+            .hero-stats { gap: 28px; }
+            .hero-stat-num { font-size: 28px; }
         }
         @media (max-width: 640px) {
             .projects-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 18px;
             }
             .hero { padding: 120px 0 40px; }
-            .card-preview { height: 180px; }
-            .card-body { padding: 16px 20px 20px; }
+            .card-preview { height: 200px; }
+            .card-body { padding: 18px 20px 22px; }
+            .hero-stats { gap: 20px; flex-wrap: wrap; }
+            .hero-stat-num { font-size: 24px; }
+            .nav-logo { font-size: 18px; }
+            .nav-counter { display: none; }
+            .cta-btn {
+                padding: 18px 36px;
+                font-size: 17px;
+            }
+            .bottom-quote { font-size: clamp(22px, 5vw, 32px); }
+            .orb { display: none; }
+            .agent-avatar { width: 64px; height: 64px; }
         }
     </style>
 </head>
 <body>
 
+<!-- Particle Canvas -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Volumetric Orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="orb orb-4"></div>
+
+<!-- Gradient Mesh -->
+<div class="gradient-mesh"></div>
+
+<!-- Film Grain -->
+<div class="film-grain"></div>
+
 <!-- Nav -->
-<nav class="nav">
+<nav class="nav" id="mainNav">
     <div class="container">
-        <a href="https://aimarketolog.site" class="nav-logo">AI-Маркетолог</a>
-        <a href="https://aimarketolog.site" class="nav-back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-            На главную
-        </a>
+        <div class="nav-left">
+            <a href="https://aimarketolog.site" class="nav-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                На главную
+            </a>
+            <a href="https://aimarketolog.site" class="nav-logo">AI-Маркетолог</a>
+        </div>
+        <div class="nav-counter">
+            <span class="pulse-dot"></span>
+            11 проектов
+        </div>
     </div>
 </nav>
 
@@ -493,10 +919,24 @@
     <div class="container">
         <div class="hero-badge">
             <span class="dot"></span>
-            Первый поток
+            Первый поток завершён
         </div>
-        <h1>Проекты <span>студентов</span></h1>
+        <h1>Проекты<br><span>студентов</span></h1>
         <p class="hero-sub">Не&nbsp;концепты, не&nbsp;домашки. Живые продукты, которые зарабатывают, привлекают аудиторию и&nbsp;работают на&nbsp;автопилоте.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-num">11</div>
+                <div class="hero-stat-label">проектов</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">7</div>
+                <div class="hero-stat-label">студентов</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">0 &#8381;</div>
+                <div class="hero-stat-label">на рекламу</div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -508,6 +948,7 @@
         <div class="project-card" style="--card-accent: var(--accent-pink);">
             <div class="card-preview">
                 <iframe src="https://tochka-opory.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Точка Опоры"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">Психология / женский клуб</div>
@@ -529,6 +970,7 @@
         <div class="project-card" style="--card-accent: var(--accent-purple);">
             <div class="card-preview">
                 <iframe src="https://2026-theta-inky.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Прогноз 2026"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">Эзотерика / нумерология</div>
@@ -550,6 +992,7 @@
         <div class="project-card" style="--card-accent: var(--accent-green);">
             <div class="card-preview">
                 <iframe src="https://dopenomics.ru" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Дофаминомика"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">СДВГ / нейронаука</div>
@@ -571,6 +1014,7 @@
         <div class="project-card" style="--card-accent: var(--accent-orange);">
             <div class="card-preview">
                 <iframe src="https://neurosamurai.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="НейроСамурай"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">Велнес / детокс</div>
@@ -592,6 +1036,7 @@
         <div class="project-card" style="--card-accent: var(--accent-blue);">
             <div class="card-preview">
                 <iframe src="https://landingpagebymargofornp.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Бронежилет для ФОП"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">Бухгалтерия / e-commerce</div>
@@ -618,6 +1063,7 @@
                     </div>
                     <p>Telegram AI-ассистент<br>работает автономно 24/7</p>
                 </div>
+                <div class="card-preview-overlay"></div>
             </div>
             <div class="card-body">
                 <div class="card-niche">Коучинг / боты</div>
@@ -636,19 +1082,20 @@
         </div>
 
         <!-- 7. Казна Dashboard -->
-        <div class="project-card reveal" style="--accent: #6366f1;">
+        <div class="project-card" style="--card-accent: var(--accent-indigo);">
             <div class="card-preview">
-                <iframe src="https://kazna-dashboard.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-                <div class="card-overlay"></div>
+                <iframe src="https://kazna-dashboard.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Казна Dashboard"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
-            <div class="card-content">
-                <div class="card-meta">
-                    <span class="card-niche">Финтех / казначейство</span>
-                    <span class="card-student">Влад</span>
-                </div>
+            <div class="card-body">
+                <div class="card-niche">Финтех / казначейство</div>
                 <h3 class="card-title">Казна Dashboard</h3>
+                <div class="card-student">Влад</div>
                 <p class="card-desc">Финансовый дашборд: мультивалюта, Sankey-диаграммы, автосинхронизация с Google Sheets, аналитика по контурам</p>
-                <div class="card-wow">Полноценная ERP-система</div>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+                    Полноценная ERP-система
+                </div>
                 <a href="https://kazna-dashboard.vercel.app/" target="_blank" rel="noopener" class="card-link">
                     Открыть дашборд
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
@@ -657,19 +1104,20 @@
         </div>
 
         <!-- 8. Launch Quest -->
-        <div class="project-card reveal" style="--accent: #f59e0b;">
+        <div class="project-card" style="--card-accent: var(--accent-amber);">
             <div class="card-preview">
-                <iframe src="https://aimarketolog.site/launch-quest.html" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-                <div class="card-overlay"></div>
+                <iframe src="https://aimarketolog.site/launch-quest.html" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Launch Quest"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
-            <div class="card-content">
-                <div class="card-meta">
-                    <span class="card-niche">Продуктивность / СДВГ</span>
-                    <span class="card-student">Влад</span>
-                </div>
+            <div class="card-body">
+                <div class="card-niche">Продуктивность / СДВГ</div>
                 <h3 class="card-title">Launch Quest</h3>
+                <div class="card-student">Влад</div>
                 <p class="card-desc">СДВГ-дашборд запуска: 30 квестов, XP-система, уровни, помодоро-таймер, streak-счётчик. Геймификация для тех, кто не может заставить себя делать</p>
-                <div class="card-wow">Геймификация для СДВГ-мозга</div>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M6 15H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="m2 21 9-3 9 3"/><path d="M9 18V6"/><path d="M15 18V6"/></svg>
+                    Геймификация для СДВГ-мозга
+                </div>
                 <a href="https://aimarketolog.site/launch-quest.html" target="_blank" rel="noopener" class="card-link">
                     Открыть квест
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
@@ -678,19 +1126,20 @@
         </div>
 
         <!-- 9. AI-Ковчег -->
-        <div class="project-card reveal" style="--accent: #10b981;">
+        <div class="project-card" style="--card-accent: var(--accent-emerald);">
             <div class="card-preview">
-                <iframe src="https://vercel-deploy-psi-ecru.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
-                <div class="card-overlay"></div>
+                <iframe src="https://vercel-deploy-psi-ecru.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="AI-Ковчег"></iframe>
+                <div class="card-preview-overlay"></div>
             </div>
-            <div class="card-content">
-                <div class="card-meta">
-                    <span class="card-niche">Образование / AI</span>
-                    <span class="card-student">Влад</span>
-                </div>
+            <div class="card-body">
+                <div class="card-niche">Образование / AI</div>
                 <h3 class="card-title">AI-Ковчег</h3>
+                <div class="card-student">Влад</div>
                 <p class="card-desc">Лендинг образовательного продукта: WebGL-молнии, glassmorphism, 8 модулей, 3 тарифа, анимации. Создан через вайб-кодинг</p>
-                <div class="card-wow">WebGL + glassmorphism</div>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    WebGL + glassmorphism
+                </div>
                 <a href="https://vercel-deploy-psi-ecru.vercel.app/" target="_blank" rel="noopener" class="card-link">
                     Открыть сайт
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
@@ -698,23 +1147,33 @@
             </div>
         </div>
 
-        <!-- 10. Владюша — AI-куратор -->
-        <div class="project-card reveal" style="--accent: #ec4899;">
-            <div class="card-preview" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(139,92,246,0.1));min-height:220px;">
-                <div style="text-align:center;padding:20px;">
-                    <div style="font-size:48px;margin-bottom:12px;">🤖</div>
-                    <div style="font-size:18px;font-weight:800;color:#f5f5f5;">@vladyusha_yasko_bot</div>
-                    <div style="font-size:13px;color:#a1a1aa;margin-top:4px;">AI-куратор курса</div>
+        <!-- 10. Владюша — AI-куратор (AGENT CARD) -->
+        <div class="project-card card-agent" style="--card-accent: var(--accent-purple);">
+            <div class="card-preview">
+                <div class="agent-bg-anim"></div>
+                <div class="agent-preview-content">
+                    <div class="agent-avatar">
+                        <img src="factory-visual.png" alt="Влад Яско" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="agent-avatar-initials" style="display:none;">ВЯ</div>
+                    </div>
+                    <div class="agent-bot-name">@vladyusha_yasko_bot</div>
+                    <div class="agent-bot-sub">AI-куратор курса</div>
+                    <div class="badge-voice">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        Голос Влада
+                    </div>
                 </div>
+                <div class="card-preview-overlay"></div>
             </div>
-            <div class="card-content">
-                <div class="card-meta">
-                    <span class="card-niche">Образование / AI-кураторство</span>
-                    <span class="card-student">Влад</span>
-                </div>
+            <div class="card-body">
+                <div class="card-niche">Образование / AI-кураторство</div>
                 <h3 class="card-title">Владюша — AI-куратор</h3>
+                <div class="card-student">Влад</div>
                 <p class="card-desc">Отвечает текстом и голосом Влада, видит картинки, слышит голосовые. Работает 24/7 в групповом чате курса</p>
-                <div class="card-wow">Голос Влада через ElevenLabs</div>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    Голос Влада через ElevenLabs
+                </div>
                 <a href="https://t.me/vladyusha_yasko_bot" target="_blank" rel="noopener" class="card-link">
                     Открыть бота
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
@@ -722,23 +1181,33 @@
             </div>
         </div>
 
-        <!-- 11. AI-Продавец -->
-        <div class="project-card reveal" style="--accent: #22c55e;">
-            <div class="card-preview" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(59,130,246,0.1));min-height:220px;">
-                <div style="text-align:center;padding:20px;">
-                    <div style="font-size:48px;margin-bottom:12px;">💰</div>
-                    <div style="font-size:18px;font-weight:800;color:#f5f5f5;">@vlad_yasko_ai</div>
-                    <div style="font-size:13px;color:#a1a1aa;margin-top:4px;">AI-менеджер по продажам</div>
+        <!-- 11. AI-Продавец (AGENT CARD) -->
+        <div class="project-card card-agent" style="--card-accent: var(--accent-green);">
+            <div class="card-preview">
+                <div class="agent-bg-anim"></div>
+                <div class="agent-preview-content">
+                    <div class="agent-avatar">
+                        <img src="factory-visual.png" alt="Влад Яско" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="agent-avatar-initials" style="display:none;">ВЯ</div>
+                    </div>
+                    <div class="agent-bot-name">@vlad_yasko_ai</div>
+                    <div class="agent-bot-sub">AI-менеджер по продажам</div>
+                    <div class="badge-voice">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        Голос Влада
+                    </div>
                 </div>
+                <div class="card-preview-overlay"></div>
             </div>
-            <div class="card-content">
-                <div class="card-meta">
-                    <span class="card-niche">Продажи / автоматизация</span>
-                    <span class="card-student">Влад</span>
-                </div>
+            <div class="card-body">
+                <div class="card-niche">Продажи / автоматизация</div>
                 <h3 class="card-title">AI-менеджер по продажам</h3>
+                <div class="card-student">Влад</div>
                 <p class="card-desc">Автономный бот: SPIN-квалификация, голосовые ответы, кейсы по нише клиента, закрытие на оплату. Уведомляет о горячих лидах</p>
-                <div class="card-wow">Продаёт голосом Влада 24/7</div>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    Продаёт голосом Влада 24/7
+                </div>
                 <a href="https://t.me/vlad_yasko_ai" target="_blank" rel="noopener" class="card-link">
                     Написать боту
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
@@ -751,37 +1220,137 @@
 
 <!-- Bottom CTA -->
 <section class="bottom-section">
+    <div class="bottom-glow"></div>
     <div class="container">
         <p class="bottom-quote">
             Всё создано через нейронки.<br>
             Без дизайнеров. Без разработчиков. <em>Голосом.</em>
         </p>
         <p class="bottom-subtext">11 проектов. Сайты, приложения, боты, дашборды. Всё &mdash; рабочее.</p>
+        <div class="urgency-line">
+            <span class="urgency-dot"></span>
+            <span class="urgency-text">Осталось 8 мест на второй поток</span>
+        </div>
         <a href="https://aimarketolog.site" class="cta-btn">
             Создай свой проект на втором потоке
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
         <p class="cta-date">Старт 15 апреля</p>
     </div>
 </section>
 
 <script>
-// Scroll reveal for cards
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+// ===== PARTICLE SYSTEM =====
+(function() {
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w, h;
+    const PARTICLE_COUNT = 60;
+    const CONNECTION_DIST = 150;
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * w;
+            this.y = Math.random() * h;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.r = Math.random() * 1.5 + 0.5;
+            this.alpha = Math.random() * 0.4 + 0.1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > w) this.vx *= -1;
+            if (this.y < 0 || this.y > h) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(139, 92, 246, ${this.alpha})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < CONNECTION_DIST) {
+                    const alpha = (1 - dist / CONNECTION_DIST) * 0.08;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+
+// ===== NAV SCROLL EFFECT =====
+let lastScroll = 0;
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+    lastScroll = y;
+}, { passive: true });
+
+// ===== CARD TILT EFFECT =====
+document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const tiltX = (y - 0.5) * 4;
+        const tiltY = (x - 0.5) * -4;
+        card.style.transform = `translateY(-8px) scale(1.01) perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        card.style.setProperty('--mouse-x', `${x * 100}%`);
+        card.style.setProperty('--mouse-y', `${y * 100}%`);
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+});
+
+// ===== SCROLL REVEAL FOR CARDS =====
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 100;
+            const idx = Array.from(entry.target.parentElement.children).indexOf(entry.target);
             setTimeout(() => {
                 entry.target.classList.add('visible');
-            }, delay);
-            observer.unobserve(entry.target);
+            }, idx * 80);
+            cardObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
+document.querySelectorAll('.project-card').forEach(card => cardObserver.observe(card));
 
-// Scroll reveal for bottom section
+// ===== SCROLL REVEAL FOR BOTTOM SECTION =====
 const bottomObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -789,22 +1358,21 @@ const bottomObserver = new IntersectionObserver((entries) => {
             bottomObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.2 });
+}, { threshold: 0.15 });
 
-document.querySelectorAll('.bottom-quote, .bottom-subtext, .cta-btn, .cta-date').forEach(el => {
+document.querySelectorAll('.bottom-quote, .bottom-subtext, .urgency-line, .cta-btn, .cta-date').forEach(el => {
     bottomObserver.observe(el);
 });
 
-// Animated counters
+// ===== ANIMATED COUNTERS =====
 function animateCounter(el) {
     const target = parseInt(el.dataset.target);
-    const duration = 1800;
+    const duration = 2000;
     const start = performance.now();
 
     function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
-        // Ease out cubic
         const eased = 1 - Math.pow(1 - progress, 3);
         const current = Math.round(eased * target);
         el.textContent = current.toLocaleString('ru-RU');
