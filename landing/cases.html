@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты студентов | AI-Маркетолог</title>
+    <meta name="description" content="Реальные проекты студентов курса AI-Маркетолог. Созданы во время обучения, не после.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050510;
+            --bg-surface: #0d0d1a;
+            --bg-card: #111125;
+            --border: #1e1e3a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-cyan: #06b6d4;
+            --accent-rose: #f43f5e;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Manrope', 'Inter', sans-serif;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --container: 1140px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        /* Animated gradient mesh background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(139,92,246,0.07), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(59,130,246,0.05), transparent),
+                radial-gradient(ellipse 50% 60% at 50% 80%, rgba(34,197,94,0.03), transparent);
+            background-size: 200% 200%;
+            animation: meshFlow 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes meshFlow {
+            0%, 100% { background-position: 0% 50%; }
+            33% { background-position: 100% 0%; }
+            66% { background-position: 50% 100%; }
+        }
+
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(5,5,16,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-back:hover { color: var(--text-primary); }
+        .nav-back svg { width: 16px; height: 16px; }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 140px 0 60px;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s var(--ease-out) both;
+        }
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s var(--ease-out) 0.1s both;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s var(--ease-out) 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GRID ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 40px 0 80px;
+        }
+
+        /* ===== CARD ===== */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.4s;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+        }
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--card-accent);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.4),
+                0 0 40px color-mix(in srgb, var(--card-accent) 15%, transparent);
+        }
+
+        /* Top accent line */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .project-card:hover::before { opacity: 1; }
+
+        /* Preview area */
+        .card-preview {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: var(--bg-surface);
+        }
+        .card-preview iframe {
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5);
+            transform-origin: top left;
+            border: none;
+            pointer-events: none;
+        }
+        .card-preview-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 8%, var(--bg-surface)), var(--bg-surface));
+        }
+        .card-preview-placeholder .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: color-mix(in srgb, var(--card-accent) 15%, transparent);
+            font-size: 24px;
+        }
+        .card-preview-placeholder p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Overlay gradient */
+        .card-preview::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to top, var(--bg-card), transparent);
+            pointer-events: none;
+        }
+
+        /* Card body */
+        .card-body {
+            padding: 20px 24px 24px;
+        }
+        .card-niche {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--card-accent);
+            margin-bottom: 8px;
+        }
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .card-student {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        /* Wow metric */
+        .card-wow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: color-mix(in srgb, var(--card-accent) 8%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-accent) 15%, transparent);
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--card-accent);
+        }
+        .card-wow .wow-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Link button */
+        .card-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--card-accent) 25%, transparent);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s var(--ease-out);
+            cursor: pointer;
+        }
+        .card-link:hover {
+            background: color-mix(in srgb, var(--card-accent) 20%, transparent);
+            border-color: var(--card-accent);
+            transform: translateY(-1px);
+        }
+        .card-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+        .card-link:hover svg { transform: translateX(3px); }
+
+        /* ===== BOTTOM CTA ===== */
+        .bottom-section {
+            padding: 60px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        .bottom-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+        }
+
+        .bottom-quote {
+            font-family: var(--font-display);
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .bottom-quote.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s var(--ease-out);
+        }
+        .bottom-quote em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bottom-subtext {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .bottom-subtext.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s var(--ease-out) 0.1s;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border: none;
+            border-radius: var(--radius-lg);
+            font-family: var(--font);
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .cta-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s var(--ease-out) 0.2s, transform 0.6s var(--ease-out) 0.2s;
+        }
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .cta-btn:hover::before { opacity: 1; }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(139,92,246,0.35);
+        }
+        .cta-btn svg { width: 20px; height: 20px; }
+
+        .cta-date {
+            margin-top: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--accent-green);
+            opacity: 0;
+        }
+        .cta-date.visible {
+            opacity: 1;
+            transition: opacity 0.6s var(--ease-out) 0.3s;
+        }
+
+        /* ===== COUNTER ANIMATION ===== */
+        .counter { display: inline; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+        @media (max-width: 640px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .hero { padding: 120px 0 40px; }
+            .card-preview { height: 180px; }
+            .card-body { padding: 16px 20px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="container">
+        <a href="https://aimarketolog.site" class="nav-logo">AI-Маркетолог</a>
+        <a href="https://aimarketolog.site" class="nav-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            На главную
+        </a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Первый поток
+        </div>
+        <h1>Проекты <span>студентов</span></h1>
+        <p class="hero-sub">Не&nbsp;концепты, не&nbsp;домашки. Живые продукты, которые зарабатывают, привлекают аудиторию и&nbsp;работают на&nbsp;автопилоте.</p>
+    </div>
+</section>
+
+<!-- Projects grid -->
+<section class="container">
+    <div class="projects-grid">
+
+        <!-- 1. Точка Опоры -->
+        <div class="project-card" style="--card-accent: var(--accent-pink);">
+            <div class="card-preview">
+                <iframe src="https://tochka-opory.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Точка Опоры"></iframe>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">Психология / женский клуб</div>
+                <h3 class="card-title">Точка Опоры</h3>
+                <div class="card-student">Андрей</div>
+                <p class="card-desc">Антистресс-клуб для женщин с AI-калькулятором &laquo;Матрицы&raquo;, подкастами и медитациями</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+                    Полноценный подписочный продукт
+                </div>
+                <a href="https://tochka-opory.vercel.app/" target="_blank" rel="noopener" class="card-link">
+                    Открыть проект
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. Прогноз 2026 -->
+        <div class="project-card" style="--card-accent: var(--accent-purple);">
+            <div class="card-preview">
+                <iframe src="https://2026-theta-inky.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Прогноз 2026"></iframe>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">Эзотерика / нумерология</div>
+                <h3 class="card-title">Прогноз 2026</h3>
+                <div class="card-student">Lilia</div>
+                <p class="card-desc">Персональный нумерологический прогноз: вводишь дату рождения &mdash; получаешь год</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    Glassmorphism + звёздное небо + за 1 день
+                </div>
+                <a href="https://2026-theta-inky.vercel.app/" target="_blank" rel="noopener" class="card-link">
+                    Открыть проект
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. Дофаминомика -->
+        <div class="project-card" style="--card-accent: var(--accent-green);">
+            <div class="card-preview">
+                <iframe src="https://dopenomics.ru" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Дофаминомика"></iframe>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">СДВГ / нейронаука</div>
+                <h3 class="card-title">Дофаминомика</h3>
+                <div class="card-student">Jedi Monkey</div>
+                <p class="card-desc">Интерактивный симулятор дофамина: 107 научных источников, визуализация кривых</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span><span class="counter" data-target="2288">0</span> пользователей &middot; $0 рекламы</span>
+                </div>
+                <a href="https://dopenomics.ru" target="_blank" rel="noopener" class="card-link">
+                    Открыть проект
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 4. НейроСамурай -->
+        <div class="project-card" style="--card-accent: var(--accent-orange);">
+            <div class="card-preview">
+                <iframe src="https://neurosamurai.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="НейроСамурай"></iframe>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">Велнес / детокс</div>
+                <h3 class="card-title">НейроСамурай</h3>
+                <div class="card-student">Виталий</div>
+                <p class="card-desc">21-дневный дофаминовый детокс в формате игры с персонализацией</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M6 15H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="m2 21 9-3 9 3"/><path d="M9 18V6"/><path d="M15 18V6"/></svg>
+                    Геймификация как у Duolingo
+                </div>
+                <a href="https://neurosamurai.vercel.app/" target="_blank" rel="noopener" class="card-link">
+                    Открыть проект
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. Бронежилет для ФОП -->
+        <div class="project-card" style="--card-accent: var(--accent-blue);">
+            <div class="card-preview">
+                <iframe src="https://landingpagebymargofornp.vercel.app/" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Бронежилет для ФОП"></iframe>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">Бухгалтерия / e-commerce</div>
+                <h3 class="card-title">Бронежилет для ФОП</h3>
+                <div class="card-student">Марго</div>
+                <p class="card-desc">Лендинг для бухгалтерских услуг: калькулятор экономии, отзывы, гарантия</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <span><span class="counter" data-target="100">0</span>+ клиентов</span>
+                </div>
+                <a href="https://landingpagebymargofornp.vercel.app/" target="_blank" rel="noopener" class="card-link">
+                    Открыть проект
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- 6. Anna Lakshmi Bot -->
+        <div class="project-card" style="--card-accent: var(--accent-cyan);">
+            <div class="card-preview">
+                <div class="card-preview-placeholder">
+                    <div class="icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <p>Telegram AI-ассистент<br>работает автономно 24/7</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-niche">Коучинг / боты</div>
+                <h3 class="card-title">Anna Lakshmi Bot</h3>
+                <div class="card-student">Анна</div>
+                <p class="card-desc">AI-ассистент в Telegram, работающий автономно</p>
+                <div class="card-wow">
+                    <svg class="wow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><path d="m2 14 6-6"/><circle cx="12" cy="14" r="8"/></svg>
+                    Бот вместо менеджера
+                </div>
+                <a href="https://t.me/AnnaLakshmi_Bot" target="_blank" rel="noopener" class="card-link">
+                    Открыть бота
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="bottom-section">
+    <div class="container">
+        <p class="bottom-quote">
+            Всё создано на обучении.<br>
+            Не после &mdash; <em>во время</em>.
+        </p>
+        <p class="bottom-subtext">6 проектов. 6 ниш. Каждый &mdash; рабочий продукт.</p>
+        <a href="https://aimarketolog.site" class="cta-btn">
+            Создай свой проект на втором потоке
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <p class="cta-date">Старт 15 апреля</p>
+    </div>
+</section>
+
+<script>
+// Scroll reveal for cards
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 100;
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, delay);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
+
+// Scroll reveal for bottom section
+const bottomObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            bottomObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.bottom-quote, .bottom-subtext, .cta-btn, .cta-date').forEach(el => {
+    bottomObserver.observe(el);
+});
+
+// Animated counters
+function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 1800;
+    const start = performance.now();
+
+    function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.textContent = current.toLocaleString('ru-RU');
+        if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+</script>
+
+</body>
+</html>
