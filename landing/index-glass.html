@@ -1,0 +1,2800 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Маркетолог: Сверхчеловек за 2 месяца | Влад Яско</title>
+    <meta name="description" content="63 нейронки. 27 цифровых сотрудников. 7 блоков. За 2 месяца собери AI-систему маркетинга — от исследования до продаж. Предпродажа от $250.">
+    <meta property="og:title" content="AI-Маркетолог: 63 нейронки. 27 сотрудников. Сверхчеловек.">
+    <meta property="og:description" content="Практический воркшоп от Влада Яско. За 2 месяца собери AI-систему из 27 цифровых сотрудников. Старт 15 апреля.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== GLASSMORPHISM DESIGN TOKENS ========== */
+        :root {
+            --bg: #050510;
+            --bg-surface: rgba(255, 255, 255, 0.03);
+            --bg-surface-hover: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-light: rgba(255, 255, 255, 0.04);
+            --text-primary: #f0f0f5;
+            --text-secondary: #a8a8b8;
+            --text-muted: #6b6b80;
+            --accent-green: #22c55e;
+            --accent-green-hover: #2dd66b;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --pain-red: #ef4444;
+            --gradient-purple-blue: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            --gradient-hero: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Manrope', 'Inter', sans-serif;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --container: 1140px;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg-hover: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-hover: rgba(255, 255, 255, 0.14);
+            --glass-blur: blur(20px) saturate(180%);
+            --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 20px 60px rgba(0, 0, 0, 0.3);
+            --glass-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 20px 60px rgba(139, 92, 246, 0.15);
+        }
+
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+        ul, ol { list-style: none; }
+
+        /* ========== BACKGROUND ORBS (FIXED, ANIMATED) ========== */
+        .glass-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+        .glass-orb-1 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 70%);
+            top: -15%; left: -10%;
+            animation: orbDrift1 25s ease-in-out infinite;
+        }
+        .glass-orb-2 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
+            top: 20%; right: -15%;
+            animation: orbDrift2 30s ease-in-out infinite;
+        }
+        .glass-orb-3 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+            bottom: 10%; left: 20%;
+            animation: orbDrift3 22s ease-in-out infinite;
+        }
+        .glass-orb-4 {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            top: 50%; right: 10%;
+            animation: orbDrift4 28s ease-in-out infinite;
+        }
+        .glass-orb-5 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
+            bottom: -5%; right: -5%;
+            animation: orbDrift5 20s ease-in-out infinite;
+        }
+        @keyframes orbDrift1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(80px, 40px) scale(1.08); }
+            50% { transform: translate(30px, -60px) scale(0.95); }
+            75% { transform: translate(-50px, 20px) scale(1.05); }
+        }
+        @keyframes orbDrift2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-70px, 50px) scale(1.1); }
+            66% { transform: translate(40px, -30px) scale(0.92); }
+        }
+        @keyframes orbDrift3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, -40px) scale(1.12); }
+        }
+        @keyframes orbDrift4 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(-50px, 30px) scale(1.06) rotate(5deg); }
+        }
+        @keyframes orbDrift5 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-40px, 20px) scale(0.95); }
+        }
+
+        /* ========== NOISE GRAIN OVERLAY ========== */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: overlay;
+        }
+
+        /* ========== PULSING CTA GLOW ========== */
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(34,197,94,0.2), 0 0 60px rgba(34,197,94,0.05); }
+            50% { box-shadow: 0 0 30px rgba(34,197,94,0.4), 0 0 80px rgba(34,197,94,0.15); }
+        }
+        .cta-btn:not(.cta-btn-outline) {
+            animation: ctaPulse 3s ease-in-out infinite;
+        }
+
+        /* ========== GLASS CARD BASE ========== */
+        .card, .tcard, .case-card, .module-header, .module-body,
+        .package-card, .guarantee-box, .faq-item, .bonus-card,
+        .forwho-col, .final-option, .contrast-table,
+        .product-item, .author-quote {
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+        }
+
+        /* ========== ANIMATED BORDER FOR FEATURED PACKAGE ========== */
+        @keyframes borderGlow {
+            0%, 100% {
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 20px rgba(139,92,246,0.15), 0 0 60px rgba(139,92,246,0.08);
+                border-color: rgba(139,92,246,0.4);
+            }
+            50% {
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 0 30px rgba(139,92,246,0.3), 0 0 80px rgba(139,92,246,0.15);
+                border-color: rgba(139,92,246,0.6);
+            }
+        }
+        .package-card.featured {
+            animation: borderGlow 4s ease-in-out infinite;
+        }
+
+        /* ========== COUNTDOWN GLOW ========== */
+        .countdown-num {
+            text-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 40px rgba(139,92,246,0.2);
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(5,5,16,0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.5); }
+
+        /* ========== UTILITIES ========== */
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+        @media (min-width: 768px) { .container { padding: 0 32px; } }
+
+        .gradient-text {
+            background: var(--gradient-hero);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ========== SCROLL REVEAL ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ========== SECTION ========== */
+        section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 1;
+        }
+        @media (min-width: 768px) { section { padding: 120px 0; } }
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+        @media (min-width: 768px) { .section-title { font-size: 36px; margin-bottom: 64px; } }
+
+        /* ========== CTA BUTTON (GLASS) ========== */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: rgba(34, 197, 94, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-bounce);
+            font-family: var(--font);
+            text-align: center;
+        }
+        @media (min-width: 768px) { .cta-btn { font-size: 20px; padding: 18px 40px; } }
+        .cta-btn:hover {
+            background: rgba(34, 197, 94, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(34,197,94,0.3), 0 0 60px rgba(34,197,94,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .cta-btn:active { transform: translateY(0); }
+        .cta-btn-outline {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--accent-purple);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .cta-btn-outline:hover {
+            background: rgba(139,92,246,0.15);
+            box-shadow: 0 8px 32px rgba(139,92,246,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        /* ========== GLASS CARD ========== */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            transition: all 0.4s var(--ease-out);
+            position: relative;
+            box-shadow: var(--glass-shadow);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 30%, rgba(139,92,246,0.4) 60%, rgba(59,130,246,0.3) 80%, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            background: var(--glass-bg-hover);
+            border-color: var(--glass-border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--glass-shadow-hover);
+        }
+
+        /* ========== BADGE ========== */
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(139,92,246,0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--accent-purple);
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* ========== BACKGROUND ORBS (SECTION-LEVEL) ========== */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* =============================================
+           BLOCK 1: HERO
+           ============================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding: 100px 0 60px;
+            overflow: hidden;
+        }
+        .hero .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle at 40% 40%, rgba(139,92,246,0.25), rgba(99,102,241,0.12) 50%, transparent 70%);
+            top: -200px; right: -200px;
+            animation: orbFloat1 18s ease-in-out infinite;
+        }
+        .hero .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle at 60% 60%, rgba(59,130,246,0.2), rgba(6,182,212,0.08) 50%, transparent 70%);
+            bottom: -100px; left: -100px;
+            animation: orbFloat2 22s ease-in-out infinite;
+        }
+        .hero .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle at 50% 50%, rgba(34,197,94,0.1), rgba(139,92,246,0.06) 50%, transparent 70%);
+            top: 40%; left: 50%;
+            animation: orbFloat3 15s ease-in-out infinite;
+        }
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -40px) scale(1.08); }
+        }
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(-20px, 15px) scale(1.1) rotate(10deg); }
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge { margin-bottom: 24px; animation: fadeUp 0.8s var(--ease-out) 0.1s both; }
+        .hero h1 {
+            font-size: 28px; font-weight: 800; font-family: var(--font-display);
+            line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 24px;
+            animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+        }
+        @media (min-width: 768px) { .hero h1 { font-size: 48px; } }
+        .hero h2 {
+            font-size: 16px; font-weight: 400; color: var(--text-secondary);
+            line-height: 1.7; margin-bottom: 40px; max-width: 640px;
+            animation: fadeUp 0.8s var(--ease-out) 0.35s both;
+        }
+        @media (min-width: 768px) { .hero h2 { font-size: 20px; } }
+        .hero-cta-wrap { display: flex; flex-direction: column; gap: 16px; animation: fadeUp 0.8s var(--ease-out) 0.5s both; }
+        .hero-sub-cta { font-size: 14px; color: var(--text-muted); }
+        .hero-sub-cta span { color: var(--accent-green); font-weight: 600; }
+        .trust-bar {
+            display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px;
+            padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06);
+            animation: fadeUp 0.8s var(--ease-out) 0.65s both;
+        }
+        .trust-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 14px; font-weight: 500; }
+        .trust-icon {
+            width: 36px; height: 24px;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+        .hero-floats { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .hero-float {
+            position: absolute; padding: 6px 14px;
+            background: rgba(139,92,246,0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(139,92,246,0.1);
+            border-radius: 100px; font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,0.3); white-space: nowrap;
+            animation: floatBadge 6s ease-in-out infinite;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .hero-float:nth-child(1) { top: 15%; right: 5%; animation-delay: 0s; }
+        .hero-float:nth-child(2) { top: 35%; right: 8%; animation-delay: 1s; }
+        .hero-float:nth-child(3) { top: 55%; right: 3%; animation-delay: 2s; }
+        .hero-float:nth-child(4) { top: 25%; left: -2%; animation-delay: 0.5s; }
+        .hero-float:nth-child(5) { top: 50%; left: 1%; animation-delay: 1.5s; }
+        .hero-float:nth-child(6) { top: 70%; right: 12%; animation-delay: 2.5s; }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-12px) rotate(2deg); opacity: 0.6; }
+        }
+        @media (max-width: 767px) { .hero-floats { display: none; } }
+        .wave-divider { width: 100%; height: 60px; background: none; overflow: hidden; }
+        .wave-divider svg { width: 100%; height: 100%; display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =============================================
+           BLOCK 2: PAIN
+           ============================================= */
+        .pain-section { }
+        .pain-grid { display: flex; flex-direction: column; gap: 12px; max-width: 700px; margin: 0 auto; }
+        .pain-item {
+            display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px;
+            border-radius: var(--radius-sm); cursor: pointer;
+            transition: background 0.3s ease; user-select: none; -webkit-user-select: none;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        .pain-item:hover { background: rgba(239,68,68,0.04); }
+        .pain-item.checked { background: rgba(239,68,68,0.06); }
+        .pain-checkbox {
+            flex-shrink: 0; width: 24px; height: 24px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 6px; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s var(--ease-bounce); margin-top: 2px;
+            backdrop-filter: blur(8px); background: rgba(255,255,255,0.02);
+        }
+        .pain-item.checked .pain-checkbox { background: rgba(239,68,68,0.7); border-color: var(--pain-red); }
+        .pain-checkbox-icon { opacity: 0; transform: scale(0.5); transition: all 0.3s var(--ease-bounce); color: #fff; font-size: 14px; }
+        .pain-item.checked .pain-checkbox-icon { opacity: 1; transform: scale(1); }
+        .pain-text { color: var(--text-secondary); font-size: 16px; line-height: 1.5; transition: color 0.3s ease; }
+        @media (min-width: 768px) { .pain-text { font-size: 18px; } }
+        .pain-item.checked .pain-text { color: var(--text-primary); }
+        .pain-highlight { color: rgba(239,68,68,0.9); font-weight: 600; }
+        .pain-footer { text-align: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .pain-footer p:first-child { color: var(--text-primary); font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .pain-footer p:last-child { color: var(--text-secondary); font-size: 16px; }
+        .pain-counter { text-align: center; margin-bottom: 32px; font-size: 14px; color: var(--text-muted); min-height: 20px; }
+        .pain-counter span { color: var(--pain-red); font-weight: 700; font-size: 16px; }
+
+        /* =============================================
+           BLOCK 3: CONTRAST (GLASS TABLE)
+           ============================================= */
+        .contrast-section { overflow: hidden; }
+        .contrast-table {
+            display: grid; grid-template-columns: 1fr; gap: 0; max-width: 900px; margin: 0 auto;
+            border-radius: var(--radius-lg); overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: var(--glass-shadow);
+        }
+        @media (min-width: 768px) { .contrast-table { grid-template-columns: 1fr 1fr; } }
+        .contrast-col { padding: 0; }
+        .contrast-header {
+            padding: 20px 24px; font-size: 16px; font-weight: 700;
+            text-align: center; letter-spacing: 0.02em;
+        }
+        .contrast-header-old { background: rgba(239,68,68,0.06); color: rgba(239,68,68,0.8); }
+        .contrast-header-new { background: rgba(34,197,94,0.06); color: var(--accent-green); }
+        .contrast-row {
+            padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.04);
+            font-size: 15px; line-height: 1.5; display: flex; align-items: center; gap: 12px; min-height: 60px;
+        }
+        .contrast-col-old .contrast-row { color: var(--text-muted); background: rgba(239,68,68,0.02); }
+        .contrast-col-new .contrast-row { color: var(--text-primary); background: rgba(34,197,94,0.02); }
+        .strikethrough { text-decoration: line-through; text-decoration-color: rgba(239,68,68,0.5); }
+        .contrast-icon { flex-shrink: 0; width: 24px; text-align: center; }
+        @media (min-width: 768px) { .contrast-row { font-size: 16px; } }
+
+        /* =============================================
+           BLOCK 4: VIDEO
+           ============================================= */
+        .video-section { text-align: center; }
+        .video-wrapper {
+            max-width: 800px; margin: 0 auto 32px; aspect-ratio: 16/9;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: var(--glass-shadow);
+        }
+        .video-wrapper:hover { border-color: rgba(139,92,246,0.3); }
+        .video-play-btn {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(139,92,246,0.7); backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s var(--ease-bounce), background 0.3s ease;
+            z-index: 1; box-shadow: 0 0 40px rgba(139,92,246,0.3);
+        }
+        .video-wrapper:hover .video-play-btn { transform: scale(1.1); background: rgba(139,92,246,0.9); }
+        .video-play-btn svg { width: 32px; height: 32px; fill: #fff; margin-left: 4px; }
+        .video-bg-pulse {
+            position: absolute; width: 120px; height: 120px; border-radius: 50%;
+            background: rgba(139,92,246,0.15); animation: pulse-ring 2s ease infinite;
+        }
+        @keyframes pulse-ring { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+        .video-caption { color: var(--text-secondary); font-size: 16px; max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+        .video-caption strong { color: var(--text-primary); }
+
+        /* =============================================
+           BLOCK 5: PROGRAM (GLASS ACCORDION)
+           ============================================= */
+        .program-section { }
+        .program-timeline { max-width: 740px; margin: 0 auto; position: relative; }
+        .program-timeline::before {
+            content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(180deg, rgba(139,92,246,0.3), rgba(59,130,246,0.3), rgba(34,197,94,0.2));
+        }
+        @media (min-width: 768px) { .program-timeline::before { left: 28px; } }
+        .module-card { position: relative; margin-bottom: 12px; padding-left: 52px; }
+        @media (min-width: 768px) { .module-card { padding-left: 72px; } }
+        .module-dot {
+            position: absolute; left: 12px; top: 24px; width: 18px; height: 18px;
+            border-radius: 50%; background: var(--accent-purple);
+            border: 3px solid var(--bg); z-index: 1;
+            transition: transform 0.3s var(--ease-bounce);
+            box-shadow: 0 0 12px rgba(139,92,246,0.3);
+        }
+        @media (min-width: 768px) { .module-dot { left: 20px; width: 20px; height: 20px; } }
+        .module-card.active .module-dot { transform: scale(1.3); box-shadow: 0 0 24px rgba(139,92,246,0.6); }
+        .module-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 24px;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+            cursor: pointer; transition: all 0.3s ease; gap: 12px;
+            box-shadow: var(--glass-shadow);
+        }
+        .module-header:hover { background: var(--glass-bg-hover); border-color: rgba(139,92,246,0.2); }
+        .module-card.active .module-header { border-color: rgba(139,92,246,0.3); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .module-header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .module-emoji { font-size: 24px; flex-shrink: 0; }
+        .module-title { font-size: 16px; font-weight: 700; }
+        @media (min-width: 768px) { .module-title { font-size: 18px; } }
+        .module-toggle {
+            flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(139,92,246,0.08); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent-purple); font-size: 18px;
+            transition: transform 0.3s var(--ease-out);
+        }
+        .module-card.active .module-toggle { transform: rotate(45deg); }
+        .module-body {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out);
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+        }
+        .module-card.active .module-body { max-height: 600px; }
+        .module-body-inner { padding: 12px 24px 24px; }
+        .module-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+        .module-desc strong { color: var(--accent-purple); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; margin-top: 12px; }
+        .module-desc strong:first-child { margin-top: 0; }
+        .module-result {
+            display: flex; align-items: flex-start; gap: 8px; padding: 14px 16px;
+            background: rgba(34,197,94,0.05); backdrop-filter: blur(8px);
+            border-radius: var(--radius-sm); border-left: 3px solid var(--accent-green);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .module-result-text { font-size: 13px; color: var(--accent-green); font-weight: 700; }
+        .program-progress { max-width: 740px; margin: 40px auto 0; padding-left: 52px; }
+        @media (min-width: 768px) { .program-progress { padding-left: 72px; } }
+        .progress-bar-bg { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0%; background: var(--gradient-purple-blue); border-radius: 3px; transition: width 1.5s var(--ease-out); }
+        .progress-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+        /* =============================================
+           BLOCK 5.5: FACTORY WORKFLOW
+           ============================================= */
+        .factory-section { overflow: hidden; }
+        .factory-subtitle { text-align: center; color: var(--text-secondary); font-size: 16px; max-width: 640px; margin: -32px auto 56px; line-height: 1.7; }
+        @media (min-width: 768px) { .factory-subtitle { font-size: 18px; } }
+        .pipeline {
+            display: flex; align-items: stretch; gap: 0; position: relative;
+            max-width: 1100px; margin: 0 auto 64px; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 12px;
+        }
+        .pipeline::-webkit-scrollbar { display: none; }
+        .pipeline-step { flex: 1; min-width: 180px; position: relative; text-align: center; padding: 0 8px; }
+        .pipeline-icon {
+            width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 32px;
+            position: relative; z-index: 2;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s var(--ease-out);
+            box-shadow: var(--glass-shadow);
+        }
+        .pipeline-step:hover .pipeline-icon {
+            transform: scale(1.12); border-color: rgba(139,92,246,0.3);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 30px rgba(139,92,246,0.3);
+        }
+        .pipeline-step:nth-child(1) .pipeline-icon { background: rgba(139,92,246,0.08); }
+        .pipeline-step:nth-child(2) .pipeline-icon { background: rgba(236,72,153,0.08); }
+        .pipeline-step:nth-child(3) .pipeline-icon { background: rgba(59,130,246,0.08); }
+        .pipeline-step:nth-child(4) .pipeline-icon { background: rgba(34,197,94,0.08); }
+        .pipeline-step:nth-child(5) .pipeline-icon { background: rgba(245,158,11,0.08); }
+        .pipeline-arrow { position: absolute; right: -14px; top: 36px; transform: translateY(-50%); color: var(--text-muted); font-size: 20px; z-index: 3; opacity: 0.5; }
+        .pipeline-step:last-child .pipeline-arrow { display: none; }
+        .pipeline-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pipeline-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+        .pipeline::before {
+            content: ''; position: absolute; top: 36px; left: 60px; right: 60px; height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--accent-green));
+            opacity: 0.2; z-index: 1;
+        }
+        .products-galaxy { position: relative; max-width: 1100px; margin: 0 auto; }
+        .galaxy-title { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 32px; color: var(--text-secondary); }
+        @media (min-width: 768px) { .galaxy-title { font-size: 22px; } }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (min-width: 640px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+        @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+        .product-item {
+            position: relative; padding: 20px 16px;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+            text-align: center; cursor: default; transition: all 0.4s var(--ease-out);
+            overflow: hidden; box-shadow: var(--glass-shadow);
+        }
+        .product-item::before {
+            content: ''; position: absolute; inset: 0; border-radius: var(--radius-md); padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, rgba(139,92,246,0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .product-item:hover::before { opacity: 1; }
+        .product-item:hover { transform: translateY(-6px); border-color: rgba(139,92,246,0.2); box-shadow: var(--glass-shadow-hover); }
+        .product-emoji { font-size: 36px; margin-bottom: 10px; display: block; transition: transform 0.4s var(--ease-bounce); }
+        .product-item:hover .product-emoji { transform: scale(1.2) rotate(-5deg); }
+        .product-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        @media (min-width: 768px) { .product-name { font-size: 15px; } }
+        .product-detail { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+        .product-cat {
+            display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px;
+        }
+        .cat-strategy { background: rgba(139,92,246,0.1); color: #a78bfa; }
+        .cat-content { background: rgba(236,72,153,0.1); color: #f472b6; }
+        .cat-tech { background: rgba(59,130,246,0.1); color: #60a5fa; }
+        .cat-sales { background: rgba(34,197,94,0.1); color: #4ade80; }
+        .cat-automation { background: rgba(245,158,11,0.1); color: #fbbf24; }
+        .factory-counter {
+            display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+            margin-top: 56px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        @media (min-width: 768px) { .factory-counter { gap: 64px; } }
+        .counter-item { text-align: center; }
+        .counter-num {
+            font-size: 36px; font-weight: 800;
+            background: var(--gradient-hero); background-size: 200% 200%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; animation: gradientShift 6s ease infinite; line-height: 1.1;
+        }
+        @media (min-width: 768px) { .counter-num { font-size: 48px; } }
+        .counter-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+        /* =============================================
+           BLOCK 6.5: MARQUEE TESTIMONIALS (GLASS)
+           ============================================= */
+        .marquee-wrap {
+            position: relative; overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+        }
+        .marquee-track { display: flex; gap: 16px; width: max-content; }
+        .marquee-left { animation: marqueeLeft 40s linear infinite; }
+        .marquee-right { animation: marqueeRight 45s linear infinite; }
+        .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+        @keyframes marqueeLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marqueeRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        .tcard {
+            flex-shrink: 0; width: 340px; padding: 20px;
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+            transition: all 0.3s ease; box-shadow: var(--glass-shadow);
+        }
+        .tcard:hover { border-color: rgba(139,92,246,0.25); box-shadow: var(--glass-shadow-hover); }
+        .tcard-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .tcard-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0;
+        }
+        .tcard-name { font-size: 14px; font-weight: 700; }
+        .tcard-role { font-size: 11px; color: var(--text-muted); }
+        .tcard-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; font-style: italic; }
+
+        /* =============================================
+           BLOCK 6: CASES
+           ============================================= */
+        .cases-scroll-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 16px; }
+        .cases-scroll-wrapper::-webkit-scrollbar { display: none; }
+        .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        @media (max-width: 1023px) {
+            .cases-grid { display: flex; gap: 16px; min-width: max-content; padding-right: 20px; }
+            .case-card { width: 300px; flex-shrink: 0; }
+        }
+        .case-card {
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+            padding: 28px; display: flex; flex-direction: column; gap: 16px;
+            transition: all 0.3s var(--ease-out); box-shadow: var(--glass-shadow);
+        }
+        .case-card:hover { border-color: rgba(139,92,246,0.25); transform: translateY(-4px); box-shadow: var(--glass-shadow-hover); }
+        .case-top { display: flex; align-items: center; gap: 14px; }
+        .case-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 16px; color: #fff; flex-shrink: 0;
+        }
+        .case-name { font-size: 16px; font-weight: 700; }
+        .case-niche {
+            font-size: 12px; padding: 4px 10px;
+            background: rgba(139,92,246,0.08); backdrop-filter: blur(8px);
+            color: var(--accent-purple); border-radius: 100px; font-weight: 600;
+            display: inline-block; margin-top: 2px;
+        }
+        .case-result { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+        .case-result strong { color: var(--accent-green); }
+        .case-quote { font-size: 14px; color: var(--text-muted); font-style: italic; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+        /* =============================================
+           BLOCK 7: WHO LEADS
+           ============================================= */
+        .author-section { }
+        .author-grid { display: grid; grid-template-columns: 1fr; gap: 48px; max-width: 900px; margin: 0 auto; align-items: center; }
+        @media (min-width: 768px) { .author-grid { grid-template-columns: 260px 1fr; } }
+        .author-photo {
+            width: 200px; height: 200px; border-radius: 20px;
+            background: var(--gradient-purple-blue); margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 56px; font-weight: 800; color: #fff;
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(139,92,246,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .author-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1)); }
+        @media (min-width: 768px) { .author-photo { width: 260px; height: 260px; font-size: 72px; } }
+        .author-info h2 { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
+        @media (min-width: 768px) { .author-info h2 { font-size: 36px; } }
+        .author-desc { color: var(--text-secondary); font-size: 16px; line-height: 1.7; margin-bottom: 24px; }
+        .author-stats { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+        .author-stat { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+        .author-stat-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-purple); flex-shrink: 0; box-shadow: 0 0 8px rgba(139,92,246,0.5); }
+        .author-tagline { color: var(--text-secondary); font-size: 15px; line-height: 1.7; margin-bottom: 24px; }
+        .author-quote {
+            padding: 20px 24px;
+            background: rgba(139,92,246,0.04); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-left: 3px solid var(--accent-purple);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 16px; line-height: 1.6; color: var(--text-primary); font-style: italic;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* =============================================
+           BLOCK 8: FOR WHO (GLASS PANELS)
+           ============================================= */
+        .forwho-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 900px; margin: 0 auto; }
+        @media (min-width: 768px) { .forwho-grid { grid-template-columns: 1fr 1fr; } }
+        .forwho-col {
+            padding: 32px; border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: var(--glass-shadow);
+        }
+        .forwho-col-yes { border-color: rgba(34,197,94,0.15); }
+        .forwho-col-no { border-color: rgba(239,68,68,0.1); }
+        .forwho-col h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+        .forwho-col-yes h3 { color: var(--accent-green); }
+        .forwho-col-no h3 { color: rgba(239,68,68,0.8); }
+        .forwho-list { display: flex; flex-direction: column; gap: 14px; }
+        .forwho-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.5; color: var(--text-secondary); }
+        .forwho-icon { flex-shrink: 0; font-size: 16px; margin-top: 2px; }
+
+        /* =============================================
+           BLOCK 9: PACKAGES (GLASS CARDS)
+           ============================================= */
+        #packages { }
+        .packages-value-banner { text-align: center; margin-bottom: 48px; font-size: 16px; color: var(--text-muted); }
+        .packages-value-banner span { font-size: 20px; font-weight: 700; color: var(--text-primary); text-decoration: line-through; text-decoration-color: var(--accent-purple); }
+        .packages-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1100px; margin: 0 auto; }
+        @media (min-width: 768px) { .packages-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .packages-grid { grid-template-columns: repeat(4, 1fr); } }
+        .package-card {
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+            padding: 32px 24px; display: flex; flex-direction: column;
+            transition: all 0.3s ease; position: relative;
+            box-shadow: var(--glass-shadow);
+        }
+        .package-card:hover { border-color: rgba(139,92,246,0.2); box-shadow: var(--glass-shadow-hover); }
+        .package-card.featured {
+            border-color: rgba(139,92,246,0.4);
+            background: linear-gradient(180deg, rgba(139,92,246,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            transform: scale(1);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 8px 40px rgba(139,92,246,0.2), 0 0 80px rgba(139,92,246,0.08);
+        }
+        .package-card.featured:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 12px 48px rgba(139,92,246,0.3), 0 0 100px rgba(139,92,246,0.12);
+        }
+        @media (min-width: 1024px) { .package-card.featured { transform: scale(1.05); z-index: 1; } }
+        .package-badge-wrap { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); }
+        .package-badge {
+            padding: 6px 20px; background: rgba(139,92,246,0.8);
+            backdrop-filter: blur(8px); color: #fff; font-size: 12px; font-weight: 700;
+            border-radius: 100px; white-space: nowrap; text-transform: uppercase;
+            letter-spacing: 0.05em; box-shadow: 0 4px 16px rgba(139,92,246,0.3);
+        }
+        .package-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; margin-top: 4px; }
+        .package-price { font-size: 36px; font-weight: 800; margin-bottom: 4px; }
+        .package-card.featured .package-price { color: var(--accent-purple); }
+        .package-installment { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+        .package-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; flex: 1; }
+        .package-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-secondary); }
+        .package-feature.included .pf-icon { color: var(--accent-green); }
+        .package-feature.excluded { color: var(--text-muted); opacity: 0.5; }
+        .package-feature.excluded .pf-icon { color: var(--text-muted); }
+        .pf-icon { flex-shrink: 0; font-size: 16px; }
+        .package-spots { font-size: 13px; color: var(--pain-red); font-weight: 600; margin-bottom: 16px; }
+        .package-cta { width: 100%; padding: 14px; font-size: 16px; }
+        .package-card.featured .package-cta { background: rgba(34,197,94,0.85); color: #fff; }
+        .packages-footer {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 24px;
+            margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .packages-footer-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); }
+        .packages-footer-item span:first-child { font-size: 18px; }
+
+        /* =============================================
+           BLOCK 10: BONUSES (GLASS)
+           ============================================= */
+        .bonuses-grid { display: flex; flex-direction: column; gap: 0; max-width: 700px; margin: 0 auto; }
+        .bonus-card {
+            display: flex; align-items: flex-start; gap: 16px; padding: 24px 0;
+            border-bottom: 1px solid rgba(139,92,246,0.08);
+            transition: all 0.3s ease; position: relative;
+        }
+        .bonus-card:last-child { border-bottom: none; }
+        .bonus-card:hover { padding-left: 8px; }
+        .bonus-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(139,92,246,0.06); backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(139,92,246,0.12);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .bonus-content { flex: 1; min-width: 0; }
+        .bonus-header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+        .bonus-name { font-size: 15px; font-weight: 800; font-family: var(--font-display); line-height: 1.3; }
+        .bonus-value { flex-shrink: 0; font-size: 14px; font-weight: 800; color: var(--accent-purple); position: relative; }
+        .bonus-value::after { content: ''; position: absolute; left: -4px; right: -4px; top: 50%; height: 2px; background: var(--accent-purple); transform: rotate(-8deg); }
+        .bonus-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        @media (max-width: 767px) {
+            .bonus-card { gap: 12px; padding: 18px 0; }
+            .bonus-icon { width: 40px; height: 40px; font-size: 18px; border-radius: 10px; }
+            .bonus-name { font-size: 14px; }
+            .bonus-desc { font-size: 12px; }
+        }
+        .bonuses-footer {
+            text-align: center; margin-top: 32px; padding: 20px 24px;
+            background: rgba(139,92,246,0.04); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(139,92,246,0.1);
+            border-radius: var(--radius-lg); max-width: 700px; margin-left: auto; margin-right: auto;
+            box-shadow: var(--glass-shadow);
+        }
+        .bonuses-footer p:first-child { font-size: 14px; color: var(--text-muted); }
+        .bonuses-footer p:first-child span { font-size: 24px; font-weight: 900; font-family: var(--font-display); color: var(--accent-green); }
+        .bonuses-footer p:last-child { margin-top: 4px; font-size: 15px; color: var(--text-secondary); }
+
+        /* =============================================
+           BLOCK 11: GUARANTEE + FAQ (GLASS)
+           ============================================= */
+        .guarantee-box {
+            max-width: 700px; margin: 0 auto 64px; text-align: center; padding: 48px 32px;
+            background: rgba(34,197,94,0.03); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(34,197,94,0.1);
+            border-radius: var(--radius-lg); box-shadow: var(--glass-shadow);
+        }
+        .guarantee-box h2 { font-size: 24px; margin-bottom: 24px; }
+        @media (min-width: 768px) { .guarantee-box h2 { font-size: 32px; } }
+        .guarantee-big {
+            font-size: 48px; font-weight: 800; font-family: var(--font-display);
+            color: var(--accent-green); margin-bottom: 16px; line-height: 1.1;
+            text-shadow: 0 0 40px rgba(34,197,94,0.3);
+        }
+        @media (min-width: 768px) { .guarantee-big { font-size: 64px; } }
+        .guarantee-text { font-size: 16px; line-height: 1.8; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+        .faq-wrapper { max-width: 740px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .faq-question {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 0; cursor: pointer; gap: 16px;
+            font-size: 16px; font-weight: 600; color: var(--text-primary); transition: color 0.3s ease;
+        }
+        @media (min-width: 768px) { .faq-question { font-size: 18px; } }
+        .faq-question:hover { color: var(--accent-purple); }
+        .faq-toggle {
+            flex-shrink: 0; width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: var(--accent-purple); transition: transform 0.3s var(--ease-out);
+        }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out); }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-answer-inner { padding: 0 0 20px; font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+
+        /* =============================================
+           BLOCK 12: FINAL CTA
+           ============================================= */
+        .final-section { text-align: center; padding-bottom: 140px; }
+        .final-section h2 { font-size: 24px; font-weight: 700; margin-bottom: 48px; }
+        @media (min-width: 768px) { .final-section h2 { font-size: 36px; } }
+        .final-options { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 900px; margin: 0 auto 48px; }
+        @media (min-width: 768px) { .final-options { grid-template-columns: 1fr 1fr; } }
+        .final-option {
+            padding: 32px; border-radius: var(--radius-md); text-align: left; font-size: 16px; line-height: 1.7;
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: var(--glass-shadow);
+        }
+        .final-option-dim { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); color: var(--text-muted); }
+        .final-option-bright { background: rgba(139,92,246,0.04); border: 1px solid rgba(139,92,246,0.2); color: var(--text-primary); }
+        .final-option h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .final-option-dim h3 { color: var(--text-muted); }
+        .final-option-bright h3 { color: var(--accent-purple); }
+        .final-option-bright .final-price { font-size: 28px; font-weight: 800; color: var(--accent-green); margin-top: 12px; }
+        .final-small { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 24px; font-size: 14px; color: var(--text-muted); }
+        .final-small span { white-space: nowrap; }
+        .final-small span::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); margin-right: 8px; vertical-align: middle; }
+        .final-small span:first-child::before { display: none; }
+
+        /* ========== STICKY MOBILE CTA (GLASS) ========== */
+        .sticky-cta {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+            padding: 12px 16px;
+            background: rgba(5,5,16,0.7);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            transform: translateY(100%); transition: transform 0.4s var(--ease-out);
+        }
+        .sticky-cta.visible { transform: translateY(0); }
+        .sticky-cta .cta-btn { width: 100%; padding: 14px; font-size: 16px; }
+        @media (min-width: 768px) { .sticky-cta { display: none; } }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center; padding: 32px 20px 100px; font-size: 13px;
+            color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06);
+            position: relative; z-index: 2;
+        }
+        @media (min-width: 768px) { footer { padding-bottom: 32px; } }
+
+        /* ========== MOBILE-FIRST FIXES ========== */
+        @media (max-width: 767px) {
+            .hero h1 { font-size: 24px; line-height: 1.25; }
+            .hero h2 { font-size: 15px; }
+            .hero-cta-wrap > div { flex-direction: column; }
+            .hero-cta-wrap .cta-btn { width: 100%; text-align: center; font-size: 16px; padding: 14px 20px; }
+            .trust-bar { gap: 10px; }
+            .trust-item { font-size: 12px; }
+            .tcard { width: 260px; padding: 14px; }
+            .tcard-text { font-size: 12px; line-height: 1.5; }
+            .tcard-name { font-size: 13px; }
+            .tcard-avatar { width: 34px; height: 34px; font-size: 11px; }
+            .contrast-table { flex-direction: column; }
+            .contrast-col { width: 100%; }
+            audio { height: 36px; }
+            .module-card.active .module-body { max-height: 500px; }
+            #employees .card { padding: 16px; }
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .product-item { padding: 14px 10px; }
+            .product-emoji { font-size: 28px; }
+            .product-name { font-size: 12px; }
+            .product-detail { font-size: 10px; }
+            .packages-grid { gap: 12px; }
+            .package-card { padding: 20px 16px; }
+            .package-price { font-size: 28px; }
+            .process-line { display: none !important; }
+            #calc-save-money, #calc-save-hours { font-size: 24px; }
+            #niches-grid { grid-template-columns: 1fr !important; }
+            .bonuses-grid { grid-template-columns: 1fr; }
+            .final-options { flex-direction: column; }
+            .final-option { width: 100%; }
+            .final-price { font-size: 28px; }
+            .faq-question { padding: 14px 16px; }
+            section { padding: 48px 0; }
+            table th, table td { padding: 8px 10px !important; font-size: 11px !important; }
+            #forwho-top + section .container > div:last-child span { font-size: 10px; padding: 3px 8px; }
+            .factory-counter { gap: 16px; }
+            .counter-num { font-size: 28px; }
+        }
+
+        /* ========== SWIPE INDICATOR ========== */
+        .swipe-hint { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 8px; animation: swipeHint 2s ease-in-out infinite; }
+        @keyframes swipeHint { 0%, 100% { transform: translateX(0); opacity: 0.5; } 50% { transform: translateX(10px); opacity: 1; } }
+        @media (min-width: 768px) { .swipe-hint { display: none; } }
+
+        /* ========== COUNTDOWN TIMER ========== */
+        .countdown-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 12px 0; }
+        .countdown-unit { text-align: center; min-width: 56px; }
+        .countdown-num {
+            font-size: 24px; font-weight: 900; color: var(--accent-purple);
+            font-variant-numeric: tabular-nums; line-height: 1;
+        }
+        @media (min-width: 768px) { .countdown-num { font-size: 32px; } }
+        .countdown-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .countdown-sep { font-size: 24px; font-weight: 300; color: var(--text-muted); line-height: 1; }
+
+        /* ========== GLASS TABLE (COMPARISON) ========== */
+        table {
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        table th, table td {
+            border-color: rgba(255,255,255,0.04) !important;
+        }
+
+        /* ========== RANGE INPUTS ========== */
+        input[type="range"] {
+            -webkit-appearance: none; appearance: none;
+            background: rgba(255,255,255,0.06); border-radius: 4px; height: 6px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--accent-purple); cursor: pointer;
+            box-shadow: 0 0 12px rgba(139,92,246,0.4);
+        }
+    </style>
+</head>
+<body>
+
+<!-- GLASSMORPHISM: Floating Background Orbs -->
+<div class="glass-orb glass-orb-1"></div>
+<div class="glass-orb glass-orb-2"></div>
+<div class="glass-orb glass-orb-3"></div>
+<div class="glass-orb glass-orb-4"></div>
+<div class="glass-orb glass-orb-5"></div>
+
+<!-- ============ BLOCK 1: HERO ============ -->
+<section class="hero" id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <!-- Floating tool badges -->
+    <div class="hero-floats">
+        <div class="hero-float">&#129302; Claude Code</div>
+        <div class="hero-float">&#128300; Deep Research</div>
+        <div class="hero-float">&#127912; Nano Banana Pro</div>
+        <div class="hero-float">&#128176; Хормози Оффер</div>
+        <div class="hero-float">&#128172; Контент-завод</div>
+        <div class="hero-float">&#9889; 63 нейронки</div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge">&#128293; Второй поток &nbsp;|&nbsp; Старт 15 апреля &nbsp;|&nbsp; Предпродажа &mdash; цена растёт через 5 дней</span>
+            </div>
+            <h1>Замени себе отдел маркетинга.<br><span class="gradient-text">За 2 месяца.</span></h1>
+            <h2>Воркшоп &laquo;AI-Маркетолог&raquo;: глубокое обучение нейронкам с&nbsp;внедрением в&nbsp;маркетинг твоего бизнеса.</h2>
+            <!-- Hero bullets -->
+            <div style="margin:20px 0 0;display:flex;flex-direction:column;gap:10px;animation:fadeUp 0.8s var(--ease-out) 0.35s both;">
+                <div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="font-size:20px;">&#9889;</span> <span><strong>7 AI-навыков</strong> <span style="color:var(--text-secondary);">&mdash; от исследования рынка до автоматических продаж</span></span></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="font-size:20px;">&#129302;</span> <span><strong>27 готовых AI-сотрудников</strong> <span style="color:var(--text-secondary);">&mdash; не промпты, а рабочие системы</span></span></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="font-size:20px;">&#129504;</span> <span><strong>30+ нейронок</strong> <span style="color:var(--text-secondary);">&mdash; знаешь какая для чего и как связывать</span></span></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="font-size:20px;">&#128176;</span> <span><strong>$20/мес на подписки</strong> <span style="color:var(--text-secondary);">заменяют команду из 12 человек за $3&ndash;5K</span></span></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="font-size:20px;">&#128260;</span> <span><strong>80% рутины &mdash; на нейронках.</strong> <span style="color:var(--text-secondary);">Ты управляешь, а не делаешь</span></span></div>
+            </div>
+            <!-- Hero visual -->
+            <div style="margin:24px auto 32px;max-width:480px;animation:fadeUp 0.8s var(--ease-out) 0.4s both;">
+                <img src="factory-visual.png" alt="AI-система: один человек, 12 экранов" style="width:100%;border-radius:16px;border:1px solid rgba(139,92,246,0.2);box-shadow:0 20px 60px rgba(139,92,246,0.15);">
+            </div>
+            <div class="hero-cta-wrap">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <a href="#packages" class="cta-btn">Забрать по цене предпродажи &rarr;</a>
+                    <a href="quiz.html" class="cta-btn cta-btn-outline">&#128300; Узнай свой уровень AI</a>
+                </div>
+                <p class="hero-sub-cta"><span>от $250</span> &middot; рассрочка до 9 платежей &middot; 100% возврат 14 дней &middot; 60 учеников на первом потоке</p>
+                <!-- Countdown timer -->
+                <div style="margin-top:20px;padding:16px 20px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.15);border-radius:12px;" class="reveal">
+                    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">&#128293; Цена предпродажи заканчивается через</p>
+                    <div class="countdown-bar" id="hero-countdown">
+                        <div class="countdown-unit"><div class="countdown-num" id="cd-days">04</div><div class="countdown-label">дней</div></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><div class="countdown-num" id="cd-hours">12</div><div class="countdown-label">часов</div></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><div class="countdown-num" id="cd-mins">37</div><div class="countdown-label">минут</div></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><div class="countdown-num" id="cd-secs">15</div><div class="countdown-label">секунд</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="trust-bar">
+                <div class="trust-item"><span class="trust-icon">MONO</span> Monobank</div>
+                <div class="trust-item"><span class="trust-icon">PP</span> PayPal</div>
+                <div class="trust-item"><span class="trust-icon">USDT</span> Крипто</div>
+                <div class="trust-item"><span class="trust-icon">VISA</span> Visa / MC</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 1.5: MARQUEE TESTIMONIALS ============ -->
+<section style="padding:40px 0 20px;overflow:hidden;">
+    <div class="container" style="margin-bottom:20px;">
+        <p style="text-align:center;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">&#128172; Что говорят ученики в Telegram-чате &mdash; <span style="color:var(--accent-purple);">без цензуры</span></p>
+    </div>
+    <!-- Marquee track 1: left -->
+    <div class="marquee-wrap" style="margin-bottom:12px;">
+        <div class="marquee-track marquee-left">
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">ВК</div><div><div class="tcard-name">Виктория</div><div class="tcard-role">HR / рекрутинг</div></div></div><p class="tcard-text">&laquo;Сижу, делаю домашку и охереваю. Вот реально охереваю, потому что понимаю, насколько это всё упрощает жизнь, работу и всю систему.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">ТХ</div><div><div class="tcard-name">Татьяна</div><div class="tcard-role">Бизнес-психолог</div></div></div><p class="tcard-text">&laquo;Это может решить 80% моих запросов! У меня прямо азарт и ощущение, что это может изменить всё!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">АП</div><div><div class="tcard-name">Андрей</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Я честно просто в диком ахуе от всех этих возможностей. Нужно быть полным долбоебом, чтобы не заработать на этом.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#22c55e,#3b82f6)">МД</div><div><div class="tcard-name">Марина</div><div class="tcard-role">Терапевт</div></div></div><p class="tcard-text">&laquo;У меня появилась надежда, что высвободится время и энергия на бОльшие проекты и свободное время на просто жизнь.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">АЛ</div><div><div class="tcard-name">Александра</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Бля, какая крутая штука клод код! Прям разработчиком себя чувствую. Пилит мне расширение для хрома.&raquo;</p></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">ВК</div><div><div class="tcard-name">Виктория</div><div class="tcard-role">HR / рекрутинг</div></div></div><p class="tcard-text">&laquo;Сижу, делаю домашку и охереваю. Вот реально охереваю, потому что понимаю, насколько это всё упрощает жизнь, работу и всю систему.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">ТХ</div><div><div class="tcard-name">Татьяна</div><div class="tcard-role">Бизнес-психолог</div></div></div><p class="tcard-text">&laquo;Это может решить 80% моих запросов! У меня прямо азарт и ощущение, что это может изменить всё!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">АП</div><div><div class="tcard-name">Андрей</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Я честно просто в диком ахуе от всех этих возможностей. Нужно быть полным долбоебом, чтобы не заработать на этом.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#22c55e,#3b82f6)">МД</div><div><div class="tcard-name">Марина</div><div class="tcard-role">Терапевт</div></div></div><p class="tcard-text">&laquo;У меня появилась надежда, что высвободится время и энергия на бОльшие проекты и свободное время на просто жизнь.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">АЛ</div><div><div class="tcard-name">Александра</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Бля, какая крутая штука клод код! Прям разработчиком себя чувствую. Пилит мне расширение для хрома.&raquo;</p></div>
+        </div>
+    </div>
+
+    <!-- Marquee track 2: right -->
+    <div class="marquee-wrap">
+        <div class="marquee-track marquee-right">
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#06b6d4,#8b5cf6)">РО</div><div><div class="tcard-name">Руслана</div><div class="tcard-role">Локализация / проекты</div></div></div><p class="tcard-text">&laquo;Меня вчера просто прорвало. Я наконец-то установила все скиллы, которые откладывала на потом!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">ВК</div><div><div class="tcard-name">Виктория</div><div class="tcard-role">HR-консультант</div></div></div><p class="tcard-text">&laquo;Я наконец загрузила всю свою литературу, разложила по полочкам и вдруг чётко увидела, чего вообще хочу от этой жизни.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">ЛВ</div><div><div class="tcard-name">Lilia</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Мозок бурлить, кипить, генерує ідеї і каже: Іди роби, в процесі розберешся! І це мегакруто!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">ОС</div><div><div class="tcard-name">Олеся</div><div class="tcard-role">Семейный психолог</div></div></div><p class="tcard-text">&laquo;Сделала сценарий на 3 вирусных рилса, это так креативно и круто! Мне понравилось.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#f59e0b,#22c55e)">СС</div><div><div class="tcard-name">Сергей</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;С каждым зумом все больше раскрываются возможности и новые идеи для себя. Уже начал работу с Gemini и NotebookLM.&raquo;</p></div>
+            <!-- Duplicate -->
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#06b6d4,#8b5cf6)">РО</div><div><div class="tcard-name">Руслана</div><div class="tcard-role">Локализация / проекты</div></div></div><p class="tcard-text">&laquo;Меня вчера просто прорвало. Я наконец-то установила все скиллы, которые откладывала на потом!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">ВК</div><div><div class="tcard-name">Виктория</div><div class="tcard-role">HR-консультант</div></div></div><p class="tcard-text">&laquo;Я наконец загрузила всю свою литературу, разложила по полочкам и вдруг чётко увидела, чего вообще хочу от этой жизни.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">ЛВ</div><div><div class="tcard-name">Lilia</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;Мозок бурлить, кипить, генерує ідеї і каже: Іди роби, в процесі розберешся! І це мегакруто!&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">ОС</div><div><div class="tcard-name">Олеся</div><div class="tcard-role">Семейный психолог</div></div></div><p class="tcard-text">&laquo;Сделала сценарий на 3 вирусных рилса, это так креативно и круто! Мне понравилось.&raquo;</p></div>
+            <div class="tcard"><div class="tcard-top"><div class="tcard-avatar" style="background:linear-gradient(135deg,#f59e0b,#22c55e)">СС</div><div><div class="tcard-name">Сергей</div><div class="tcard-role">Предприниматель</div></div></div><p class="tcard-text">&laquo;С каждым зумом все больше раскрываются возможности и новые идеи для себя. Уже начал работу с Gemini и NotebookLM.&raquo;</p></div>
+        </div>
+    </div>
+    <!-- Niche badges -->
+    <div class="container" style="margin-top:16px;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">HR</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Психология</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Коучинг</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">SAAS</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Строительство</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">E-commerce</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">TikTok</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Велнес</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Блоггинг</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Терапия</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">Финансы</span>
+            <span style="padding:4px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:100px;font-size:11px;color:var(--text-muted);">12+ ниш</span>
+        </div>
+        <p style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:8px;">Одна система &mdash; работает в любой нише</p>
+    </div>
+</section>
+
+<!-- ============ BLOCK 2: FOR WHO (NEW POSITION) ============ -->
+<section style="padding:60px 0;" id="forwho-top">
+    <div class="container">
+        <h2 class="section-title reveal">Не просто курс по нейросетям.<br><span class="gradient-text">Новая профессия. Новая экономическая модель.</span></h2>
+        <p style="text-align:center;color:var(--text-secondary);font-size:16px;max-width:700px;margin:-32px auto 40px;line-height:1.7;" class="reveal">AI-Маркетолог &mdash; это &laquo;завод в одно лицо&raquo;. Один человек закрывает работу целого отдела. Вот для кого это:</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;">
+            <!-- Segment 1: Experts -->
+            <div class="card reveal" style="border-left:3px solid var(--accent-purple);padding:28px;">
+                <div style="font-size:32px;margin-bottom:10px;">&#128170;</div>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:10px;font-family:var(--font-display);">Эксперты, которые &laquo;задолбались&raquo;</h3>
+                <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">Устал платить команде, которая делает долго и плохо. Хочешь уволить дорогих продюсеров и SMM-щиков и делать всё сам &mdash; но быстро.</p>
+                <div style="padding:12px 16px;background:rgba(139,92,246,0.06);border-radius:8px;border-left:3px solid var(--accent-purple);">
+                    <p style="font-size:13px;color:var(--text-primary);font-weight:600;line-height:1.5;">&laquo;Как я в одно лицо закрыл работу целого отдела по маркетингу &mdash; так и каждый эксперт может это сделать самостоятельно.&raquo;</p>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--accent-green);font-weight:600;">&#10004; Результат: от идеи до автоплатежей &mdash; без продюсера</div>
+            </div>
+
+            <!-- Segment 2: Marketers -->
+            <div class="card reveal reveal-delay-1" style="border-left:3px solid var(--accent-blue);padding:28px;">
+                <div style="font-size:32px;margin-bottom:10px;">&#128640;</div>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:10px;font-family:var(--font-display);">Маркетологи и продюсеры</h3>
+                <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">Хочешь ломать рынок старых агентств. Предлагать услуги не за $10K, а за $1K &mdash; и делать их за один вечер. Забирать объёмом и скоростью.</p>
+                <div style="padding:12px 16px;background:rgba(59,130,246,0.06);border-radius:8px;border-left:3px solid var(--accent-blue);">
+                    <p style="font-size:13px;color:var(--text-primary);font-weight:600;line-height:1.5;">Станешь &laquo;AI-продюсером&raquo;, который в одиночку ведёт 10 проектов. Или продаёт то, что раньше стоило $250, за $1 500&ndash;$10 000.</p>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--accent-green);font-weight:600;">&#10004; Результат: one-man agency с 10+ проектами</div>
+            </div>
+
+            <!-- Segment 3: Innovators -->
+            <div class="card reveal reveal-delay-2" style="border-left:3px solid #f59e0b;padding:28px;">
+                <div style="font-size:32px;margin-bottom:10px;">&#128161;</div>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:10px;font-family:var(--font-display);">AI-стартаперы</h3>
+                <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">Хочешь запускать не курсы, а микро-сервисы и приложения. Понимаешь, что классический инфобиз умирает. Ищешь новую модель.</p>
+                <div style="padding:12px 16px;background:rgba(245,158,11,0.06);border-radius:8px;border-left:3px solid #f59e0b;">
+                    <p style="font-size:13px;color:var(--text-primary);font-weight:600;line-height:1.5;">Кейсы: дофамин-трекер (2 288 пользователей), wellness-приложение, автообзвон клиентов &mdash; всё сделано &laquo;на коленке&raquo; за день.</p>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:var(--accent-green);font-weight:600;">&#10004; Результат: запуск продукта за 1 день, а не за месяц</div>
+            </div>
+
+            <!-- Segment 4: Entrepreneurs (from old block) -->
+            <div class="card reveal reveal-delay-3" style="border-left:3px solid #06b6d4;padding:28px;">
+                <div style="font-size:32px;margin-bottom:10px;">&#128188;</div>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:10px;font-family:var(--font-display);">Предприниматели</h3>
+                <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">Хочешь внедрить AI во все отделы бизнеса и повысить личную эффективность. Маркетинг, продажи, финансы, контент, аналитика &mdash; одна система вместо 5-12 подрядчиков.</p>
+                <div style="margin-top:12px;font-size:12px;color:var(--accent-green);font-weight:600;">&#10004; Результат: экономия $30 000-100 000/год + x10 к продуктивности</div>
+            </div>
+
+            <!-- Segment 5: Seekers of new opportunities -->
+            <div class="card reveal reveal-delay-4" style="border-left:3px solid var(--accent-green);padding:28px;">
+                <div style="font-size:32px;margin-bottom:10px;">&#128176;</div>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:10px;font-family:var(--font-display);">Новаторы, ищущие новые деньги</h3>
+                <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">Видишь возможности в AI и хочешь зарабатывать на этом. Новые профессии, новые услуги, новые рынки. Те, кто первым освоит &mdash; заберут рынок.</p>
+                <div style="margin-top:12px;font-size:12px;color:var(--accent-green);font-weight:600;">&#10004; Результат: новая профессия + новая экономическая модель</div>
+            </div>
+        </div>
+
+        <!-- Result summary -->
+        <div class="reveal reveal-delay-3" style="margin-top:32px;text-align:center;">
+            <div style="display:inline-flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+                <span style="padding:10px 20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:700;">&#128293; Завод в кармане</span>
+                <span style="padding:10px 20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:700;">&#9889; Запуск за 1 день</span>
+                <span style="padding:10px 20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:700;">&#128165; Паралич перфекциониста = снят</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 3: CONTRAST ============ -->
+<section class="contrast-section" id="contrast">
+    <div class="container">
+        <h2 class="section-title reveal">Было &rarr; Стало</h2>
+        <div class="contrast-table reveal reveal-delay-1">
+            <div class="contrast-col contrast-col-old">
+                <div class="contrast-header contrast-header-old">Раньше (без AI)</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> <span class="strikethrough">$5 000–$10 000</span>&nbsp; на запуск</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> <span class="strikethrough">2–3 недели</span>&nbsp; на лендинг</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> <span class="strikethrough">3 часа</span>&nbsp; на контент-план</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> <span class="strikethrough">5–12 подрядчиков</span></div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> Зависимость от команды</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10060;</span> Потолок: <span class="strikethrough">3 клиента</span></div>
+            </div>
+            <div class="contrast-col contrast-col-new">
+                <div class="contrast-header contrast-header-new">Теперь (с AI-системой)</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> <strong style="color:var(--accent-green)">$20–$200/мес</strong>&nbsp; на подписки</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> <strong style="color:var(--accent-green)">2 часа</strong>&nbsp; голосом</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> <strong style="color:var(--accent-green)">30 минут</strong>&nbsp; на неделю</div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> <strong style="color:var(--accent-green)">27 AI-сотрудников</strong></div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> Полная <strong style="color:var(--accent-green)">автономность</strong></div>
+                <div class="contrast-row"><span class="contrast-icon">&#10004;</span> <strong style="color:var(--accent-green)">40 проектов</strong> в одиночку</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 4: VIDEO ============ -->
+<section class="video-section" id="video">
+    <div class="container">
+        <h2 class="section-title reveal">Не рассказываю, как делать. <span class="gradient-text">ДЕЛАЮ.</span></h2>
+        <!-- Audio pitch from Vlad — Telegram style -->
+        <div class="reveal reveal-delay-1" style="max-width:560px;margin:0 auto 24px;padding:24px 28px;background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(59,130,246,0.08));border:1px solid rgba(139,92,246,0.2);border-radius:20px;position:relative;overflow:hidden;">
+            <!-- Waveform decoration -->
+            <div style="position:absolute;right:-20px;top:50%;transform:translateY(-50%);opacity:0.06;font-size:120px;pointer-events:none;">&#127911;</div>
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;position:relative;">
+                <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent-purple),var(--accent-blue));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 4px 16px rgba(139,92,246,0.3);">ВЯ</div>
+                <div>
+                    <div style="font-size:15px;font-weight:800;font-family:var(--font-display);">Влад Яско</div>
+                    <div style="font-size:12px;color:var(--text-muted);">&#128308; Голосовое сообщение</div>
+                </div>
+            </div>
+            <!-- Waveform bars (decorative) -->
+            <div style="display:flex;align-items:center;gap:2px;margin-bottom:12px;height:32px;opacity:0.3;">
+                <svg viewBox="0 0 200 32" style="width:100%;height:32px;" preserveAspectRatio="none">
+                    <defs><linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient></defs>
+                    <rect x="0" y="10" width="3" height="12" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="5" y="6" width="3" height="20" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="10" y="3" width="3" height="26" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="15" y="8" width="3" height="16" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="20" y="4" width="3" height="24" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="25" y="10" width="3" height="12" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="30" y="2" width="3" height="28" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="35" y="7" width="3" height="18" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="40" y="5" width="3" height="22" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="45" y="9" width="3" height="14" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="50" y="3" width="3" height="26" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="55" y="6" width="3" height="20" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="60" y="11" width="3" height="10" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="65" y="4" width="3" height="24" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="70" y="8" width="3" height="16" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="75" y="2" width="3" height="28" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="80" y="6" width="3" height="20" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="85" y="10" width="3" height="12" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="90" y="5" width="3" height="22" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="95" y="3" width="3" height="26" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="100" y="8" width="3" height="16" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="105" y="4" width="3" height="24" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="110" y="9" width="3" height="14" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="115" y="6" width="3" height="20" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="120" y="2" width="3" height="28" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="125" y="7" width="3" height="18" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="130" y="5" width="3" height="22" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="135" y="10" width="3" height="12" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="140" y="3" width="3" height="26" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="145" y="7" width="3" height="18" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="150" y="4" width="3" height="24" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="155" y="9" width="3" height="14" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="160" y="6" width="3" height="20" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="165" y="2" width="3" height="28" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="170" y="8" width="3" height="16" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="175" y="5" width="3" height="22" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="180" y="10" width="3" height="12" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="185" y="4" width="3" height="24" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="190" y="7" width="3" height="18" rx="1" fill="url(#waveGrad)"/>
+                    <rect x="195" y="11" width="3" height="10" rx="1" fill="url(#waveGrad)"/>
+                </svg>
+            </div>
+            <audio controls style="width:100%;height:36px;border-radius:8px;filter:hue-rotate(240deg) saturate(1.5);" preload="metadata">
+                <source src="vlad-pitch.ogg" type="audio/ogg">
+            </audio>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:10px;text-align:center;">Послушай, что тебя ждёт на воркшопе &mdash; прямо голосом Влада</p>
+        </div>
+        <div class="video-wrapper reveal reveal-delay-1" style="display:none;">
+            <div class="video-bg-pulse"></div>
+            <div class="video-play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+        </div>
+        <p class="video-caption reveal reveal-delay-2">Этот лендинг создан голосом. Без дизайнера. Без верстальщика.<br><strong>За 2 часа. С $0 бюджетом.</strong> Хочешь так же?</p>
+        <div class="reveal reveal-delay-3" style="text-align:center;">
+            <a href="#packages" class="cta-btn">Хочу научиться &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 5: PROGRAM ============ -->
+<section class="program-section" id="program">
+    <div class="container">
+        <h2 class="section-title reveal">2 месяца. 8 модулей. <span class="gradient-text">Путь от нуля до системы.</span></h2>
+        <p style="text-align:center;color:var(--text-secondary);font-size:15px;max-width:680px;margin:-32px auto 40px;line-height:1.6;" class="reveal">Каждый модуль = урок в записи + live-воркшоп + домашнее задание + готовый результат на твоём проекте. Вот путь, который ты пройдёшь:</p>
+        <div class="program-timeline">
+            <!-- MODULE 1 -->
+            <div class="module-card reveal" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#9889;</span>
+                        <span class="module-title">Инфраструктура AI: 30+ нейронок</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Принципы работы с нейронками на продвинутом уровне</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Claude &mdash; скиллы, плагины, MCP-коннекторы</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Как создавать AI-сотрудников и AI-ассистентов</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Метапромтинг, контекст, агенты</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> 30+ нейронок &mdash; сильные и слабые стороны каждой</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Понимаешь всю инфраструктуру AI</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Создаёшь своих AI-сотрудников</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Работаешь с целым стеком, а не с одним ChatGPT</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Настроенный стек 30+ нейронок + свои AI-ассистенты + ДНК Бизнеса</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 2 -->
+            <div class="module-card reveal reveal-delay-1" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#128300;</span>
+                        <span class="module-title">Deep Research &mdash; стратегические решения</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Авторский метод дипресерча &mdash; стек нейронок параллельно</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Анализ конкурентов, тренды, запросы ЦА</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Стратегия, ценообразование, позиционирование</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Подход для ЛЮБОГО вопроса в жизни и бизнесе</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Стратегические решения на основе данных</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Полная картина рынка за 1 день</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Маркетинг-стратегия + GAP-анализ + понимание &laquo;что делать дальше&raquo;</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 3 -->
+            <div class="module-card reveal reveal-delay-2" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#128230;</span>
+                        <span class="module-title">Упаковка: ДНК ЦА + оффер + позиционирование</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> ДНК Клиента &mdash; глубинный анализ ЦА из 5 частей</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Кастдев через AI + лестница Бена Ханта</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Оффер по Хормози &mdash; от которого невозможно отказаться</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Упаковка любого продукта за 1 день</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Знаешь ЦА лучше, чем она сама</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Упакованный оффер + позиционирование + лид-магниты + скрипты продаж</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 4 -->
+            <div class="module-card reveal reveal-delay-3" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#128187;</span>
+                        <span class="module-title">Сайты, квизы, лид-магниты &mdash; голосом</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Создание сайтов голосом &mdash; без программирования</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Геймификация и персонализированные квизы</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Лид-магниты, калькуляторы, дизайн, анимации</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Сайт за 2 часа, квиз за 30 мин</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> 6 лендингов за 1.5 часа (реальный кейс)</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Работающий сайт + персонализированный квиз + лид-магнит</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 5 -->
+            <div class="module-card reveal reveal-delay-4" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#9997;&#65039;</span>
+                        <span class="module-title">Текстовый контент &mdash; 16 форматов</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Threads, статьи, Telegram, блоги, карусели, креативы</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Всё через скиллы и плагины &mdash; автоматически</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Лучшие тренды и мировые практики контента</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> 1 единица контента &rarr; 16 форматов</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Контент-план на месяц за 30 минут</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Контент-система + план на месяц + 5 AI-сотрудников для контента</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 6 -->
+            <div class="module-card reveal" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#127912;</span>
+                        <span class="module-title">Визуальный контент &mdash; фото, видео, аватары</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Создание фото (Nano Banana Pro, Gemini)</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Оживление фото в видео (Grok, Kling)</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Озвучка, клон голоса (11Labs), аватары</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> VSL-ролик за 3 часа вместо недели</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Полный визуальный продакшн &mdash; всё сам</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Без видеографа, дизайнера, монтажёра</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; VSL-видео + фото-банк + цифровой аватар + визуальная упаковка</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 7 -->
+            <div class="module-card reveal reveal-delay-1" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#128260;</span>
+                        <span class="module-title">Воронка + оплаты + контент для продаж</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Воронка целиком: лид-магнит &rarr; квиз &rarr; бот &rarr; оплата</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Подключение автоплатежей</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Контент: прогревы, email-цепочки, скрипты продаж</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Полная воронка от касания до оплаты</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Работает автоматически, без продюсера</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Работающая воронка + автоплатежи + контент для продаж</span></div>
+                </div></div>
+            </div>
+            <!-- MODULE 8 -->
+            <div class="module-card reveal reveal-delay-2" data-module>
+                <div class="module-dot"></div>
+                <div class="module-header">
+                    <div class="module-header-left">
+                        <span class="module-emoji">&#129302;</span>
+                        <span class="module-title">Автоматизация: Open Claw + AI-агенты + ассистенты</span>
+                    </div>
+                    <span class="module-toggle">+</span>
+                </div>
+                <div class="module-body"><div class="module-body-inner">
+                    <div class="module-desc">
+                        <strong>Изучишь:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Open Claw &mdash; AI-помощник 24/7</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> AI-менеджер по продажам в мессенджерах</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Личные ассистенты для рутины</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#8226;</span> Интеграция всего в единую систему</li>
+                        </ul>
+                        <strong>Навык:</strong>
+                        <ul style="list-style:none;padding:0;margin:4px 0 0;">
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> AI-агенты работают пока ты спишь</li>
+                            <li style="padding:3px 0;padding-left:16px;position:relative;"><span style="position:absolute;left:0;">&#10003;</span> Рутина делегирована. Ты управляешь.</li>
+                        </ul>
+                    </div>
+                    <div class="module-result"><span class="module-result-text">&#127919; Open Claw + AI-агенты + менеджер по продажам + полная автоматизация</span></div>
+                </div></div>
+            </div>
+        </div>
+        <div class="program-progress reveal">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-label">0 из 8 модулей раскрыто</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 5.3: WHAT YOU GET ============ -->
+<section style="padding:60px 0;background:linear-gradient(180deg,rgba(34,197,94,0.03) 0%,var(--bg) 100%);">
+    <div class="container">
+        <h2 class="section-title reveal">Что ты <span class="gradient-text">получишь на выходе</span></h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;margin:0 auto;">
+            <!-- Навыки -->
+            <div class="card reveal" style="grid-column:1/-1;background:linear-gradient(135deg,rgba(139,92,246,0.06),rgba(59,130,246,0.06));border-color:rgba(139,92,246,0.2);">
+                <h3 style="font-size:16px;font-weight:800;margin-bottom:14px;color:var(--accent-purple);">&#127891; Навыки, которые останутся навсегда</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px;">
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Работа с 30+ нейронками на продвинутом уровне</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Создание AI-сотрудников и ассистентов</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Deep Research &mdash; анализ любого рынка за 1 день</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Упаковка продукта и создание офферов</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Создание сайтов голосом (вайб-кодинг)</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Генерация 16 форматов контента</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; AI-генерация фото, видео, аватаров</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Построение воронок продаж с автооплатами</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Настройка AI-агентов для автоматизации</div>
+                    <div style="font-size:13px;color:var(--text-secondary);padding:6px 0;">&#10003; Делегирование 80% рутины нейронкам</div>
+                </div>
+            </div>
+            <!-- Продукты -->
+            <div class="card reveal reveal-delay-1">
+                <h3 style="font-size:15px;font-weight:800;margin-bottom:12px;color:var(--accent-green);">&#128230; Готовые продукты</h3>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:2;">
+                    &#10004; Маркетинг-стратегия<br>
+                    &#10004; Упакованный оффер<br>
+                    &#10004; Работающий сайт<br>
+                    &#10004; Квиз-воронка<br>
+                    &#10004; Контент на месяц<br>
+                    &#10004; VSL-видео<br>
+                    &#10004; Воронка с автооплатами<br>
+                    &#10004; AI-агенты для бизнеса
+                </div>
+            </div>
+            <!-- Что забираешь -->
+            <div class="card reveal reveal-delay-2">
+                <h3 style="font-size:15px;font-weight:800;margin-bottom:12px;color:#f59e0b;">&#127873; Что забираешь с собой</h3>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:2;">
+                    &#128293; 27 AI-сотрудников Влада<br>
+                    &#128293; Записи всех уроков навсегда<br>
+                    &#128293; Записи 12 стратсессий<br>
+                    &#128293; Доступ к комьюнити<br>
+                    &#128293; Open Claw + VPS<br>
+                    &#128293; Обновления 12 месяцев<br>
+                    &#128293; Методологии и скиллы<br>
+                    &#128293; Шаблоны и промпты
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 5.5: 27 DIGITAL EMPLOYEES ============ -->
+<section id="employees" style="padding:80px 0;background:linear-gradient(180deg,rgba(139,92,246,0.03) 0%,var(--bg) 100%);">
+    <div class="container">
+        <h2 class="section-title reveal">Это не курс.<br><span class="gradient-text">Это 27 цифровых сотрудников.</span></h2>
+        <div class="reveal" style="max-width:400px;margin:-24px auto 32px;">
+            <img src="hero-ai.png" alt="27 AI-сотрудников" style="width:100%;border-radius:16px;opacity:0.85;">
+        </div>
+        <p style="text-align:center;color:var(--text-secondary);font-size:16px;max-width:680px;margin:-32px auto 20px;line-height:1.7;" class="reveal">
+            Ты получаешь не промпты и не PDF-ки. Ты получаешь <strong style="color:var(--text-primary)">готовых AI-сотрудников</strong>, которые выполняют задачи по эталону. Каждый создавался 5-10 часов. Ты копируешь их себе за 5 минут &mdash; и они работают как у меня.
+        </p>
+        <div style="text-align:center;margin-bottom:40px;" class="reveal reveal-delay-1">
+            <span style="display:inline-block;padding:8px 20px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:100px;font-size:13px;font-weight:700;color:#f59e0b;">&#128293; Планирую продавать отдельно за $2 000+ &mdash; пока бонусом обучения</span>
+        </div>
+
+        <!-- 5 categories grid -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;" class="reveal reveal-delay-2">
+
+            <!-- ИССЛЕДОВАНИЕ ЦА -->
+            <div class="card" style="border-left:3px solid var(--accent-purple);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#128300;</span>
+                    <span style="font-size:15px;font-weight:800;color:var(--accent-purple);">ИССЛЕДОВАНИЕ ЦА</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(139,92,246,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#129516;</span>
+                        <div><div style="font-size:13px;font-weight:700;">ДНК ЦА</div><div style="font-size:11px;color:var(--text-muted);">Глубинный портрет целевой аудитории из 5 частей</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(139,92,246,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128200;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Лестница Бена Ханта</div><div style="font-size:11px;color:var(--text-muted);">6 уровней осведомлённости + стратегия прогрева</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПРОДУКТ И УПАКОВКА -->
+            <div class="card" style="border-left:3px solid var(--accent-blue);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#127919;</span>
+                    <span style="font-size:15px;font-weight:800;color:var(--accent-blue);">ПРОДУКТ И УПАКОВКА</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(59,130,246,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128176;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Оффер по Хормози</div><div style="font-size:11px;color:var(--text-muted);">$100M Offers &mdash; формула ценности, пакеты, бонусы</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(59,130,246,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128187;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Frontend Designer</div><div style="font-size:11px;color:var(--text-muted);">Создание сайтов и упаковка продукта голосом</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(59,130,246,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#10067;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Персонализированный квиз</div><div style="font-size:11px;color:var(--text-muted);">4 формата: диагностика, типология, калькулятор, сканер</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОНТЕНТ -->
+            <div class="card" style="border-left:3px solid #ec4899;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#9997;&#65039;</span>
+                    <span style="font-size:15px;font-weight:800;color:#ec4899;">КОНТЕНТ &mdash; 9 сотрудников</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#9734; Content System</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#127909; Reels</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#128293; Вирусные Reels</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#128247; Сторис</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#127912; Карусели</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#128172; Threads</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#127752; Креативы</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#129504; Очеловечивание</div>
+                    <div style="padding:6px 10px;background:rgba(236,72,153,0.06);border-radius:6px;font-size:12px;font-weight:600;">&#128483;&#65039; Tone of Voice</div>
+                </div>
+                <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">Из 1 единицы контента &rarr; 16 готовых форматов для разных площадок</p>
+            </div>
+
+            <!-- ВОРОНКИ -->
+            <div class="card" style="border-left:3px solid #06b6d4;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#128260;</span>
+                    <span style="font-size:15px;font-weight:800;color:#06b6d4;">ВОРОНКИ</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(6,182,212,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#9734;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Direct Funnel</div><div style="font-size:11px;color:var(--text-muted);">Воронка продаж: квиз &rarr; бот &rarr; оплата</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(6,182,212,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128293;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Прогревы</div><div style="font-size:11px;color:var(--text-muted);">Серии сторис и постов для подогрева аудитории</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(6,182,212,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#127909;</span>
+                        <div><div style="font-size:13px;font-weight:700;">VSL видео</div><div style="font-size:11px;color:var(--text-muted);">Продающие видеопрезентации по 15-блочной структуре</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПРОДАЖИ -->
+            <div class="card" style="border-left:3px solid var(--accent-green);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#128176;</span>
+                    <span style="font-size:15px;font-weight:800;color:var(--accent-green);">ПРОДАЖИ</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#129302;</span>
+                        <div><div style="font-size:13px;font-weight:700;">AI-менеджер по продажам</div><div style="font-size:11px;color:var(--text-muted);">Автономный агент: отвечает в Telegram/мессенджерах, квалифицирует, закрывает на оплату</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- РУТИНА И АВТОМАТИЗАЦИЯ -->
+            <div class="card" style="border-left:3px solid #f59e0b;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                    <span style="font-size:24px;">&#9881;&#65039;</span>
+                    <span style="font-size:15px;font-weight:800;color:#f59e0b;">РУТИНА И АВТОМАТИЗАЦИЯ</span>
+                </div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">AI-агенты, которые работают за тебя 24/7:</p>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128222;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Агент звонков и встреч</div><div style="font-size:11px;color:var(--text-muted);">Транскрибация, договорённости, задачи &rarr; рассылка участникам автоматически</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128202;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Excel-агент</div><div style="font-size:11px;color:var(--text-muted);">Продвинутая работа с таблицами, отчётами, финансовой аналитикой</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128196;</span>
+                        <div><div style="font-size:13px;font-weight:700;">КП и презентации</div><div style="font-size:11px;color:var(--text-muted);">Коммерческие предложения, pitch-деки, слайды &mdash; автоматически</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128214;</span>
+                        <div><div style="font-size:13px;font-weight:700;">NotebookLM</div><div style="font-size:11px;color:var(--text-muted);">Обработка большого объёма информации, базы знаний, исследования</div></div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:8px;">
+                        <span style="font-size:18px;">&#128203;</span>
+                        <div><div style="font-size:13px;font-weight:700;">Трекер договорённостей</div><div style="font-size:11px;color:var(--text-muted);">Фиксация обязательств, дедлайны, контроль выполнения</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOT ABOUT PROMPTS -->
+        <div style="margin-top:40px;padding:28px 32px;background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(59,130,246,0.08));border:1px solid rgba(139,92,246,0.2);border-radius:16px;" class="reveal">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;text-align:center;">
+                <div>
+                    <div style="font-size:32px;margin-bottom:6px;">&#10060;</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-muted);text-decoration:line-through;">Промпты</div>
+                    <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">которые не работают без контекста</div>
+                </div>
+                <div>
+                    <div style="font-size:32px;margin-bottom:6px;">&#10060;</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--text-muted);text-decoration:line-through;">Теория</div>
+                    <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">которую смотришь и забываешь</div>
+                </div>
+                <div>
+                    <div style="font-size:32px;margin-bottom:6px;">&#9989;</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--accent-green);">Рабочие AI-сотрудники</div>
+                    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">которые выполняют задачи по эталону</div>
+                </div>
+                <div>
+                    <div style="font-size:32px;margin-bottom:6px;">&#9989;</div>
+                    <div style="font-size:14px;font-weight:700;color:var(--accent-green);">Делегирование 80% рутины</div>
+                    <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">AI делает &mdash; ты проверяешь и кайфуешь</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA to employees showcase -->
+        <div style="text-align:center;margin-top:32px;" class="reveal">
+            <a href="employees.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:100px;font-size:14px;font-weight:600;color:var(--accent-purple);text-decoration:none;transition:all 0.2s ease;" onmouseover="this.style.background='rgba(139,92,246,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(139,92,246,0.1)';this.style.transform='none'">
+                &#128065; Посмотреть всех 27 сотрудников подробно &rarr;
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 5.5: FACTORY WORKFLOW ============ -->
+<section class="factory-section" id="factory">
+    <div class="container">
+        <h2 class="section-title reveal">Твой <span class="gradient-text">завод в кармане</span></h2>
+        <p class="factory-subtitle reveal reveal-delay-1">Одна система — десятки продуктов. Вот что ты сможешь создавать сама после воркшопа:</p>
+
+        <!-- Pipeline: 5 stages -->
+        <div class="pipeline reveal reveal-delay-2">
+            <div class="pipeline-step">
+                <div class="pipeline-icon">🔬</div>
+                <div class="pipeline-label">Research</div>
+                <div class="pipeline-desc">Исследование рынка и ЦА</div>
+                <span class="pipeline-arrow">→</span>
+            </div>
+            <div class="pipeline-step">
+                <div class="pipeline-icon">📦</div>
+                <div class="pipeline-label">Упаковка</div>
+                <div class="pipeline-desc">Оффер, позиционирование</div>
+                <span class="pipeline-arrow">→</span>
+            </div>
+            <div class="pipeline-step">
+                <div class="pipeline-icon">🎨</div>
+                <div class="pipeline-label">Контент</div>
+                <div class="pipeline-desc">Тексты, визуал, видео</div>
+                <span class="pipeline-arrow">→</span>
+            </div>
+            <div class="pipeline-step">
+                <div class="pipeline-icon">💻</div>
+                <div class="pipeline-label">Вайб-кодинг</div>
+                <div class="pipeline-desc">Сайты, приложения, боты</div>
+                <span class="pipeline-arrow">→</span>
+            </div>
+            <div class="pipeline-step">
+                <div class="pipeline-icon">🚀</div>
+                <div class="pipeline-label">Запуск</div>
+                <div class="pipeline-desc">Воронки, продажи, деньги</div>
+            </div>
+        </div>
+
+        <!-- Products galaxy title -->
+        <p class="galaxy-title reveal">Ценные конечные продукты, которые ты создашь:</p>
+
+        <!-- Products grid -->
+        <div class="products-grid">
+            <!-- СТРАТЕГИЯ -->
+            <div class="product-item reveal">
+                <span class="product-cat cat-strategy">Стратегия</span>
+                <span class="product-emoji">🎯</span>
+                <div class="product-name">Маркетинг-стратегия</div>
+                <div class="product-detail">Полная стратегия на основе AI-ресёрча</div>
+            </div>
+            <div class="product-item reveal reveal-delay-1">
+                <span class="product-cat cat-strategy">Стратегия</span>
+                <span class="product-emoji">🧬</span>
+                <div class="product-name">ДНК Клиента</div>
+                <div class="product-detail">Глубинный портрет ЦА из 5 частей</div>
+            </div>
+            <div class="product-item reveal reveal-delay-2">
+                <span class="product-cat cat-strategy">Стратегия</span>
+                <span class="product-emoji">💎</span>
+                <div class="product-name">Оффер по Хормози</div>
+                <div class="product-detail">Продающее предложение с ценностью 10x</div>
+            </div>
+            <div class="product-item reveal reveal-delay-3">
+                <span class="product-cat cat-strategy">Стратегия</span>
+                <span class="product-emoji">🔍</span>
+                <div class="product-name">GAP-анализ рынка</div>
+                <div class="product-detail">Ниша, конкуренты, «кнопка бабло»</div>
+            </div>
+
+            <!-- КОНТЕНТ -->
+            <div class="product-item reveal">
+                <span class="product-cat cat-content">Контент</span>
+                <span class="product-emoji">📱</span>
+                <div class="product-name">Рилсы и сторис</div>
+                <div class="product-detail">AI-генерация видео: Kling, Runway</div>
+            </div>
+            <div class="product-item reveal reveal-delay-1">
+                <span class="product-cat cat-content">Контент</span>
+                <span class="product-emoji">✍️</span>
+                <div class="product-name">Посты и тексты</div>
+                <div class="product-detail">Контент-план на месяц за 30 мин</div>
+            </div>
+            <div class="product-item reveal reveal-delay-2">
+                <span class="product-cat cat-content">Контент</span>
+                <span class="product-emoji">🎬</span>
+                <div class="product-name">Видео-креативы</div>
+                <div class="product-detail">Рекламные ролики через AI</div>
+            </div>
+            <div class="product-item reveal reveal-delay-3">
+                <span class="product-cat cat-content">Контент</span>
+                <span class="product-emoji">🔥</span>
+                <div class="product-name">Прогревы и запуски</div>
+                <div class="product-detail">Контентные серии по лестнице Ханта</div>
+            </div>
+
+            <!-- TECH -->
+            <div class="product-item reveal">
+                <span class="product-cat cat-tech">Вайб-кодинг</span>
+                <span class="product-emoji">🌐</span>
+                <div class="product-name">Лендинги</div>
+                <div class="product-detail">Сайт голосом за 2 часа через Claude Code</div>
+            </div>
+            <div class="product-item reveal reveal-delay-1">
+                <span class="product-cat cat-tech">Вайб-кодинг</span>
+                <span class="product-emoji">❓</span>
+                <div class="product-name">Квизы</div>
+                <div class="product-detail">Интерактивные квиз-воронки</div>
+            </div>
+            <div class="product-item reveal reveal-delay-2">
+                <span class="product-cat cat-tech">Вайб-кодинг</span>
+                <span class="product-emoji">📊</span>
+                <div class="product-name">Презентации и вебы</div>
+                <div class="product-detail">Вебинарные страницы, слайды</div>
+            </div>
+            <div class="product-item reveal reveal-delay-3">
+                <span class="product-cat cat-tech">Вайб-кодинг</span>
+                <span class="product-emoji">🧲</span>
+                <div class="product-name">Лид-магниты</div>
+                <div class="product-detail">Калькуляторы, чек-листы, мини-приложения</div>
+            </div>
+
+            <!-- ПРОДАЖИ -->
+            <div class="product-item reveal">
+                <span class="product-cat cat-sales">Продажи</span>
+                <span class="product-emoji">🤖</span>
+                <div class="product-name">AI-ассистент продаж</div>
+                <div class="product-detail">Бот, который продаёт в переписках</div>
+            </div>
+            <div class="product-item reveal reveal-delay-1">
+                <span class="product-cat cat-sales">Продажи</span>
+                <span class="product-emoji">🎥</span>
+                <div class="product-name">VSL-сценарии</div>
+                <div class="product-detail">Продающие видеопрезентации</div>
+            </div>
+            <div class="product-item reveal reveal-delay-2">
+                <span class="product-cat cat-sales">Продажи</span>
+                <span class="product-emoji">💬</span>
+                <div class="product-name">Скрипты продаж</div>
+                <div class="product-detail">Переписки, звонки, возражения</div>
+            </div>
+            <div class="product-item reveal reveal-delay-3">
+                <span class="product-cat cat-sales">Продажи</span>
+                <span class="product-emoji">📧</span>
+                <div class="product-name">Email-цепочки</div>
+                <div class="product-detail">Автоворонки в переписках</div>
+            </div>
+
+            <!-- АВТОМАТИЗАЦИЯ -->
+            <div class="product-item reveal">
+                <span class="product-cat cat-automation">Автоматизация</span>
+                <span class="product-emoji">⚡</span>
+                <div class="product-name">AI-агенты</div>
+                <div class="product-detail">Кастомные скиллы для Claude Code</div>
+            </div>
+            <div class="product-item reveal reveal-delay-1">
+                <span class="product-cat cat-automation">Автоматизация</span>
+                <span class="product-emoji">🔄</span>
+                <div class="product-name">Воронки продаж</div>
+                <div class="product-detail">Вебинарные, трипваерные, классические</div>
+            </div>
+            <div class="product-item reveal reveal-delay-2">
+                <span class="product-cat cat-automation">Автоматизация</span>
+                <span class="product-emoji">📈</span>
+                <div class="product-name">Аналитика</div>
+                <div class="product-detail">Дашборды, метрики, отчёты</div>
+            </div>
+            <div class="product-item reveal reveal-delay-3">
+                <span class="product-cat cat-automation">Автоматизация</span>
+                <span class="product-emoji">🏭</span>
+                <div class="product-name">Контент-завод</div>
+                <div class="product-detail">Система производства контента 24/7</div>
+            </div>
+        </div>
+
+        <!-- Counter -->
+        <div class="factory-counter reveal">
+            <div class="counter-item">
+                <div class="counter-num" data-target="27">0</div>
+                <div class="counter-label">AI-сотрудников</div>
+            </div>
+            <div class="counter-item">
+                <div class="counter-num" data-target="63">0</div>
+                <div class="counter-label">нейронки</div>
+            </div>
+            <div class="counter-item">
+                <div class="counter-num" data-target="16">0</div>
+                <div class="counter-label">форматов контента</div>
+            </div>
+            <div class="counter-item">
+                <div class="counter-num" data-target="7">0</div>
+                <div class="counter-label">блоков</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 6: CASES ============ -->
+<section id="cases">
+    <div class="container">
+        <h2 class="section-title reveal">Кейсы участников <span class="gradient-text">первого потока</span></h2>
+        <div class="cases-scroll-wrapper reveal reveal-delay-1">
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">JM</div>
+                        <div>
+                            <div class="case-name">Jedi Monkey</div>
+                            <span class="case-niche">СДВГ-блоггер</span>
+                        </div>
+                    </div>
+                    <div class="case-result">&laquo;Дофаминомика&raquo;: <strong>2 288 пользователей</strong> с одного поста. $0 рекламы.</div>
+                    <div class="case-quote">Deep Research &rarr; Claude Code &rarr; продукт за 1 день.</div>
+                </div>
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">КД</div>
+                        <div>
+                            <div class="case-name">Катерина Дегтярь</div>
+                            <span class="case-niche">SaaS автообзвона</span>
+                        </div>
+                    </div>
+                    <div class="case-result">Нашла стратегию White Label. Потенциал: <strong>&times;10 выручки</strong>.</div>
+                    <div class="case-quote">Средний чек: $500-$1 500/мес &rarr; масштабирование через AI.</div>
+                </div>
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">СД</div>
+                        <div>
+                            <div class="case-name">София Дробинина</div>
+                            <span class="case-niche">Продажи в переписках</span>
+                        </div>
+                    </div>
+                    <div class="case-result">AI-ассистент из <strong>10 часов контента за 4 часа</strong>. Теперь продаёт не время — а систему.</div>
+                    <div class="case-quote"></div>
+                </div>
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">ВК</div>
+                        <div>
+                            <div class="case-name">Виктория Кова</div>
+                            <span class="case-niche">HR / рекрутинг</span>
+                        </div>
+                    </div>
+                    <div class="case-result">2 года в паузе &rarr; <strong>упакованный оффер + лендинг + план</strong>.</div>
+                    <div class="case-quote">&laquo;Понятно, просто, возможно.&raquo;</div>
+                </div>
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">СШ</div>
+                        <div>
+                            <div class="case-name">Стас Шевчук</div>
+                            <span class="case-niche">Строительство, Бали</span>
+                        </div>
+                    </div>
+                    <div class="case-result"><strong>$1M+ девелопер</strong> &rarr; нашёл образовательный проект через Deep Research.</div>
+                    <div class="case-quote">&laquo;AI-ассистент заменяет менеджера по продажам.&raquo;</div>
+                </div>
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-avatar" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">ВЯ</div>
+                        <div>
+                            <div class="case-name">Влад Яско</div>
+                            <span class="case-niche">Собственный кейс</span>
+                        </div>
+                    </div>
+                    <div class="case-result">Запуск на <strong>$120 000</strong> с помощью AI. 14-летний сын заработал <strong>$300</strong> на вайб-кодинге.</div>
+                    <div class="case-quote"></div>
+                </div>
+            </div>
+        </div>
+        <div class="swipe-hint">&#8592; свайпни чтобы увидеть больше &#8594;</div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 7: WHO LEADS ============ -->
+<section class="author-section" id="author">
+    <div class="container">
+        <div class="author-grid">
+            <div class="reveal">
+                <div class="author-photo">ВЯ</div>
+            </div>
+            <div class="author-info">
+                <h2 class="reveal">Влад Яско</h2>
+                <p class="author-desc reveal reveal-delay-1">14 лет в маркетинге. Практикующий маркетолог, который в одиночку закрывает задачи целого отдела &mdash; через 63 нейронки ежедневно.</p>
+                <div class="author-stats reveal reveal-delay-2">
+                    <div class="author-stat"><span class="author-stat-bullet"></span> 63 нейронки в ежедневном использовании</div>
+                    <div class="author-stat"><span class="author-stat-bullet"></span> 27 цифровых сотрудников &mdash; создавал каждого по 5-10 часов</div>
+                    <div class="author-stat"><span class="author-stat-bullet"></span> Запуск на $120K с помощью AI-системы</div>
+                    <div class="author-stat"><span class="author-stat-bullet"></span> 60 учеников на первом потоке, 12+ ниш</div>
+                    <div class="author-stat"><span class="author-stat-bullet"></span> Автор методологий: Deep Research, ДНК Клиента, Контент-завод</div>
+                </div>
+                <p class="author-tagline reveal reveal-delay-3">Мечтал найти человека, который шарит в нейронках &mdash; и понял, что нужно стать им самому. Теперь 10-20-40 проектов &mdash; без разницы, потому что есть система. И эту систему я передаю.</p>
+                <div class="author-quote reveal reveal-delay-4">
+                    &laquo;Я не обучаю промптам. Я передаю 27 готовых сотрудников и показываю, как ими управлять на своём бизнесе.&raquo;
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 7.5: FORMAT ============ -->
+<section style="padding:60px 0;background:linear-gradient(180deg,var(--bg) 0%,rgba(59,130,246,0.02) 50%,var(--bg) 100%);">
+    <div class="container">
+        <h2 class="section-title reveal">Как проходит <span class="gradient-text">обучение</span></h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:900px;margin:0 auto;">
+            <div class="card reveal" style="text-align:center;padding:28px 20px;">
+                <div style="font-size:40px;margin-bottom:12px;">&#127916;</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Уроки в записи</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Каждую неделю &mdash; новый модуль. Смотри когда удобно. Все материалы навсегда.</p>
+            </div>
+            <div class="card reveal reveal-delay-1" style="text-align:center;padding:28px 20px;">
+                <div style="font-size:40px;margin-bottom:12px;">&#128225;</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Live-воркшоп каждую неделю</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Влад показывает внедрение на живых проектах. Задаёшь вопросы &mdash; получаешь ответы прямо в эфире.</p>
+            </div>
+            <div class="card reveal reveal-delay-2" style="text-align:center;padding:28px 20px;">
+                <div style="font-size:40px;margin-bottom:12px;">&#128172;</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Чат + комьюнити</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">71 участник в чате первого потока. Помогают друг другу, находят команду, делают совместные запуски.</p>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:24px;" class="reveal reveal-delay-3">
+            <p style="font-size:14px;color:var(--text-muted);">&#128205; <strong style="color:var(--text-primary);">Старт: 15 апреля</strong> &nbsp;|&nbsp; Длительность: 2 месяца &nbsp;|&nbsp; 4-6 часов в неделю</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 7.6: 4-STEP PROCESS ============ -->
+<section style="padding:60px 0;">
+    <div class="container">
+        <h2 class="section-title reveal">4 шага от нуля до <span class="gradient-text">работающей системы</span></h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;position:relative;max-width:960px;margin:0 auto;">
+            <!-- Connector line -->
+            <div style="position:absolute;top:48px;left:60px;right:60px;height:2px;background:linear-gradient(90deg,var(--accent-purple),var(--accent-blue),var(--accent-green),#f59e0b);opacity:0.3;z-index:0;display:none;" class="process-line"></div>
+
+            <div class="reveal" style="text-align:center;padding:0 12px;position:relative;z-index:1;">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(139,92,246,0.05));border:2px solid rgba(139,92,246,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;">&#128300;</div>
+                <div style="font-size:11px;font-weight:800;color:var(--accent-purple);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Шаг 1</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Исследование</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Deep Research: рынок, ЦА, конкуренты, ниша — за 1 день</p>
+                <div style="margin-top:10px;padding:8px 12px;background:rgba(34,197,94,0.06);border-left:2px solid var(--accent-green);border-radius:0 6px 6px 0;font-size:11px;color:var(--accent-green);font-weight:600;text-align:left;">&#8594; Маркетинг-стратегия</div>
+            </div>
+
+            <div class="reveal reveal-delay-1" style="text-align:center;padding:0 12px;position:relative;z-index:1;">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(59,130,246,0.05));border:2px solid rgba(59,130,246,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;">&#128230;</div>
+                <div style="font-size:11px;font-weight:800;color:var(--accent-blue);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Шаг 2</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Упаковка</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Оффер, позиционирование, лендинг, воронка — готово к продаже</p>
+                <div style="margin-top:10px;padding:8px 12px;background:rgba(34,197,94,0.06);border-left:2px solid var(--accent-green);border-radius:0 6px 6px 0;font-size:11px;color:var(--accent-green);font-weight:600;text-align:left;">&#8594; Оффер + сайт + воронка</div>
+            </div>
+
+            <div class="reveal reveal-delay-2" style="text-align:center;padding:0 12px;position:relative;z-index:1;">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.05));border:2px solid rgba(34,197,94,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;">&#127912;</div>
+                <div style="font-size:11px;font-weight:800;color:var(--accent-green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Шаг 3</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Контент</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Контент-завод: 16 форматов, визуал, видео, аватары, прогревы</p>
+                <div style="margin-top:10px;padding:8px 12px;background:rgba(34,197,94,0.06);border-left:2px solid var(--accent-green);border-radius:0 6px 6px 0;font-size:11px;color:var(--accent-green);font-weight:600;text-align:left;">&#8594; Контент на месяц за 30 мин</div>
+            </div>
+
+            <div class="reveal reveal-delay-3" style="text-align:center;padding:0 12px;position:relative;z-index:1;">
+                <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.05));border:2px solid rgba(245,158,11,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;">&#128640;</div>
+                <div style="font-size:11px;font-weight:800;color:#f59e0b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Шаг 4</div>
+                <div style="font-size:16px;font-weight:800;margin-bottom:6px;">Запуск</div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;">AI-агенты, автоматизация, продажи — система работает за тебя</p>
+                <div style="margin-top:10px;padding:8px 12px;background:rgba(34,197,94,0.06);border-left:2px solid var(--accent-green);border-radius:0 6px 6px 0;font-size:11px;color:var(--accent-green);font-weight:600;text-align:left;">&#8594; Первый клиент через AI</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 7.7: ROI CALCULATOR ============ -->
+<section style="padding:60px 0;background:linear-gradient(180deg,rgba(139,92,246,0.03) 0%,var(--bg) 100%);">
+    <div class="container">
+        <h2 class="section-title reveal">Посчитай, сколько ты <span class="gradient-text">сэкономишь</span></h2>
+        <div class="reveal reveal-delay-1" style="max-width:700px;margin:0 auto;">
+            <div class="card" style="padding:32px;">
+                <!-- Slider 1: подрядчики -->
+                <div style="margin-bottom:28px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <label style="font-size:14px;font-weight:600;">Сколько тратишь на подрядчиков в месяц?</label>
+                        <span style="font-size:18px;font-weight:800;color:var(--accent-purple);" id="calc-spend">$1 000</span>
+                    </div>
+                    <input type="range" min="200" max="5000" value="1000" step="100" id="calc-spend-slider" style="width:100%;accent-color:var(--accent-purple);cursor:pointer;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);"><span>$200</span><span>$5 000</span></div>
+                </div>
+
+                <!-- Slider 2: часы рутины -->
+                <div style="margin-bottom:28px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <label style="font-size:14px;font-weight:600;">Сколько часов в неделю тратишь на рутину?</label>
+                        <span style="font-size:18px;font-weight:800;color:var(--accent-blue);" id="calc-hours">15 ч</span>
+                    </div>
+                    <input type="range" min="5" max="40" value="15" step="1" id="calc-hours-slider" style="width:100%;accent-color:var(--accent-blue);cursor:pointer;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);"><span>5 ч</span><span>40 ч</span></div>
+                </div>
+
+                <!-- Divider -->
+                <div style="height:1px;background:var(--border);margin:24px 0;"></div>
+
+                <!-- Results -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center;">
+                    <div>
+                        <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Экономия за год</div>
+                        <div style="font-size:32px;font-weight:900;color:var(--accent-green);" id="calc-save-money">$9 600</div>
+                    </div>
+                    <div>
+                        <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Часов высвободишь</div>
+                        <div style="font-size:32px;font-weight:900;color:var(--accent-green);" id="calc-save-hours">624 ч</div>
+                    </div>
+                </div>
+                <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:16px;">* AI берёт на себя 80% рутины. Расчёт: (подрядчики &times; 0.8 &times; 12) и (часы &times; 0.8 &times; 52)</p>
+
+                <!-- CTA -->
+                <div style="text-align:center;margin-top:24px;">
+                    <a href="#packages" class="cta-btn" style="font-size:16px;">Окупить за первый месяц &rarr;</a>
+                    <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">Курс от $250 &mdash; окупается за <span id="calc-payback" style="color:var(--accent-green);font-weight:700;">3 дня</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 8.5: COMPARISON ============ -->
+<section style="padding:60px 0;">
+    <div class="container">
+        <h2 class="section-title reveal">Почему не YouTube, не другой курс, <span class="gradient-text">не самостоятельно?</span></h2>
+        <div class="reveal reveal-delay-1" style="overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;">
+            <div class="swipe-hint" style="margin-bottom:8px;">&#8592; листай таблицу &#8594;</div>
+            <table style="width:100%;min-width:640px;border-collapse:separate;border-spacing:0;font-size:12px;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border);"></th>
+                        <th style="padding:12px 16px;text-align:center;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border);">&#127909; YouTube</th>
+                        <th style="padding:12px 16px;text-align:center;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border);">&#128218; Курс по промптам</th>
+                        <th style="padding:12px 16px;text-align:center;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border);">&#128101; Агентство</th>
+                        <th style="padding:12px 16px;text-align:center;color:var(--accent-green);font-weight:800;border-bottom:2px solid var(--accent-green);background:rgba(34,197,94,0.04);border-radius:8px 8px 0 0;">&#9889; Этот воркшоп</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;">Результат</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Обрывочные знания</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Умеешь промптить</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Зависишь от людей</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--accent-green);font-weight:700;background:rgba(34,197,94,0.04);">27 сотрудников + система</td></tr>
+                    <tr><td style="padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;">Время</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Месяцы проб</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">1-2 навыка</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Неделя на найм</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--accent-green);font-weight:700;background:rgba(34,197,94,0.04);">2 мес &rarr; полная система</td></tr>
+                    <tr><td style="padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;">Стоимость</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">$0, но время = $$$</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">$100-500</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">$3 000-10 000/мес</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--accent-green);font-weight:700;background:rgba(34,197,94,0.04);">От $250 один раз</td></tr>
+                    <tr><td style="padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600;">Ниши</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Общие примеры</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Общие промпты</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--text-muted);">Только их ниша</td><td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--accent-green);font-weight:700;background:rgba(34,197,94,0.04);">12+ ниш проверено</td></tr>
+                    <tr><td style="padding:10px 16px;font-weight:600;">Поддержка</td><td style="padding:10px 16px;text-align:center;color:var(--text-muted);">Нет</td><td style="padding:10px 16px;text-align:center;color:var(--text-muted);">Чат в лучшем случае</td><td style="padding:10px 16px;text-align:center;color:var(--text-muted);">За доп. деньги</td><td style="padding:10px 16px;text-align:center;color:var(--accent-green);font-weight:700;background:rgba(34,197,94,0.04);border-radius:0 0 8px 8px;">Live каждую неделю + чат</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 9: PACKAGES ============ -->
+<section id="packages">
+    <div class="container">
+        <h2 class="section-title reveal">&#128293; Предпродажа &mdash; <span class="gradient-text">цена растёт через 5 дней</span></h2>
+        <div class="packages-value-banner reveal reveal-delay-1">
+            Старт 15 апреля &nbsp;|&nbsp; 2 месяца &nbsp;|&nbsp; 27 цифровых сотрудников в подарок
+        </div>
+        <div class="packages-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+            <!-- Package 1: Куколд -->
+            <div class="package-card reveal">
+                <div class="package-name">Самостоятельный</div>
+                <div class="package-price" style="display:flex;align-items:baseline;gap:10px;justify-content:center;">$250 <span style="font-size:16px;color:var(--text-muted);text-decoration:line-through;font-weight:400;">$297</span></div>
+                <div class="package-installment">Для тех, кто уже работает с AI и разберётся сам</div>
+                <div class="package-features">
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Все 8 модулей в записи</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Записи 1-го потока</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> 27 цифровых сотрудников</div>
+                    <div class="package-feature excluded"><span class="pf-icon">&#10007;</span> Live-сессии и Q&A</div>
+                    <div class="package-feature excluded"><span class="pf-icon">&#10007;</span> Чат + обратная связь</div>
+                    <div class="package-feature excluded"><span class="pf-icon">&#10007;</span> Стратсессия</div>
+                </div>
+                <a href="https://secure.wayforpay.com/button/bb954200eef5b" target="_blank" class="cta-btn cta-btn-outline package-cta">Забрать за $250 &rarr;</a>
+            </div>
+            <!-- Package 2: Групповой FEATURED -->
+            <div class="package-card featured reveal reveal-delay-1">
+                <div class="package-badge-wrap"><span class="package-badge">&#128293; Популярный выбор</span></div>
+                <div class="package-name">Групповой</div>
+                <div class="package-price" style="display:flex;align-items:baseline;gap:10px;justify-content:center;">$500 <span style="font-size:16px;color:var(--text-muted);text-decoration:line-through;font-weight:400;">$597</span></div>
+                <div class="package-installment">Хочешь внедрить AI с поддержкой &mdash; 70% выбирают этот</div>
+                <div class="package-features">
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Все 8 модулей в записи</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Записи 1-го потока</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> 27 цифровых сотрудников</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Live-сессии + Q&A каждую неделю</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Чат + обратная связь от Влада</div>
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Все бонусы предпродажи</div>
+                    <div class="package-feature excluded"><span class="pf-icon">&#10007;</span> Стратсессия</div>
+                </div>
+                <a href="https://secure.wayforpay.com/button/b7b2256b303d5" target="_blank" class="cta-btn package-cta">Забрать за $500 &rarr;</a>
+            </div>
+            <!-- Package 3: Со стратсессией -->
+            <div class="package-card reveal reveal-delay-2">
+                <div class="package-badge-wrap"><span class="package-badge" style="background:rgba(245,158,11,0.15);color:#f59e0b;border-color:rgba(245,158,11,0.3);">&#9733; Максимум результата</span></div>
+                <div class="package-name">Групповой + Стратсессия</div>
+                <div class="package-price" style="display:flex;align-items:baseline;gap:10px;justify-content:center;">$800 <span style="font-size:16px;color:var(--text-muted);text-decoration:line-through;font-weight:400;">$997</span></div>
+                <div class="package-installment" style="color:var(--accent-green);font-weight:600;">Стратсессия отдельно = $700. Здесь всё + сессия = $800</div>
+                <div class="package-features">
+                    <div class="package-feature included"><span class="pf-icon">&#10003;</span> Всё из &laquo;Группового&raquo; пакета</div>
+                    <div class="package-feature included" style="background:rgba(245,158,11,0.05);border-radius:6px;padding:8px 4px;margin:4px 0;"><span class="pf-icon">&#9733;</span> <strong>Личная стратсессия 60 мин с Владом:</strong></div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Прогон твоего проекта через 63 нейронки</div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Готовый маркетинговый план: ниша, ЦА, оффер, воронка</div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Идеи по продукту, контенту, упаковке под твою задачу</div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Помощь с внедрением AI-инструментов в твой бизнес</div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Ресурсы, контакты и рекомендации от Влада лично</div>
+                    <div class="package-feature included" style="padding-left:28px;font-size:13px;"><span class="pf-icon" style="font-size:10px;">&#8226;</span> Уходишь с чётким видением: что делать, как и кому продавать</div>
+                </div>
+                <div class="package-spots" style="color:#f59e0b;">&#128293; Ограниченное количество мест</div>
+                <a href="https://secure.wayforpay.com/button/bff4a2bdba1b8" target="_blank" class="cta-btn package-cta" style="background:#f59e0b;">Забрать за $800 &rarr;</a>
+            </div>
+        </div>
+        <div class="packages-footer reveal">
+            <div class="packages-footer-item"><span>&#128179;</span> Рассрочка Mono до 9 платежей</div>
+            <div class="packages-footer-item"><span>&#128260;</span> 100% возврат в первые 14 дней</div>
+            <div class="packages-footer-item"><span>&#127758;</span> Оплата: Mono, PayPal, USDT, карта</div>
+            <div class="packages-footer-item"><span>&#128172;</span> Рассрочка на 2-3 платежа от Влада</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 9.5: 12 NICHES ============ -->
+<section style="padding:60px 0;">
+    <div class="container">
+        <h2 class="section-title reveal">12 ниш. 12 стратсессий. <span class="gradient-text">Твоя — тоже здесь.</span></h2>
+        <p style="text-align:center;color:var(--text-secondary);font-size:15px;max-width:600px;margin:-32px auto 32px;line-height:1.6;" class="reveal">На первом потоке мы разобрали реальные бизнесы. Записи всех стратсессий &mdash; бонусом.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px;" class="reveal reveal-delay-1">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#127891;</span>
+                <div><div style="font-size:13px;font-weight:700;">Коучинг, женская трансформация</div><div style="font-size:11px;color:var(--text-muted);">Из &laquo;коуч всего&raquo; &rarr; конкретный продукт за 1 сессию</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#128188;</span>
+                <div><div style="font-size:13px;font-weight:700;">HR / рекрутинг</div><div style="font-size:11px;color:var(--text-muted);">2000+ резюме за 6 часов вместо недели через AI</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#128150;</span>
+                <div><div style="font-size:13px;font-weight:700;">Семейная психология</div><div style="font-size:11px;color:var(--text-muted);">Голубой океан + квиз &laquo;% угрозы браку&raquo;</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#129302;</span>
+                <div><div style="font-size:13px;font-weight:700;">Робо-звонки / SAAS</div><div style="font-size:11px;color:var(--text-muted);">Структуризация SAAS-модели: услуга под ключ ~$500</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#128172;</span>
+                <div><div style="font-size:13px;font-weight:700;">Продажи через мессенджеры</div><div style="font-size:11px;color:var(--text-muted);">Полный переход на AI-скрипты в переписках</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#127909;</span>
+                <div><div style="font-size:13px;font-weight:700;">Контент-заводы / TikTok</div><div style="font-size:11px;color:var(--text-muted);">AI-автоматизация производства контента</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#129504;</span>
+                <div><div style="font-size:13px;font-weight:700;">Нейросоматика</div><div style="font-size:11px;color:var(--text-muted);">Deep Research конкурентов + двойная модель online/offline</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#127981;</span>
+                <div><div style="font-size:13px;font-weight:700;">Производство</div><div style="font-size:11px;color:var(--text-muted);">Образовательный проект на стыке бизнеса и духовности</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#128170;</span>
+                <div><div style="font-size:13px;font-weight:700;">Велнес / биохакинг</div><div style="font-size:11px;color:var(--text-muted);">Стратегия перехода из найма в онлайн через AI</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#127775;</span>
+                <div><div style="font-size:13px;font-weight:700;">Терапия / телесные практики</div><div style="font-size:11px;color:var(--text-muted);">Переупаковка офлайн-услуг для онлайн-продаж</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#127760;</span>
+                <div><div style="font-size:13px;font-weight:700;">Локализация / проекты</div><div style="font-size:11px;color:var(--text-muted);">AI-контент система для мультиязычных проектов</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;">
+                <span style="font-size:22px;flex-shrink:0;">&#128165;</span>
+                <div><div style="font-size:13px;font-weight:700;">СДВГ-блоггинг</div><div style="font-size:11px;color:var(--text-muted);">Дофаминомика: 2288 пользователей с одного поста</div></div>
+            </div>
+        </div>
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--text-muted);" class="reveal">Нет твоей ниши? Напиши &mdash; разберём на втором потоке.</p>
+    </div>
+</section>
+
+<!-- ============ BLOCK 10: BONUSES ============ -->
+<section id="bonuses">
+    <div class="container">
+        <h2 class="section-title reveal">Бонусы <span class="gradient-text">предпродажи</span></h2>
+        <div class="bonuses-grid">
+            <div class="bonus-card reveal">
+                <div class="bonus-icon">&#9889;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">27 цифровых сотрудников</div>
+                        <span class="bonus-value">$2 000</span>
+                    </div>
+                    <div class="bonus-desc">Полный набор AI-скиллов Влада. По 5-10 часов на создание каждого. Планирую продавать отдельно &mdash; пока бонусом.</div>
+                </div>
+            </div>
+            <div class="bonus-card reveal reveal-delay-1">
+                <div class="bonus-icon">&#128218;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">12 стратсессий по 12 нишам</div>
+                        <span class="bonus-value">$700</span>
+                    </div>
+                    <div class="bonus-desc">Коучинг, HR, психология, SAAS, e-commerce, TikTok и другие. Ниша &rarr; прорывное решение.</div>
+                </div>
+            </div>
+            <div class="bonus-card reveal reveal-delay-2">
+                <div class="bonus-icon">&#129302;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">Урок по Open Claw + автоматизация</div>
+                        <span class="bonus-value">$300</span>
+                    </div>
+                    <div class="bonus-desc">Персональный AI-ассистент 24/7. Полный урок + практика внедрения.</div>
+                </div>
+            </div>
+            <div class="bonus-card reveal reveal-delay-3">
+                <div class="bonus-icon">&#9881;&#65039;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">Установка VPS + Open Claw + токены</div>
+                        <span class="bonus-value">$200</span>
+                    </div>
+                    <div class="bonus-desc">Помощь с установкой сервера и токенов Anthropic. Агент работает без остановки.</div>
+                </div>
+            </div>
+            <div class="bonus-card reveal">
+                <div class="bonus-icon">&#127916;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">Все записи первого потока</div>
+                        <span class="bonus-value">$500</span>
+                    </div>
+                    <div class="bonus-desc">16 уроков + 9 стратсессий + Q&A. Полная база знаний с реальными кейсами.</div>
+                </div>
+            </div>
+            <div class="bonus-card reveal reveal-delay-1">
+                <div class="bonus-icon">&#128260;</div>
+                <div class="bonus-content">
+                    <div class="bonus-header">
+                        <div class="bonus-name">Обновления на 12 месяцев</div>
+                        <span class="bonus-value">$500</span>
+                    </div>
+                    <div class="bonus-desc">Новые сотрудники, скиллы, кейсы. AI меняется каждый месяц &mdash; ты будешь в курсе.</div>
+                </div>
+            </div>
+        </div>
+        <div class="bonuses-footer reveal">
+            <p>Общая ценность бонусов: <span>$4 200</span></p>
+            <p>Включено в пакет &laquo;Групповой&raquo; и выше &mdash; только на предпродаже</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 11: GUARANTEE + FAQ ============ -->
+<section id="guarantee">
+    <div class="container">
+        <div class="guarantee-box reveal">
+            <h2>Гарантия &laquo;Без дураков&raquo;</h2>
+            <div class="guarantee-big">100%</div>
+            <div class="guarantee-text">
+                Возврат в первые 14 дней. Без вопросов. Без мелким шрифтом.<br>
+                Просто напиши — и получишь деньги обратно.<br>
+                Мне важнее, чтобы ты попробовал.
+            </div>
+        </div>
+
+        <h2 class="section-title reveal" style="font-size:22px;">Частые вопросы</h2>
+        <div class="faq-wrapper">
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>У меня нет технических навыков. Это для программистов?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Нет. Мамочка в декрете сделала лендинг голосом. 14-летний подросток заработал $300. Если умеешь пользоваться смартфоном — справишься.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>Чем это отличается от других курсов по AI?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Конкуренты учат промптить. Я учу зарабатывать. У тебя будет система, а не набор советов. Влад делает в прямом эфире — ты повторяешь на своём проекте.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>А если у меня нет продукта/ниши?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Deep Research за 1 день покажет тебе нишу, аудиторию и GAP рынка. Не нужно &laquo;определяться&raquo; — нужно запустить исследование.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>$250–$500 — это дорого для меня.</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">На предпродаже от $250. Рассрочка от $56/мес. Это дешевле, чем один пост от фрилансера. А навык + 27 сотрудников — навсегда. Через 5 дней цена растёт.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>А вдруг AI — это временный хайп?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">AI — не хайп, а инфраструктурный сдвиг. Как интернет в 2000-х. Через год вопрос будет не &laquo;нужен ли AI?&raquo;, а &laquo;почему ты не начал раньше?&raquo;.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>Я уже проходила курсы по AI — ничего нового.</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Ты проходила курсы по инструментам. Здесь — система от исследования до продажи. 12+ ниш сработало на первом потоке. Посмотри кейсы.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>Сколько времени нужно уделять?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">4-6 часов в неделю. 1 урок в записи + 1 live-воркшоп. Всё в записи — смотри когда удобно. Программа на 2 месяца.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal" data-faq>
+                <div class="faq-question">
+                    <span>Что если я отстану от группы?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Всё в записи. Q&A каждую неделю. Комьюнити в Telegram. Обратная связь. Темп — свой. Материалы — навсегда.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BLOCK 12: FINAL CTA ============ -->
+<section class="final-section" id="final">
+    <div class="container">
+        <h2 class="reveal">Через 2 месяца у тебя будет выбор:</h2>
+        <div class="final-options">
+            <div class="final-option final-option-dim reveal">
+                <h3>Вариант 1</h3>
+                <p>Продолжать платить подрядчикам $3 000/мес. Тратить 3 часа на контент. Зависеть от дизайнера. Смотреть, как конкуренты уезжают вперёд.</p>
+            </div>
+            <div class="final-option final-option-bright reveal reveal-delay-1">
+                <h3>Вариант 2</h3>
+                <p>За $250 получить 27 цифровых сотрудников + систему, которая заменяет всех подрядчиков. Навсегда.</p>
+                <div class="final-price">от $250</div>
+            </div>
+        </div>
+        <div class="reveal reveal-delay-2">
+            <a href="#packages" class="cta-btn" style="font-size:20px; padding: 20px 48px;">Забрать по цене предпродажи &rarr;</a>
+        </div>
+        <div class="final-small reveal reveal-delay-3">
+            <span>Старт 15 апреля</span>
+            <span>Цена растёт через 5 дней</span>
+            <span>Рассрочка от $66/мес</span>
+            <span>100% возврат 14 дней</span>
+        </div>
+    </div>
+</section>
+
+<!-- ========== STICKY MOBILE CTA ========== -->
+<div class="sticky-cta" id="sticky-cta">
+    <a href="#packages" class="cta-btn">Выбрать пакет &rarr;</a>
+</div>
+
+<footer>
+    &copy; 2026 Влад Яско &middot; AI-Маркетолог
+</footer>
+
+<script>
+(function() {
+    'use strict';
+
+    // ===== SCROLL REVEAL (IntersectionObserver) =====
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ===== PAIN CHECKBOXES =====
+    const painItems = document.querySelectorAll('[data-pain]');
+    const painCounter = document.getElementById('pain-counter');
+    let checkedCount = 0;
+
+    painItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('checked');
+            checkedCount = document.querySelectorAll('.pain-item.checked').length;
+            if (checkedCount === 0) {
+                painCounter.innerHTML = '';
+            } else if (checkedCount >= 2) {
+                painCounter.innerHTML = 'Выбрано: <span>' + checkedCount + '</span> из 6 — похоже, тебе сюда';
+            } else {
+                painCounter.innerHTML = 'Выбрано: <span>' + checkedCount + '</span> из 6';
+            }
+        });
+    });
+
+    // ===== MODULE ACCORDION =====
+    const moduleCards = document.querySelectorAll('[data-module]');
+    const progressFill = document.getElementById('progress-fill');
+    const progressLabel = document.querySelector('.progress-label');
+    let openModules = new Set();
+
+    moduleCards.forEach((card, i) => {
+        const header = card.querySelector('.module-header');
+        header.addEventListener('click', () => {
+            const wasActive = card.classList.contains('active');
+            card.classList.toggle('active');
+            if (wasActive) {
+                openModules.delete(i);
+            } else {
+                openModules.add(i);
+            }
+            const count = openModules.size;
+            progressFill.style.width = ((count / 8) * 100) + '%';
+            progressLabel.textContent = count + ' из 8 модулей раскрыто';
+        });
+    });
+
+    // ===== FAQ ACCORDION =====
+    const faqItems = document.querySelectorAll('[data-faq]');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            const wasActive = item.classList.contains('active');
+            // Close all
+            faqItems.forEach(fi => fi.classList.remove('active'));
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+
+    // ===== STICKY MOBILE CTA =====
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.getElementById('hero');
+    const stickyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                stickyCta.classList.add('visible');
+            } else {
+                stickyCta.classList.remove('visible');
+            }
+        });
+    }, { threshold: 0 });
+    stickyObserver.observe(heroSection);
+
+    // ===== FACTORY COUNTER ANIMATION =====
+    const counterNums = document.querySelectorAll('.counter-num[data-target]');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.dataset.target);
+                const duration = 1500;
+                const start = performance.now();
+                const animate = (now) => {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.round(target * eased) + '+';
+                    if (progress < 1) requestAnimationFrame(animate);
+                    else el.textContent = target === 1 ? '1' : target + '+';
+                };
+                requestAnimationFrame(animate);
+                counterObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    counterNums.forEach(el => counterObserver.observe(el));
+
+    // ===== COUNTDOWN TIMER =====
+    (function() {
+        // Set end date: 5 days from first visit (stored in localStorage)
+        let endKey = 'ai-mktg-countdown-end';
+        let endStr = localStorage.getItem(endKey);
+        if (!endStr) {
+            const end = new Date();
+            end.setDate(end.getDate() + 5);
+            endStr = end.toISOString();
+            localStorage.setItem(endKey, endStr);
+        }
+        const endDate = new Date(endStr);
+        function tick() {
+            const now = new Date();
+            let diff = endDate - now;
+            if (diff < 0) diff = 0;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = String(v).padStart(2, '0'); };
+            el('cd-days', d); el('cd-hours', h); el('cd-mins', m); el('cd-secs', s);
+        }
+        tick();
+        setInterval(tick, 1000);
+    })();
+
+    // ===== ROI CALCULATOR =====
+    const spendSlider = document.getElementById('calc-spend-slider');
+    const hoursSlider = document.getElementById('calc-hours-slider');
+    if (spendSlider && hoursSlider) {
+        function updateCalc() {
+            const spend = parseInt(spendSlider.value);
+            const hours = parseInt(hoursSlider.value);
+            const saveMoney = Math.round(spend * 0.8 * 12);
+            const saveHours = Math.round(hours * 0.8 * 52);
+            const paybackDays = Math.max(1, Math.round(250 / (spend * 0.8 / 30)));
+            document.getElementById('calc-spend').textContent = '$' + spend.toLocaleString();
+            document.getElementById('calc-hours').textContent = hours + ' ч';
+            document.getElementById('calc-save-money').textContent = '$' + saveMoney.toLocaleString();
+            document.getElementById('calc-save-hours').textContent = saveHours.toLocaleString() + ' ч';
+            document.getElementById('calc-payback').textContent = paybackDays <= 30 ? paybackDays + ' дн.' : Math.round(paybackDays/30) + ' мес.';
+        }
+        spendSlider.addEventListener('input', updateCalc);
+        hoursSlider.addEventListener('input', updateCalc);
+        updateCalc();
+    }
+
+    // ===== SMOOTH SCROLL FOR ALL ANCHOR LINKS =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+})();
+</script>
+
+</body>
+</html>
