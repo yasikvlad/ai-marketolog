@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Маркетолог — Программа обучения</title>
+<meta name="description" content="8 модулей, 27 AI-сотрудников, 30+ нейронок. Полная программа курса AI-Маркетолог — Поток 2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --emerald:#10B981;--emerald-light:#34D399;--emerald-glow:rgba(16,185,129,0.15);
+  --emerald-dim:rgba(16,185,129,0.06);--emerald-border:rgba(16,185,129,0.12);
+  --gold:#D4AF37;--gold-glow:rgba(212,175,55,0.15);--gold-border:rgba(212,175,55,0.2);
+  --bg:#050505;--bg-card:rgba(255,255,255,0.02);--bg-card-hover:rgba(255,255,255,0.04);
+  --text:#EBEBEB;--text-dim:rgba(255,255,255,0.5);--text-muted:rgba(255,255,255,0.35);
+  --border:rgba(255,255,255,0.08);--border-hover:rgba(16,185,129,0.3);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* Scroll progress */
+#scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--emerald),var(--emerald-light));box-shadow:0 0 8px rgba(16,185,129,0.5);z-index:9999;transition:width 0.1s linear}
+
+/* Energy grid */
+.energy-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(16,185,129,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,0.025) 1px,transparent 1px);background-size:100px 100px;pointer-events:none;z-index:0}
+
+/* Container */
+.container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* ===== HEADER ===== */
+.header{text-align:center;padding:100px 24px 72px;position:relative}
+.header::before{content:'';position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(16,185,129,0.08) 0%,transparent 65%);pointer-events:none}
+
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:var(--emerald-glow);border:1px solid var(--emerald-border);border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--emerald-light);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px}
+.badge .dot{width:6px;height:6px;background:var(--emerald);border-radius:50%;animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.5)}}
+
+.header h1{font-family:'Newsreader',serif;font-size:clamp(40px,6vw,64px);font-weight:700;line-height:1.08;margin-bottom:20px;color:var(--text)}
+.header h1 em{font-style:italic;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.header .subtitle{font-size:17px;color:var(--text-dim);max-width:600px;margin:0 auto 48px;line-height:1.7}
+
+.stats-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-val{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--emerald)}
+.stat-lbl{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* ===== MODULES GRID ===== */
+.modules{padding:40px 0 80px}
+.modules-grid{display:flex;flex-direction:column;gap:16px}
+
+/* ===== MODULE CARD ===== */
+.mod{background:var(--bg-card);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.4s var(--ease);cursor:pointer}
+.mod:hover{border-color:var(--border-hover);background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 8px 32px rgba(16,185,129,0.08)}
+.mod.open{border-color:var(--border-hover)}
+.mod.open .mod-header .chevron{transform:rotate(180deg)}
+
+/* Header row */
+.mod-header{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:20px;padding:24px 28px;user-select:none}
+@media(max-width:640px){.mod-header{grid-template-columns:44px 1fr auto;gap:14px;padding:18px 18px}}
+
+.mod-num{width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;background:var(--emerald-dim);color:var(--emerald);flex-shrink:0;position:relative}
+@media(max-width:640px){.mod-num{width:44px;height:44px;font-size:15px;border-radius:11px}}
+.mod-num .emoji{font-size:24px;position:absolute;top:-6px;right:-6px}
+@media(max-width:640px){.mod-num .emoji{font-size:18px;top:-4px;right:-4px}}
+
+.mod-info{min-width:0}
+.mod-label{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--emerald);margin-bottom:4px}
+.mod-title{font-family:'Newsreader',serif;font-size:22px;font-weight:600;color:var(--text);line-height:1.3}
+@media(max-width:640px){.mod-title{font-size:18px}}
+
+.mod-right{display:flex;align-items:center;gap:16px}
+.mod-result-preview{font-size:13px;color:var(--text-dim);max-width:260px;text-align:right;line-height:1.4;display:none}
+@media(min-width:900px){.mod-result-preview{display:block}}
+.mod.open .mod-result-preview{display:none !important}
+
+.chevron{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);transition:all 0.4s var(--ease);flex-shrink:0}
+.chevron svg{width:16px;height:16px;color:var(--text-dim);transition:color 0.3s}
+.mod:hover .chevron{border-color:var(--border-hover)}
+.mod:hover .chevron svg{color:var(--emerald)}
+
+/* Expandable body */
+.mod-body{max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease)}
+.mod.open .mod-body{max-height:1200px}
+
+.mod-content{padding:0 28px 28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.mod-content{grid-template-columns:1fr;padding:0 18px 20px}}
+
+/* Left column */
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:10px;margin-top:16px}
+.sec-title:first-child{margin-top:0}
+
+.content-list{list-style:none}
+.content-list li{position:relative;padding-left:16px;margin-bottom:7px;font-size:13.5px;color:var(--text-dim);line-height:1.55}
+.content-list li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;background:var(--emerald);border-radius:50%;opacity:0.7}
+
+.skills-list{display:flex;flex-direction:column;gap:5px}
+.skill-row{display:flex;align-items:flex-start;gap:7px;font-size:13.5px;color:var(--emerald-light);line-height:1.5}
+.skill-row .ck{color:#22c55e;font-weight:700;flex-shrink:0}
+
+/* Right column */
+.col-right{display:flex;flex-direction:column;gap:16px}
+
+.result-card{padding:18px 20px;background:var(--emerald-dim);border:1px solid var(--emerald-border);border-radius:12px}
+.result-card .r-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--emerald);margin-bottom:6px}
+.result-card p{font-size:14px;color:var(--text);line-height:1.6;font-weight:500}
+
+/* Tools strip */
+.tools-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tool-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;font-size:11.5px;color:var(--text-dim);transition:all 0.3s var(--ease);white-space:nowrap}
+.tool-chip:hover{border-color:var(--border-hover);color:var(--emerald-light);background:var(--emerald-dim)}
+.tool-chip img{width:16px;height:16px;border-radius:3px;object-fit:contain}
+.tool-chip .tool-dot{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+
+/* ===== BONUS ===== */
+.mod.bonus{border-color:var(--gold-border)}
+.mod.bonus:hover,.mod.bonus.open{border-color:rgba(212,175,55,0.4)}
+.mod.bonus .mod-num{background:var(--gold-glow);color:var(--gold)}
+.mod.bonus .mod-label{color:var(--gold)}
+.mod.bonus .content-list li::before{background:var(--gold)}
+.mod.bonus .skill-row{color:#fcd34d}
+.mod.bonus .result-card{background:var(--gold-glow);border-color:var(--gold-border)}
+.mod.bonus .result-card .r-label{color:var(--gold)}
+.mod.bonus:hover .chevron svg{color:var(--gold)}
+.mod.bonus:hover{border-color:rgba(212,175,55,0.4);box-shadow:0 8px 32px rgba(212,175,55,0.08)}
+.bonus-tag{display:inline-block;padding:2px 8px;background:var(--gold-glow);border:1px solid var(--gold-border);border-radius:5px;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-left:8px;vertical-align:middle}
+
+/* ===== BONUSES SECTION ===== */
+.bonuses{padding:0 0 80px}
+.bonuses-card{background:var(--bg-card);backdrop-filter:blur(12px);border:1px solid var(--gold-border);border-radius:20px;padding:48px;overflow:hidden;position:relative}
+@media(max-width:640px){.bonuses-card{padding:32px 20px}}
+.bonuses-card h2{font-family:'Newsreader',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:8px}
+.bonuses-card h2 em{font-style:italic;background:linear-gradient(135deg,var(--gold),#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.bonuses-sub{text-align:center;font-size:15px;color:var(--text-dim);margin-bottom:36px;line-height:1.6}
+.bonuses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:768px){.bonuses-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.bonuses-grid{grid-template-columns:1fr}}
+.bonus-item{padding:24px;background:var(--gold-glow);border:1px solid var(--gold-border);border-radius:14px;transition:all 0.3s var(--ease)}
+.bonus-item:hover{border-color:rgba(212,175,55,0.4);transform:translateY(-3px)}
+.bonus-item .bi-icon{font-size:28px;margin-bottom:10px}
+.bonus-item h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.bonus-item p{font-size:13px;color:var(--text-dim);line-height:1.5}
+.bonus-item .bi-value{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--gold);margin-top:8px}
+
+/* ===== SUMMARY ===== */
+.summary{padding:0 0 80px}
+.summary-card{background:var(--bg-card);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:20px;padding:56px 48px}
+@media(max-width:640px){.summary-card{padding:36px 24px}}
+.summary-card h2{font-family:'Newsreader',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:40px}
+.summary-card h2 em{font-style:italic;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:768px){.sum-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.sum-grid{grid-template-columns:1fr}}
+
+.sum-item{padding:24px;background:var(--emerald-dim);border:1px solid var(--emerald-border);border-radius:14px;transition:all 0.3s var(--ease)}
+.sum-item:hover{border-color:var(--border-hover);transform:translateY(-3px)}
+.sum-item .si-icon{font-size:28px;margin-bottom:10px}
+.sum-item h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.sum-item p{font-size:13px;color:var(--text-dim);line-height:1.5}
+
+/* ===== AI EMPLOYEES ===== */
+.employees{padding:0 0 80px}
+.emp-card{background:var(--bg-card);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:20px;padding:48px;overflow:hidden;position:relative}
+@media(max-width:640px){.emp-card{padding:32px 20px}}
+.emp-card h2{font-family:'Newsreader',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:8px}
+.emp-card h2 em{font-style:italic;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.emp-sub{text-align:center;font-size:15px;color:var(--text-dim);margin-bottom:36px;line-height:1.6}
+.emp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:900px){.emp-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.emp-grid{grid-template-columns:repeat(2,1fr)}}
+.emp-item{padding:14px 12px;background:var(--emerald-dim);border:1px solid var(--emerald-border);border-radius:12px;text-align:center;transition:all 0.3s var(--ease);cursor:default}
+.emp-item:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.emp-item .ei-icon{font-size:22px;margin-bottom:6px}
+.emp-item h4{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:3px}
+.emp-item p{font-size:10.5px;color:var(--text-muted);line-height:1.3}
+.emp-cats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.emp-cat{padding:5px 14px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.5px;border:1px solid var(--emerald-border);color:var(--emerald-light);background:var(--emerald-dim)}
+
+/* ===== CTA ===== */
+.cta-section{padding:0 0 100px}
+.cta-card{background:var(--bg-card);backdrop-filter:blur(12px);border:1px solid var(--emerald-border);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden}
+@media(max-width:640px){.cta-card{padding:36px 24px}}
+.cta-card::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(16,185,129,0.06) 0%,transparent 65%);pointer-events:none}
+.cta-card h2{font-family:'Newsreader',serif;font-size:32px;font-weight:700;margin-bottom:16px;position:relative}
+.cta-card h2 em{font-style:italic;background:linear-gradient(135deg,var(--emerald),var(--emerald-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-card .cta-sub{font-size:15px;color:var(--text-dim);margin-bottom:32px;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;position:relative}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;background:linear-gradient(135deg,var(--emerald),#059669);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;border-radius:14px;text-decoration:none;transition:all 0.3s var(--ease);border:1px solid rgba(16,185,129,0.3);position:relative;letter-spacing:0.5px;text-transform:uppercase}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(16,185,129,0.3)}
+.cta-price{margin-top:16px;font-size:13px;color:var(--text-muted);position:relative}
+
+/* Footer */
+.footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,0.04);font-size:12px;color:var(--text-muted);font-family:'Space Grotesk',sans-serif;letter-spacing:1px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress" style="width:0%"></div>
+<div class="energy-grid"></div>
+
+<header class="header">
+    <div class="badge"><span class="dot"></span> 8 модулей &middot; 2 месяца &middot; Live</div>
+    <h1>Программа <em>AI-Маркетолог</em></h1>
+    <p class="subtitle">От нуля в нейросетях до полной маркетинг-системы с 27 AI-сотрудниками. Каждый модуль заканчивается конкретным продуктом.</p>
+    <div class="stats-row">
+        <div class="stat-item"><div class="stat-val">30+</div><div class="stat-lbl">Нейронок</div></div>
+        <div class="stat-item"><div class="stat-val">8</div><div class="stat-lbl">Модулей</div></div>
+        <div class="stat-item"><div class="stat-val">27</div><div class="stat-lbl">AI-сотрудников</div></div>
+        <div class="stat-item"><div class="stat-val">2 мес</div><div class="stat-lbl">Длительность</div></div>
+    </div>
+</header>
+
+<section class="modules">
+<div class="container">
+<div class="modules-grid">
+
+<!-- M1 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">01<span class="emoji">🧰</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 1</div><div class="mod-title">Инфраструктура AI — 30+ нейронок</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Настроенный стек + ассистенты + ДНК Бизнеса</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Claude — скиллы, плагины, MCP-коннекторы</li>
+            <li>Метапромтинг, контекст, агенты</li>
+            <li>30+ нейронок — сильные и слабые стороны каждой</li>
+            <li>Голосовой ввод — говоришь, а AI делает</li>
+            <li>Как создавать AI-сотрудников и AI-ассистентов</li>
+            <li>Настройка всего стека за 1 сессию</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Создание собственных AI-сотрудников</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Работа с целым стеком, а не с одним ChatGPT</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Понимание всей инфраструктуры AI</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Настроенный стек 30+ нейронок + свои AI-ассистенты + ДНК Бизнеса в NotebookLM</p></div>
+        <div class="sec-title">Инструменты модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/anthropic/white" alt="">Claude</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/openai/white" alt="">ChatGPT</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/googlegemini/white" alt="">Gemini</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/perplexity/white" alt="">Perplexity</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/x/white" alt="">Grok</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/google/white" alt="">NotebookLM</div>
+            <div class="tool-chip"><span class="tool-dot">⚡</span>Parallel AI</div>
+            <div class="tool-chip"><span class="tool-dot">🎤</span>Spokenly</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M2 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">02<span class="emoji">🔬</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 2</div><div class="mod-title">Deep Research — стратегические решения</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Маркетинг-стратегия + GAP-анализ</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Авторский метод дипресерча — стек из 3-5 нейронок параллельно</li>
+            <li>Анализ конкурентов, тренды, запросы ЦА</li>
+            <li>Стратегия, ценообразование, позиционирование</li>
+            <li>Поиск &laquo;Голубого океана&raquo; и карта инноваций</li>
+            <li>Подход для решения ЛЮБОГО вопроса в бизнесе</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Стратегические решения на данных, а не на &laquo;чуйке&raquo;</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Полная картина рынка за 1 день вместо недель</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Маркетинг-стратегия + GAP-анализ + связка продукт-аудитория</p></div>
+        <div class="sec-title">Инструменты модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/perplexity/white" alt="">Perplexity DR</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/openai/white" alt="">ChatGPT DR</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/anthropic/white" alt="">Claude</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/googlegemini/white" alt="">Gemini</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/google/white" alt="">NotebookLM</div>
+            <div class="tool-chip"><span class="tool-dot">⚡</span>Parallel AI</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M3 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">03<span class="emoji">📦</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 3</div><div class="mod-title">Упаковка — ДНК ЦА + оффер по Хормози</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Оффер + позиционирование + лид-магниты</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>ДНК Клиента — глубинный анализ ЦА из 5 частей</li>
+            <li>Кастдев через AI — анализ переписок, отзывов, стратсессий</li>
+            <li>Лестница Бена Ханта — 6 уровней осведомленности</li>
+            <li>Оффер по Хормози ($100M Offers) — от которого невозможно отказаться</li>
+            <li>Все через готовых AI-сотрудников — копируешь, работают</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Упаковка любого продукта за 1 день</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Знаешь свою ЦА лучше, чем она сама</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Упакованный оффер + позиционирование + лид-магниты + скрипты продаж</p></div>
+        <div class="sec-title">AI-сотрудники модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><span class="tool-dot">🔬</span>ДНК ЦА</div>
+            <div class="tool-chip"><span class="tool-dot">🪜</span>Лестница Ханта</div>
+            <div class="tool-chip"><span class="tool-dot">🎯</span>Оффер по Хормози</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M4 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">04<span class="emoji">🎨</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 4</div><div class="mod-title">Сайты, квизы, лид-магниты — голосом</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Сайт + квиз-воронка + лид-магнит</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Создание сайтов голосом через Claude Code</li>
+            <li>Геймификация и персонализированные квизы</li>
+            <li>Лид-магниты: калькуляторы, чек-листы, мини-приложения</li>
+            <li>Дизайн, анимации, интерактивные элементы</li>
+            <li>Публикация в интернет бесплатно (Vercel)</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Сайт за 2 часа, квиз за 30 минут, лид-магнит за 15 минут</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> 6 лендингов за 1.5 часа (реальный кейс)</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Без дизайнера и разработчика</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Работающий сайт + персонализированный квиз-воронка + лид-магнит</p></div>
+        <div class="sec-title">Инструменты модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/anthropic/white" alt="">Claude Code</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/vercel/white" alt="">Vercel</div>
+            <div class="tool-chip"><span class="tool-dot">🎨</span>Frontend Designer</div>
+            <div class="tool-chip"><span class="tool-dot">❓</span>Квиз-воронка</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M5 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">05<span class="emoji">✍️</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 5</div><div class="mod-title">Текстовый контент — 16 форматов</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Контент-система + 9 AI-сотрудников</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Threads, статьи, Telegram-посты, блоги, карусели, креативы</li>
+            <li>Все через скиллы и плагины — полностью автоматически</li>
+            <li>Оцифровка Tone of Voice — тексты звучат как ТЫ</li>
+            <li>Контент-план по лестнице Ханта</li>
+            <li>Лучшие мировые практики контента</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Из 1 единицы контента &rarr; 16 готовых форматов</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Контент-план на месяц за 30 минут</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Контент-система + план на месяц + 9 AI-сотрудников для контента</p></div>
+        <div class="sec-title">9 AI-сотрудников контента</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><span class="tool-dot">⚙️</span>Content System</div>
+            <div class="tool-chip"><span class="tool-dot">🎬</span>Reels</div>
+            <div class="tool-chip"><span class="tool-dot">🔥</span>Вирусные Reels</div>
+            <div class="tool-chip"><span class="tool-dot">📱</span>Сторис</div>
+            <div class="tool-chip"><span class="tool-dot">🎠</span>Карусели</div>
+            <div class="tool-chip"><span class="tool-dot">🧵</span>Threads</div>
+            <div class="tool-chip"><span class="tool-dot">💡</span>Креативы</div>
+            <div class="tool-chip"><span class="tool-dot">👤</span>Очеловечивание</div>
+            <div class="tool-chip"><span class="tool-dot">🗣</span>Tone of Voice</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M6 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">06<span class="emoji">🎥</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 6</div><div class="mod-title">Визуальный контент — фото, видео, аватары</div></div>
+    <div class="mod-right"><div class="mod-result-preview">VSL + фото + аватар + упаковка</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>AI-фото: Nano Banana Pro, Gemini — без потери лица</li>
+            <li>Оживление фото в видео: Grok, Kling</li>
+            <li>Озвучка и клон голоса (11Labs)</li>
+            <li>Цифровые аватары и Motion Control</li>
+            <li>VSL-ролик за 3 часа вместо недели у видеографа</li>
+            <li>Монтаж (CapCut) + стилистический ключ каруселей</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Полный визуальный продакшн — все сам</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> VSL за 3 часа, без видеографа и дизайнера</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>VSL-видео + фото-банк + цифровой аватар + визуальная упаковка</p></div>
+        <div class="sec-title">Инструменты модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/googlegemini/white" alt="">Nano Banana Pro</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/x/white" alt="">Grok</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/elevenlabs/white" alt="">11Labs</div>
+            <div class="tool-chip"><span class="tool-dot">🎬</span>Kling</div>
+            <div class="tool-chip"><span class="tool-dot">🎞</span>CapCut</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M7 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">07<span class="emoji">🔄</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 7</div><div class="mod-title">Воронка + оплаты + контент для продаж</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Воронка + автооплаты + контент</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Сборка воронки: лид-магнит &rarr; квиз &rarr; лендинг &rarr; бот &rarr; оплата</li>
+            <li>Автоплатежи: WayForPay, Mono, PayPal, крипта</li>
+            <li>Контент для воронки: прогревы, email-цепочки</li>
+            <li>Скрипты продаж в переписках</li>
+            <li>Тексты для Instagram DM-бота и Telegram-бота</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> Полная воронка от первого касания до оплаты</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Работает автоматически, без продюсера</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Работающая воронка с автооплатами + контент для продаж + бот-цепочки</p></div>
+        <div class="sec-title">AI-сотрудники модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><span class="tool-dot">📩</span>Direct Funnel</div>
+            <div class="tool-chip"><span class="tool-dot">🔥</span>Прогревы по Ханту</div>
+            <div class="tool-chip"><span class="tool-dot">🎞</span>VSL видео</div>
+            <div class="tool-chip"><span class="tool-dot">💰</span>AI-менеджер продаж</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+<!-- M8 -->
+<div class="mod" data-mod>
+<div class="mod-header">
+    <div class="mod-num">08<span class="emoji">⚡</span></div>
+    <div class="mod-info"><div class="mod-label">Модуль 8</div><div class="mod-title">Автоматизация — Open Claw + AI-агенты</div></div>
+    <div class="mod-right"><div class="mod-result-preview">Open Claw + агенты + менеджер</div><div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+</div>
+<div class="mod-body"><div class="mod-content">
+    <div class="col-left">
+        <div class="sec-title">Что внутри</div>
+        <ul class="content-list">
+            <li>Open Claw — персональный AI-помощник 24/7 на твоем сервере</li>
+            <li>AI-менеджер по продажам — отвечает, квалифицирует, закрывает</li>
+            <li>Личные ассистенты для рутины</li>
+            <li>Агент звонков — транскрибация, задачи автоматически</li>
+            <li>Excel-агент, КП и презентации, трекер</li>
+            <li>Интеграция всех инструментов в единую систему</li>
+        </ul>
+        <div class="sec-title">Навык на выходе</div>
+        <div class="skills-list">
+            <div class="skill-row"><span class="ck">&#10003;</span> AI-агенты работают пока ты спишь</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Рутина делегирована</div>
+            <div class="skill-row"><span class="ck">&#10003;</span> Система замкнута — ты управляешь, а не делаешь</div>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="result-card"><div class="r-label">Продукт на выходе</div><p>Open Claw (24/7) + AI-агенты + менеджер по продажам + полная автоматизация рутины</p></div>
+        <div class="sec-title">Инструменты модуля</div>
+        <div class="tools-strip">
+            <div class="tool-chip"><span class="tool-dot">🦞</span>Open Claw</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/anthropic/white" alt="">Claude API</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/telegram/white" alt="">Telegram</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/google/white" alt="">NotebookLM</div>
+            <div class="tool-chip"><img src="https://cdn.simpleicons.org/microsoftexcel/white" alt="">Excel</div>
+        </div>
+    </div>
+</div></div>
+</div>
+
+</div></div>
+</section>
+
+<!-- BONUSES -->
+<section class="bonuses">
+<div class="container">
+<div class="bonuses-card">
+    <h2>Бонусы <em>предпродажи</em></h2>
+    <p class="bonuses-sub">Общая ценность бонусов: $4 200. Все включено в стоимость пакета.</p>
+    <div class="bonuses-grid">
+        <div class="bonus-item"><div class="bi-icon">🤖</div><h3>27 AI-сотрудников</h3><p>Готовые ассистенты — копируешь за 5 минут, работают как у Влада</p><div class="bi-value">Ценность: $2 000</div></div>
+        <div class="bonus-item"><div class="bi-icon">🎯</div><h3>12 записей стратсессий</h3><p>HR, психология, SAAS, строительство, TikTok — 12 ниш</p><div class="bi-value">Ценность: $700</div></div>
+        <div class="bonus-item"><div class="bi-icon">🦞</div><h3>Урок по Open Claw</h3><p>Установка + автоматизация + персональный AI 24/7</p><div class="bi-value">Ценность: $300</div></div>
+        <div class="bonus-item"><div class="bi-icon">🖥</div><h3>VPS + токены Anthropic</h3><p>Установка сервера + Open Claw + токены для работы</p><div class="bi-value">Ценность: $200</div></div>
+        <div class="bonus-item"><div class="bi-icon">🎬</div><h3>Записи 1-го потока</h3><p>16 уроков + 9 стратсессий + Q&A — полный архив</p><div class="bi-value">Ценность: $500</div></div>
+        <div class="bonus-item"><div class="bi-icon">🔄</div><h3>Обновления 12 месяцев</h3><p>Новые инструменты, скиллы, методы — доступ на год</p><div class="bi-value">Ценность: $500</div></div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- SUMMARY -->
+<section class="summary">
+<div class="container">
+<div class="summary-card">
+    <h2>Что у тебя будет <em>после курса</em></h2>
+    <div class="sum-grid">
+        <div class="sum-item"><div class="si-icon">🧰</div><h3>8 модулей</h3><p>От инфраструктуры AI до полной автоматизации бизнеса</p></div>
+        <div class="sum-item"><div class="si-icon">🤖</div><h3>27 AI-сотрудников</h3><p>Готовая команда — копируешь и используешь с первого дня</p></div>
+        <div class="sum-item"><div class="si-icon">🧠</div><h3>30+ нейронок</h3><p>Полный стек инструментов с пониманием сильных сторон каждой</p></div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- 27 AI EMPLOYEES -->
+<section class="employees">
+<div class="container">
+<div class="emp-card">
+    <h2>27 <em>AI-сотрудников</em> — твоя команда</h2>
+    <p class="emp-sub">Каждый инструмент рабочий. Не демо. Настраиваешь под себя и используешь в бизнесе с первого дня.</p>
+    <div class="emp-cats">
+        <span class="emp-cat">🔬 Исследование ЦА</span>
+        <span class="emp-cat">🎯 Продукт</span>
+        <span class="emp-cat">✍️ Контент</span>
+        <span class="emp-cat">🔄 Воронки</span>
+        <span class="emp-cat">💰 Продажи</span>
+        <span class="emp-cat">⚙️ Рутина</span>
+    </div>
+    <div class="emp-grid">
+        <!-- Исследование ЦА (2) -->
+        <div class="emp-item"><div class="ei-icon">🔬</div><h4>ДНК ЦА</h4><p>Глубинный портрет из 5 частей</p></div>
+        <div class="emp-item"><div class="ei-icon">🪜</div><h4>Лестница Ханта</h4><p>6 уровней + стратегия</p></div>
+        <!-- Продукт (3) -->
+        <div class="emp-item"><div class="ei-icon">🎯</div><h4>Оффер по Хормози</h4><p>Формула ценности</p></div>
+        <div class="emp-item"><div class="ei-icon">🎨</div><h4>Frontend Designer</h4><p>Сайты голосом</p></div>
+        <div class="emp-item"><div class="ei-icon">❓</div><h4>Квиз-воронка</h4><p>4 формата квизов</p></div>
+        <!-- Контент (9) -->
+        <div class="emp-item"><div class="ei-icon">⚙️</div><h4>Content System</h4><p>1 материал &rarr; 7 форматов</p></div>
+        <div class="emp-item"><div class="ei-icon">🎬</div><h4>Reels</h4><p>Сценарии и хуки</p></div>
+        <div class="emp-item"><div class="ei-icon">🔥</div><h4>Вирусные Reels</h4><p>Виральный контент</p></div>
+        <div class="emp-item"><div class="ei-icon">📱</div><h4>Сторис по Яско</h4><p>Дофаминовая архитектура</p></div>
+        <div class="emp-item"><div class="ei-icon">🎠</div><h4>Карусели</h4><p>Из видео/текста в слайды</p></div>
+        <div class="emp-item"><div class="ei-icon">🧵</div><h4>Threads</h4><p>Вирусные посты</p></div>
+        <div class="emp-item"><div class="ei-icon">💡</div><h4>Креативы</h4><p>Рекламные баннеры</p></div>
+        <div class="emp-item"><div class="ei-icon">👤</div><h4>Очеловечивание</h4><p>Убирает AI-голос</p></div>
+        <div class="emp-item"><div class="ei-icon">🗣</div><h4>Tone of Voice</h4><p>Обратный инжиниринг стиля</p></div>
+        <!-- Воронки (3) -->
+        <div class="emp-item"><div class="ei-icon">📩</div><h4>Direct Funnel</h4><p>Instagram &rarr; Telegram</p></div>
+        <div class="emp-item"><div class="ei-icon">🔄</div><h4>Прогревы по Ханту</h4><p>Серии подогрева</p></div>
+        <div class="emp-item"><div class="ei-icon">🎞</div><h4>VSL видео</h4><p>Продающие видео</p></div>
+        <!-- Продажи (1) -->
+        <div class="emp-item"><div class="ei-icon">💰</div><h4>AI-менеджер продаж</h4><p>Квалификация + закрытие</p></div>
+        <!-- Рутина (5) -->
+        <div class="emp-item"><div class="ei-icon">📞</div><h4>Агент звонков</h4><p>Транскрибация + задачи</p></div>
+        <div class="emp-item"><div class="ei-icon">📊</div><h4>Excel-агент</h4><p>Таблицы и аналитика</p></div>
+        <div class="emp-item"><div class="ei-icon">📄</div><h4>КП и презентации</h4><p>Коммерческие предложения</p></div>
+        <div class="emp-item"><div class="ei-icon">📓</div><h4>NotebookLM</h4><p>Обработка информации</p></div>
+        <div class="emp-item"><div class="ei-icon">✅</div><h4>Трекер</h4><p>Дедлайны и контроль</p></div>
+        <!-- Дополнительные -->
+        <div class="emp-item"><div class="ei-icon">🦞</div><h4>Open Claw</h4><p>AI-агент 24/7</p></div>
+        <div class="emp-item"><div class="ei-icon">🔎</div><h4>Deep Research</h4><p>Стратегический анализ</p></div>
+        <div class="emp-item"><div class="ei-icon">🧠</div><h4>Мета-промтинг</h4><p>Промт пишет промт</p></div>
+        <div class="emp-item"><div class="ei-icon">🧬</div><h4>ДНК Бизнеса</h4><p>Контекст для AI</p></div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+<div class="container">
+<div class="cta-card">
+    <h2>Готов <em>внедрить AI</em> в маркетинг?</h2>
+    <p class="cta-sub">8 модулей. 27 AI-сотрудников. Полная система от стратегии до автоматизации. Старт 15 апреля.</p>
+    <a href="https://aimarketolog.site#packages" class="cta-btn" target="_blank">Забрать по цене предпродажи &rarr;</a>
+    <div class="cta-price">от $250 &middot; рассрочка до 9 платежей</div>
+</div>
+</div>
+</section>
+
+<footer class="footer">AI-Маркетолог — Поток 2 &middot; Влад Яско</footer>
+
+<script>
+// Scroll progress
+window.addEventListener('scroll',()=>{
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('scroll-progress').style.width=(window.scrollY/h)*100+'%';
+});
+
+// Accordion
+document.querySelectorAll('[data-mod]').forEach(mod=>{
+    mod.querySelector('.mod-header').addEventListener('click',()=>{
+        const wasOpen=mod.classList.contains('open');
+        document.querySelectorAll('[data-mod].open').forEach(m=>{
+            m.classList.remove('open');
+            m.querySelector('.mod-body').style.maxHeight='0';
+        });
+        if(!wasOpen){
+            mod.classList.add('open');
+            const body=mod.querySelector('.mod-body');
+            body.style.maxHeight=body.scrollHeight+'px';
+        }
+    });
+});
+
+// Entrance animation
+const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting){
+            e.target.style.opacity='1';
+            e.target.style.transform='translateY(0)';
+            obs.unobserve(e.target);
+        }
+    });
+},{threshold:0.08});
+document.querySelectorAll('.mod,.sum-item,.emp-item,.bonus-item,.cta-card').forEach((el,i)=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(24px)';
+    el.style.transition=`opacity 0.6s ${i*0.06}s cubic-bezier(0.16,1,0.3,1), transform 0.6s ${i*0.06}s cubic-bezier(0.16,1,0.3,1)`;
+    obs.observe(el);
+});
+</script>
+</body>
+</html>
