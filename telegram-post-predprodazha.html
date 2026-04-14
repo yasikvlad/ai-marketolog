@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Post — AI-Маркетолог</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0e1621; color: #f5f5f5; padding: 20px; max-width: 600px; margin: 0 auto; font-size: 15px; line-height: 1.6; }
+.post { background: #17212b; border-radius: 12px; padding: 16px 20px; white-space: pre-wrap; }
+.copy-btn { display: block; margin: 20px auto; padding: 12px 32px; background: #2ea6ff; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+.copy-btn:hover { background: #1c95ee; }
+.copied { color: #4ade80; text-align: center; display: none; margin-top: 8px; }
+</style>
+</head>
+<body>
+<button class="copy-btn" onclick="copyPost()">📋 Скопировать пост</button>
+<div class="copied" id="copied">✅ Скопировано!</div>
+
+<div class="post" id="post">Меня уже несколько раз спросили: «Влад, ты куда пропал?» 😁
+
+Рассказываю.
+
+Последние два месяца я засел и не появлялся. Не выгорел, не уехал — <b>создавал продукт</b>. Параллельно вёл первый поток обучения и строил всю систему AI-маркетинга с нуля.
+
+А началось с того, что когда я вернулся в продюсирование — пришлось закрывать на себе всё. Исследование рынка, упаковку, сайты, контент, воронки, продажи.
+
+Нанимать команду за $3-5K/мес, которая делает долго и средне — уже не хотелось.
+
+И вот я сижу, делаю работу за 10 человек, и в какой-то момент понимаю: я же всё это делаю через нейронки. Не «спросил у ChatGPT и получил текст». А через систему — скиллы, агенты, MCP-коннекторы, Open Claw.
+
+Со временем у меня появились собственные <b>AI-сотрудники</b>. Не промпты в документе — а рабочие системы. Один делает анализ аудитории лучше маркетолога. Другой собирает офферы. Третий пишет контент моим голосом. Четвёртый создаёт сайты, пока я говорю в микрофон.
+
+27 штук. Каждого создавал по 5-10 часов. 200+ часов работы.
+
+Это и есть то, чем я занимался два месяца — <b>создавал продукт, который передаёт всю эту систему</b>. Обкатывал на первом потоке. 60 учеников. 12+ ниш.
+
+Результаты из чата:
+
+<i>«Сижу, делаю домашку и охереваю»</i> — Виктория, HR
+<i>«80% моих запросов решает!»</i> — Татьяна, психолог
+<i>«Разработчиком себя чувствую»</i> — Александра
+<i>2 288 пользователей с одного поста, $0 рекламы</i> — Jedi Monkey
+
+Первый поток подходит к концу. Впереди — упаковка отзывов, воронки, вебинары.
+
+Но пока я этим занимаюсь — хочу позвать тех, <b>кто со мной уже давно</b>. По лучшим условиям. До того, как я всё красиво упакую и цена вырастет.
+
+<b>15 апреля</b> стартует AI-Маркетолог 2.0
+
+И если вы подумали <i>«опять промпты, которые не работают»</i> — нет.
+
+Самое ценное: вы <b>научитесь создавать собственных AI-сотрудников и агентов</b>. Под свои задачи. Скиллы, агенты, Open Claw — всё, что сейчас на передовой 🔥
+
+Что внутри:
+
+🤖 <b>27 готовых AI-сотрудников</b> — копируете за 5 минут, работают как у меня
+🧠 <b>Навык создания своих агентов</b> — главный навык 2026 года
+🔬 <b>Deep Research</b> — рынок за 1 день
+✍️ <b>Контент-завод</b> — 16 форматов из одного материала
+💻 <b>Вайб-кодинг</b> — сайт голосом за 2 часа
+🔄 <b>Воронки с автооплатами</b> — работают без вас
+
+Формат фокус-группы:
+📹 Записи — смотрите когда удобно
+⚡ Live каждую неделю — разбираем ваши задачи
+💬 Чат + обратная связь от меня
+
+…и перечислять можно ещё на три поста 😁
+
+<b>Цены предпродажи</b> (растут через 5 дней):
+
+🔹 $250 — записи + 27 сотрудников
+🔹 $500 — + live + чат + обратная связь
+🔹 $800 — + личная стратсессия <i>(отдельно $700)</i>
+
+❤️ Рассрочка Mono до 9 платежей
+
+👉 <b>aimarketolog.site</b>
+👉 <b>@vlad_yasko_ai</b>
+
+P.S. Два месяца я молчал, потому что строил. Теперь готов передать. Кто хочет создавать AI-агентов вместе — welcome 🔥</div>
+
+<script>
+function copyPost() {
+    const post = document.getElementById('post');
+    // Get HTML content and convert to Telegram-compatible format
+    let html = post.innerHTML;
+
+    // Create a temporary element to get formatted text
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    // Copy as both HTML and plain text
+    const text = temp.innerText;
+
+    // Try to copy HTML for Telegram Desktop (preserves formatting)
+    const blob = new Blob([html], {type: 'text/html'});
+    const textBlob = new Blob([text], {type: 'text/plain'});
+
+    navigator.clipboard.write([
+        new ClipboardItem({
+            'text/html': blob,
+            'text/plain': textBlob
+        })
+    ]).then(() => {
+        document.getElementById('copied').style.display = 'block';
+        setTimeout(() => { document.getElementById('copied').style.display = 'none'; }, 2000);
+    }).catch(() => {
+        // Fallback: copy plain text
+        navigator.clipboard.writeText(text).then(() => {
+            document.getElementById('copied').style.display = 'block';
+            setTimeout(() => { document.getElementById('copied').style.display = 'none'; }, 2000);
+        });
+    });
+}
+</script>
+</body>
+</html>

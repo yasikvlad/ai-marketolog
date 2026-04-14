@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Avatar Generator</title>
+<style>
+body { margin: 0; background: #000; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.avatar {
+    width: 512px; height: 512px;
+    background: radial-gradient(circle at 40% 35%, rgba(139,92,246,0.15), transparent 60%),
+                radial-gradient(circle at 65% 60%, rgba(59,130,246,0.1), transparent 50%),
+                #050510;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(139,92,246,0.3), 0 0 160px rgba(59,130,246,0.15);
+}
+/* Neural network grid */
+.avatar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(0deg, transparent 49.5%, rgba(139,92,246,0.08) 49.5%, rgba(139,92,246,0.08) 50.5%, transparent 50.5%),
+        linear-gradient(90deg, transparent 49.5%, rgba(59,130,246,0.06) 49.5%, rgba(59,130,246,0.06) 50.5%, transparent 50.5%);
+    background-size: 32px 32px;
+    animation: gridPulse 4s ease-in-out infinite;
+}
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+/* Head silhouette */
+.head {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; height: 260px;
+}
+.head-outline {
+    width: 160px; height: 190px;
+    border: 2px solid rgba(139,92,246,0.6);
+    border-radius: 50% 50% 45% 45%;
+    position: absolute;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px rgba(139,92,246,0.3), inset 0 0 20px rgba(139,92,246,0.1);
+    animation: headGlow 3s ease-in-out infinite;
+}
+@keyframes headGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3), inset 0 0 20px rgba(139,92,246,0.1); }
+    50% { box-shadow: 0 0 40px rgba(139,92,246,0.5), inset 0 0 30px rgba(139,92,246,0.2); }
+}
+/* Eyes */
+.eye {
+    width: 12px; height: 12px;
+    background: #22c55e;
+    border-radius: 50%;
+    position: absolute;
+    top: 95px;
+    box-shadow: 0 0 15px #22c55e, 0 0 30px rgba(34,197,94,0.5);
+    animation: eyeBlink 4s ease-in-out infinite;
+}
+.eye-left { left: 55px; }
+.eye-right { right: 55px; }
+@keyframes eyeBlink {
+    0%, 45%, 55%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+}
+/* Jaw line */
+.jaw {
+    width: 100px; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.5), transparent);
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+}
+/* Circuit lines */
+.circuit {
+    position: absolute;
+    background: linear-gradient(180deg, rgba(59,130,246,0.4), transparent);
+    width: 1px;
+}
+.c1 { height: 60px; top: 10px; left: 80px; animation: circuitFlow 2s ease-in-out infinite; }
+.c2 { height: 80px; top: 0; right: 90px; animation: circuitFlow 2.5s ease-in-out infinite 0.5s; }
+.c3 { height: 40px; bottom: 30px; left: 60px; background: linear-gradient(0deg, rgba(139,92,246,0.4), transparent); animation: circuitFlow 3s ease-in-out infinite 1s; }
+.c4 { height: 50px; bottom: 20px; right: 70px; background: linear-gradient(0deg, rgba(59,130,246,0.3), transparent); animation: circuitFlow 2.2s ease-in-out infinite 0.3s; }
+@keyframes circuitFlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+/* Nodes */
+.node {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    background: rgba(139,92,246,0.8);
+    box-shadow: 0 0 8px rgba(139,92,246,0.5);
+    animation: nodePulse 2s ease-in-out infinite;
+}
+.n1 { top: 60px; left: 40px; animation-delay: 0s; }
+.n2 { top: 30px; right: 60px; animation-delay: 0.5s; }
+.n3 { bottom: 80px; left: 50px; animation-delay: 1s; background: rgba(59,130,246,0.8); box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+.n4 { bottom: 60px; right: 40px; animation-delay: 1.5s; }
+.n5 { top: 120px; left: 30px; animation-delay: 0.7s; background: rgba(34,197,94,0.6); box-shadow: 0 0 8px rgba(34,197,94,0.4); }
+.n6 { top: 100px; right: 35px; animation-delay: 1.2s; background: rgba(59,130,246,0.8); box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+@keyframes nodePulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+/* AI label */
+.ai-label {
+    position: absolute;
+    bottom: 55px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #22c55e;
+    text-shadow: 0 0 10px #22c55e, 0 0 30px rgba(34,197,94,0.5);
+}
+/* Outer ring */
+.ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(139,92,246,0.2);
+    animation: ringRotate 20s linear infinite;
+}
+.ring::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 50%;
+    width: 8px; height: 8px;
+    background: #8b5cf6;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #8b5cf6;
+}
+@keyframes ringRotate { to { transform: rotate(360deg); } }
+.ring2 {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(59,130,246,0.1);
+    animation: ringRotate 30s linear infinite reverse;
+}
+.ring2::before {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 20%;
+    width: 6px; height: 6px;
+    background: #3b82f6;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #3b82f6;
+}
+</style>
+</head>
+<body>
+<div class="avatar">
+    <div class="ring"></div>
+    <div class="ring2"></div>
+    <div class="head">
+        <div class="head-outline"></div>
+        <div class="eye eye-left"></div>
+        <div class="eye eye-right"></div>
+        <div class="jaw"></div>
+        <div class="circuit c1"></div>
+        <div class="circuit c2"></div>
+        <div class="circuit c3"></div>
+        <div class="circuit c4"></div>
+        <div class="node n1"></div>
+        <div class="node n2"></div>
+        <div class="node n3"></div>
+        <div class="node n4"></div>
+        <div class="node n5"></div>
+        <div class="node n6"></div>
+    </div>
+    <div class="ai-label">AI</div>
+</div>
+</body>
+</html>
